@@ -1,28 +1,38 @@
-
-<div class="login-form-flex" >
+<div class="container-fluid"  style="background-image: url(../assets/images/background1.jpg); 
+background-size: cover; background-position: center ; height: 100vh;">
+<app-header></app-header>
+    <div class="login-form-flex m-50 container " >
  
     <form >
-      <mat-card>
-        <mat-card-title>
+      <div class="form-div">
+        <span style="color: rgb(255, 255, 255); font-size: 24px; font-weight: bold;
+         text-transform: uppercase; text-shadow: 2px 2px 4px rgb(255, 255, 255);">
          
-          Login
+          LOGIN
     
-        </mat-card-title>
-       <h4 style="color: red;"></h4>
-          <mat-card-content>
+        </span>
+       <h4 style="color: red;" ></h4>
+          <div style="text-align: center;">
     
-            <mat-form-field>
-              <input matInput placeholder="Enter email" formControlName="email">
+            <div  class="custom-mat-form-field" style="background-color: black !important;">
+              <input   class="custom-input"  placeholder="Enter ypur email" formControlName="email">
               <h4 style="color: red;"></h4>
-            </mat-form-field>
+            </div>
             <br>
-            <mat-form-field>
-              <input type="password" matInput placeholder="Password" formControlName="password">
+            <div  class="custom-mat-form-field">
+              <input type="password" class="custom-input"  placeholder="Enter your Password" formControlName="password">
               <h4 style="color: red;"></h4>
-            </mat-form-field>
-          </mat-card-content>
-              <button mat-raised-button color="primary"    >Login</button> 
-       
-      </mat-card>
+            </div>
+            <button mat-raised-button  class="custom-button">Login</button>
+        </div>
+        <div  class="cust p-3" style="background-color: black !important; ">
+            <p style="color: rgb(255, 255, 255);">Create account..? <a href="">SignUp</a></p>
+            
+            <p style="color: rgb(255, 255, 255);">Forget password..? <a href="">Click here</a></p>
+          </div>
+          <br>
+        </div>
     </form>
-    </div>
+    </div> 
+</div>
+
