@@ -19,6 +19,7 @@
   .form-div{
     width: 100%;
     background-color: black !important;
+    
     /* display: flex; */
     /* opacity: 0.8; */
     
@@ -45,6 +46,7 @@
     margin-top: 50px;
     padding: 20px;
     border-radius: 10px;
+    border: 1px solid #ffffff80;
   }
   
   /* Responsive styles for smaller screens */

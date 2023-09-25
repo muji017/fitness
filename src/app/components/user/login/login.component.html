@@ -1,6 +1,7 @@
-<div class="container-fluid"  style="background-image: url(../assets/images/background1.jpg); 
+
+<div class="container-fluid "  style="  background-image: url(../assets/images/background1.jpg); 
 background-size: cover; background-position: center ; height: 100vh;">
-<app-header></app-header>
+<app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br><br><br>
     <div class="login-form-flex m-50 container " >
  
     <form >
@@ -26,13 +27,14 @@ background-size: cover; background-position: center ; height: 100vh;">
             <button mat-raised-button  class="custom-button">Login</button>
         </div>
         <div  class="cust p-3" style="background-color: black !important; ">
-            <p style="color: rgb(255, 255, 255);">Create account..? <a href="">SignUp</a></p>
+            <p style="color: rgb(255, 255, 255);">Create account..? <a href="" style="text-decoration-line: underline;">SignUp</a></p>
             
-            <p style="color: rgb(255, 255, 255);">Forget password..? <a href="">Click here</a></p>
+            <p style="color: rgb(255, 255, 255);">Forget password..? <a href="" style="text-decoration-line: underline;">Click here</a></p>
           </div>
           <br>
         </div>
     </form>
     </div> 
+    <app-footer></app-footer>
 </div>
 
