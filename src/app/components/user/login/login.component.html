@@ -4,32 +4,32 @@ background-size: cover; background-position: center ; height: 100vh;">
 <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br><br><br>
     <div class="login-form-flex m-50 container " >
  
-    <form >
+    <form [formGroup]="loginForm" (ngSubmit)="login()" >
       <div class="form-div">
         <span style="color: rgb(255, 255, 255); font-size: 24px; font-weight: bold;
          text-transform: uppercase; text-shadow: 2px 2px 4px rgb(255, 255, 255);">
          
           LOGIN
-    
+        <h5 style="color: red;">{{errorMsg}}</h5>
         </span>
-       <h4 style="color: red;" ></h4>
+       <!-- <h4 style="color: red;" >{{errorMsg}}</h4> -->
           <div style="text-align: center;">
     
-            <div  class="custom-mat-form-field" style="background-color: black !important;">
-              <input   class="custom-input"  placeholder="Enter ypur email" formControlName="email">
-              <h4 style="color: red;"></h4>
+            <div class="custom-mat-form-field">
+              <input class="custom-input"  placeholder="Enter ypur email" formControlName="email">
+              <h5 style="color: red;">{{emailValid()}}</h5>
             </div>
             <br>
             <div  class="custom-mat-form-field">
               <input type="password" class="custom-input"  placeholder="Enter your Password" formControlName="password">
-              <h4 style="color: red;"></h4>
+              <h5 style="color: red;">{{passwordValid()}}</h5>
             </div>
-            <button mat-raised-button  class="custom-button">Login</button>
+            <button type="submit" mat-raised-button  class="custom-button">Login</button>
         </div>
         <div  class="cust p-3" style="background-color: black !important; ">
             <p style="color: rgb(255, 255, 255);">Create account..? <a href="" style="text-decoration-line: underline;">SignUp</a></p>
             
-            <p style="color: rgb(255, 255, 255);">Forget password..? <a href="" style="text-decoration-line: underline;">Click here</a></p>
+          <p style="color: rgb(255, 255, 255);">Forget password..? <a href="" style="text-decoration-line: underline;">Click here</a></p>
           </div>
           <br>
         </div>

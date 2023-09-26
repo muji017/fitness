@@ -1,6 +1,56 @@
-<div class="container-fluid "  style="  background-image: url(../assets/images/background1.jpg); 
+<!-- <div class="container-fluid "  style="  background-image: url(../assets/images/homebackground.jpg); 
 background-size: cover; background-position: center ; height: 100vh;">
 <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br><br><br>
    
     <app-footer></app-footer>
-</div>
+</div> -->
+
+
+    <!-- Image Section -->
+    <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
+    <div class="relative">
+        <img src="../assets/images/homebackground.jpg" alt="Background Image" class="w-full h-auto">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <div class="block">
+                <span class=" md:text-2xl font-bold text-white">NO <span class="text-red-600">PAIN</span> NO GAIN</span>
+            </div>
+            <div class=" w-50  ">
+                <span class="text-white text-xs md:text-lg" >You’re going to have to let it hurt. Let it suck. The harder you work, the better you will look. Your appearance isn’t parallel to how heavy you lift, it’s parallel to how hard you work.</span>
+            </div>
+        </div>
+    </div>
+    
+  
+
+    <!-- Cards Section -->
+    <div class="container mt-5 mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="border-gray-300 border-1 p-6 rounded-lg shadow-lg">
+                <img src="../assets/images/gymworkout.jpg" alt="Background Image" class="w-full h-auto">
+                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">Gym Workouts</h2>
+                <p class="text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="border-gray-300 border-1 p-6 rounded-lg shadow-lg">
+                <img src="../assets/images/homebackground.jpg" alt="Background Image" class="w-full h-auto">
+                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline">Home Workouts</h2>
+                <p class="text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="border-gray-300 border-1 p-6 rounded-lg shadow-lg">
+                <img src="../assets/images/homebackground.jpg" alt="Background Image" class="w-full h-auto">
+                <h2 class="text-xl text-gray-300 font-semibold mb-2">Athletic Workouts</h2>
+                <p class="text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container m-5 flex items-center justify-center mx-auto">
+        <button class=" btn  border-gray-300 border-1 p-6 rounded-full shadow-lg">
+           <span class="text-xs text-white"><a href="" class="underline">Click here</a> for more home workout videos and tips</span>
+        </button>
+    </div>
+    <app-footer></app-footer>
+

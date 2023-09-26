@@ -11,22 +11,22 @@ export class HeaderComponent {
   smallview:string="hidden"
   mobileMenuActive: boolean = false;
 
-  navLinks: { path: string; label: string }[] = [
-    { path: '/home', label: 'Home' },
-    { path: '/team', label: 'Team' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/calendar', label: 'Calendar' },
-  ];
+  // navLinks: { path: string; label: string }[] = [
+  //   { path: '/home', label: 'Home' },
+  //   { path: '/team', label: 'Team' },
+  //   { path: '/projects', label: 'Projects' },
+  //   { path: '/calendar', label: 'Calendar' },
+  // ];
 
   constructor(private router: Router) {}
 
-  toggleMobileMenu(): void {
-    this.mobileMenuActive=!this.mobileMenuActive
-  }
+  // toggleMobileMenu(): void {
+  //   this.mobileMenuActive=!this.mobileMenuActive
+  // }
 
-  isLinkActive(path: string): boolean {
-    return this.router.isActive(path, true);
-  }
+  // isLinkActive(path: string): boolean {
+  //   return this.router.isActive(path, true);
+  // }
 
 
 

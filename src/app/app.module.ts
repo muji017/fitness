@@ -9,6 +9,8 @@ import { MaterialModule } from './material.module';
 import { HeaderComponent } from './components/user/header/header.component';
 import { FooterComponent } from './components/user/footer/footer.component';
 import { HomeComponent } from './components/user/home/home.component';
+import { SignupComponent } from './components/user/signup/signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,16 @@ import { HomeComponent } from './components/user/home/home.component';
     LoginComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

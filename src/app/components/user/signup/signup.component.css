@@ -1,0 +1,88 @@
+
+  
+.mdc-button{
+    margin: 5px;
+    text-align: center;
+    border: 2px solid red;
+    background-color:black !important;
+    color: #ffffff !important;
+    box-shadow: 1px 1px 4px rgb(255, 255, 255);
+    border-radius: 4px !important;
+    
+    
+  }
+  .mat-mdc-form-field  {
+    text-align: center;
+      color: rgb(255, 255, 255);
+  }
+  
+  .form-div{
+    width: 100%;
+    background-color: black !important;
+  
+  }
+
+  .button-flex-container{
+    /* background-color: black; */
+    margin:auto;
+  
+  }
+
+  .login-form-flex {
+    /* display: flex; */
+    align-items: center !important;
+    background-color: black;
+    opacity: 0.9;
+    max-width: 750px;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ffffff80;
+  }
+  
+  /* Responsive styles for smaller screens */
+  @media (max-width: 768px) {
+    .login-form-flex {
+
+      /* Adjust styles for smaller screens */
+      max-width: 100%;
+      padding: 20px;
+    }
+  }
+  @media (max-width: 768px) {
+    .custom-mat-form-field {
+      width: 100%;
+    }
+  }
+  /* Custom styles for mat-form-field and input */
+.custom-mat-form-field  {
+    background-color: black !important;
+    /* border: 1px solid #ffffff; */
+    height: 100px;
+    width: 100%; 
+    text-align: center;
+    /* justify-content: center; */
+    /* display: flex; */
+  }
+  .mat-mdc-form-field-flex{
+    background-color: black !important;
+  }
+  
+  .custom-input {
+    color: white !important; 
+    border-bottom: 1px solid rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    width: 70%;
+    height: 70%;
+  }
+  .custom-input:hover {
+    border-bottom: 1px solid rgb(255, 0, 0);
+     
+  }
+  
+  
+
+/*   
+  .mdc-text-field--filled:not(.mdc-text-field--disabled){
+     background-color: black !important;
+  } */
