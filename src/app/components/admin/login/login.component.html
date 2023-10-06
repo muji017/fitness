@@ -1,0 +1,44 @@
+
+<app-header></app-header>
+
+<div class = "body">
+    <div class = "login mb-5 " alt="" >
+       
+    
+    <form   [formGroup]="loginForm"  (ngSubmit)="login()">
+        
+        <div class="flex flex-col items-center">
+            <img src="../../../assets/images/iconlogin.png" width="40%">
+            <h1 class="text-xl mb-2 mt-1 uppercase text-red-600" style="font-weight: bolder;">
+                Login
+              </h1>
+              
+          </div>
+          
+        
+    <mat-form-field  class ="ancho" appearance="fill">
+      <mat-label class="text-sm">Enter Admin Email</mat-label>
+      <input   type = "text" matInput autocomplete="off" formControlName = "email">
+    </mat-form-field>
+    
+    <mat-form-field  class ="ancho"  appearance="fill">
+        <mat-label class="text-sm" >Enter Admin Password</mat-label>
+        <input type = "password" matInput  autocomplete="off" formControlName = "password">
+      </mat-form-field>
+    
+    
+      <button class="button" type="submit"  mat-raised-button mat-button color="primary">Submit</button>
+    </form>
+    <p class="flex m-3 text-xs"
+    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" 
+    >Forget password? 
+    <a class="focus:text-blue" (click)="resetPassword()" style="text-decoration-line: underline;cursor: pointer;" onfocus="this.style.cursor='pointer';">Click here</a>
+
+    </p>
+    
+    
+    </div>
+      
+    
+    </div>
+ 

@@ -1,0 +1,22 @@
+/* sidebar.component.css */
+
+.sidenav-container {
+    margin-top: 20px !important;
+    height: 100% !important;
+    background-color: rgb(255, 255, 255) !important; 
+    max-width: 240px !important;
+    border-radius: 10px !important;
+    
+  }
+
+  
+  .sidenav {
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  .active-link {
+    background-color: #007bff; /* Change this to your desired background color */
+    color: white; /* Change this to your desired text color */
+    font-weight: bold; /* Optionally, make the text bold */
+  }

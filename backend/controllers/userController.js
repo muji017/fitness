@@ -1,109 +1,175 @@
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 
-const usermodel=require('../models/userModel');
+const usermodel = require('../models/userModel');
+const utilities = require('../utilities/userUtilities');
 const userModel = require('../models/userModel');
 
-// password hashing
-const securePassword = async (password) => {
-    try {
-        const passwordHash = await bcrypt.hash(password, 10);
-        return passwordHash;
-    } catch (error) {
-        console.log(error.message);
-    }
-};
+
+
 
 // user signup 
-const signup=async (req,res)=>{
+const signup = async (req, res) => {
     try {
         console.log("inside");
         console.log(req.body);
-       const userData=new usermodel()
-       const {name,email, password } = req.body
-       const userExist=await usermodel.findOne({email:email})
-       if(userExist){
-        return res.status(409).json({errorMsg:'Email already exist'})
-       }
-       userData.name=name;
-       userData.email=email
-       userData.password=await(securePassword(password))
-       await userData.save()
-       console.log("inserted");
-       res.status(200).json({ userId: userData._id });
-        
+        const userData = new usermodel()
+        const { name, email, password } = req.body
+        const userExist = await usermodel.findOne({ email: email })
+        if (userExist) {
+            return res.status(409).json({ error: 'Email already exist' })
+        }
+        userData.name = name;
+        userData.email = email
+        userData.password = await (utilities.securePassword(password))
+        await userData.save()
+        console.log("inserted");
+        res.status(200).json({ userId: userData._id });
+
     } catch (error) {
-        res.status(500).json({ error:error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 
 // user login
 
-const login=async(req,res)=>{
+const login = async (req, res) => {
     try {
-      const { email, password } = req.body
-      console.log(email,password)
-      const userData = await usermodel.findOne({ email: email })
+        const { email, password } = req.body
+        console.log(email, password)
+        const userData = await userModel.findOne({ email: email })
         if (userData) {
             const passmatch = await bcrypt.compare(password, userData.password);
             if (passmatch) {
-                if(userData.isVerified){
+                if (userData.isVerified) {
                     const options = {
                         expiresIn: '1h'
-                      };
-                      const token = jwt.sign(req.body, 'mysecretkey', options);
-                      console.log(userData.email);
-                    res.status(200).json({ userId: userData._id ,userToken:token});
+                    };
+                    const token = jwt.sign({ _id: userData._id }, 'mysecretkey', options);
+                    //   const tokencookie = jwt.sign(req.body,'mysecretkey')
+                    res.cookie("jwt", token, {
+                        httpOnly: true,
+                        maxAge: 24 * 60 * 60 * 1000
+                    })
+
+                    console.log(userData.email);
+                    res.status(200).json({ userId: userData._id, userToken: token });
                 }
-                else{
-                    var digits = '0123456789';
-                    let OTP = '';
-                    for (let i = 0; i < 6; i++) {
-                        OTP += digits[Math.floor(Math.random() * 10)];
-                    }
-                    await userModel.updateOne(
-                        { email: email },
-                        { $set: { otp: OTP } }
-                    );
-                    res.status(403).json({valid:userData.isVerified})
+                else {
+                    const OTP = utilities.otpGenerator()
+                    userData.otp = OTP
+                    await userData.save()
+                    await utilities.sendOtpMail(userData.name,userData.email,OTP)
+                    res.status(403).json({ message: "Please valid your email" })
                     setTimeout(async () => {
                         await usermodel.updateOne(
                             { email: email },
-                            { $unset:{otp:1 }}
+                            { $unset: { otp: 1 } }
                         );
                     }, 60000);
                 }
-            } 
-            else {
-              res.status(401).json({ passError: "Email and password don't match" });
             }
-          } 
-          else
-           {
-            res.status(404).json({ emailError: "Email not found" }) 
-          }
+            else {
+                res.status(401).json({ message: "Email and password don't match" });
+            }
+        }
+        else {
+            res.status(404).json({ message: "Email not found" })
+        }
     } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
+        res.status(500).json({message:"Internal Server Error" });
     }
 }
 
 // otp matching in login and make user as verified
 
-const otpVerify = async (req,res)=>{
+const otpVerify = async (req, res) => {
     try {
-        
-       
+        const { email, otp } = req.body
+        const userData = await userModel.findOne({ email: email })
+        console.log("in database", userData.otp)
+        console.log("in req.body", otp)
+        if (userData.otp === otp) {
+            userData.isVerified = true
+            await userData.save()
+            const options = {
+                expiresIn: '1h'
+            };
+            const token = jwt.sign({ _id: userData._id }, 'mysecretkey', options);
+            console.log(userData.email);
+            res.status(200).json({ userId: userData._id, userToken: token });
+        }
+        else {
+
+            res.status(401).json({ message: "Otp mismatch" })
+        }
+    } catch (error) {
+
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+// resend otp 
+
+const resendOtp = async (req, res) => {
+    try {
+        const { email } = req.body
+        console.log(email);
+        const userData = await userModel.findOne({ email: email })
+        console.log(userData)
+        const OTP = utilities.otpGenerator()
+        console.log(OTP);
+        userData.otp = OTP
+        await userData.save()
+        await utilities.sendOtpMail(userData.name,userData.email,OTP)
+        res.status(200).json({ message: "Otp resend success" })
+        setTimeout(async () => {
+            await usermodel.updateOne(
+                { email: email },
+                { $unset: { otp: 1 } }
+            );
+        }, 60000);
 
     } catch (error) {
-        
-      res.status(500).json({ error: 'An error occurred' });
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-} 
+}
+
+const sendOtp = async (req, res) => {
+    try {
+        console.log("inside send otp")
+        const { email } = req.body
+        const userData = await userModel.findOne({ email: email })
+        if (userData) {
+            const OTP = utilities.otpGenerator()
+            console.log(OTP);
+            userData.otp = OTP
+            await userData.save()
+            await utilities.sendOtpMail(userData.name, userData.email, OTP)
+            res.status(200).json({ message: "Otp resend success" })
+            setTimeout(async () => {
+                await usermodel.updateOne(
+                    { email: email },
+                    { $unset: { otp: 1 } }
+                );
+            }, 60000);
+        }
+        else {
+            res.status(404).json({ message: 'Email Not Found' })
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
 
-module.exports={
+module.exports = {
     signup,
-    login
+    login,
+    otpVerify,
+    resendOtp,
+    sendOtp
 }
 

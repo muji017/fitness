@@ -1,0 +1,23 @@
+<mat-toolbar class="bg-white">
+    <!-- Company Icon -->
+     <img class=" h-8 w-auto" src="../assets/images/logoSEcond-removebg-preview.png" >
+  
+    <!-- Company Name -->
+    <span class="company-name">Admin</span>
+  
+    <!-- Spacer -->
+    <span class="spacer"></span>
+  
+    <!-- Profile Icon (replace 'account_circle' with your desired icon) -->
+    <mat-icon class="profile-icon" *ngIf="isloginRoute()">account_circle</mat-icon >
+  
+    <!-- Profile Menu -->
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="isloginRoute()">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #profileMenu="matMenu" >
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+  

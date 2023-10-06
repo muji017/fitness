@@ -1,0 +1,23 @@
+<div class=" bg-black text-white items-center justify-center " >
+    <button class="bg-white absolute top-2 border rounded-md right-2 text-red-600 hover:text-red-800  focus:outline-none"
+    aria-label="Close" mat-dialog-close>
+
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg>
+   </button>
+    <div class=" p-8   text-center ">
+        <form [formGroup]="otpForm" >
+        <h1 class="text-2xl font-semibold mb-4">Enter OTP</h1>
+        <input type="text" class="w-24 h-12 text-xl bg-transparent  focus:outline-none "
+        formControlName="otp" placeholder="••••••••••••">
+        <div class="mt-4">
+            <p>Time remaining: <span id="timer" class="font-semibold">{{countdown}} s</span></p>
+        </div>
+        <button class="m-4 bg-red-500 hover:bg-red-800 text-white font-semibold py-2 px-4
+         rounded focus:shadow-outline" (click)="resendOtp()">Resend OTP</button>
+        <button class="m-4 bg-red-600 hover:bg-red-800 text-white font-semibold py-2 px-4
+         rounded  focus:shadow-outline" (click)="submitOtp()">Submit</button>
+         </form>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { userToken } from 'src/app/model/userModel';
 
 @Component({
   selector: 'app-header',
@@ -8,37 +9,62 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  smallview:string="hidden"
+  smallview: string = "hidden"
   mobileMenuActive: boolean = false;
+  usertoken!:userToken
 
-  // navLinks: { path: string; label: string }[] = [
-  //   { path: '/home', label: 'Home' },
-  //   { path: '/team', label: 'Team' },
-  //   { path: '/projects', label: 'Projects' },
-  //   { path: '/calendar', label: 'Calendar' },
-  // ];
-
-  constructor(private router: Router) {}
-
-  // toggleMobileMenu(): void {
-  //   this.mobileMenuActive=!this.mobileMenuActive
-  // }
-
-  // isLinkActive(path: string): boolean {
-  //   return this.router.isActive(path, true);
-  // }
-
-
-
-  onLogout(){
-
+  constructor(private router: Router) { 
+  
   }
-tog(){
-    if(this.smallview==""){
-      this.smallview="hidden"
+
+  ngOnInit(){
+    const user:userToken|any = localStorage.getItem('userToken')
+    // console.log("dcdwscwdswdcds",usertoken)
+    if(user){
+      this.usertoken=user
+    }
+  }
+
+   // Check if the current route is '/login'
+  isLoginRoute(): boolean {
+    return this.router.url === '/login';
+  }
+
+  // Check if the current route is '/signup'
+  isSignupRoute(): boolean {
+    return this.router.url === '/signup'; 
+  }
+
+  isHomeRoute(): boolean {
+    return this.router.url === '/home'; 
+  }
+
+  isTrainerRoute(): boolean {
+    return this.router.url === '/trainers'; 
+  }
+
+  isDietRoute(): boolean {
+    return this.router.url === '/dietplans'; 
+  }
+
+  isVideoRoute(): boolean {
+    return this.router.url === '/videos'; 
+  }
+
+  isBmiRoute(): boolean {
+    return this.router.url === '/bmi'; 
+  }
+
+  onLogout() {
+    localStorage.removeItem('userToken');
+    window.location.reload();
+  }
+  tog() {
+    if (this.smallview == "") {
+      this.smallview = "hidden"
       return
     }
-    this.smallview=""
+    this.smallview = ""
 
   }
 }

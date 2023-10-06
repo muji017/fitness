@@ -24,7 +24,14 @@ const upload =multer({storage:storage});
 
 userroute.post('/login',usercontroller.login);
 
+
 userroute.post('/signup', usercontroller.signup);
+
+userroute.post('/verifyOtp',usercontroller.otpVerify);
+
+userroute.put('/resendOtp',usercontroller.resendOtp)
+
+userroute.post('/sendOtp',usercontroller.sendOtp)
 
 // userroute.post('/uploadprofpic',upload.single('image'),usercontroller.uploadprofpic)
 

@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/userServices/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
@@ -8,49 +12,64 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 })
 export class SignupComponent {
 
-   signUpForm!:FormGroup
-   ngOnInit():void{
-     this.signUpForm=new FormGroup({
-        name:new FormControl('',[Validators.required,Validators.minLength(2)]),
-        email:new FormControl('',[Validators.required,Validators.email]),
-        password:new FormControl('',[Validators.required,Validators.minLength(6)]),
-        repassword:new FormControl('',Validators.required,)
-     },{
+  signUpForm!: FormGroup
+  errorMsg: string = ""
+  pattern="[a-zA-Z][a-zA-Z ]+"
+  constructor(private service: UserService, private toastr: ToastrService
+    , private router: Router, private formBuilder: FormBuilder) {
 
-     })
-   }
+  }
 
 
-  showNameError():any  {
-     
-    const name:any= this.signUpForm.get('name');
-    if (name.touched && !name.valid) {
+  ngOnInit(): void {
+    
+    this.signUpForm = this.formBuilder.group({
+      name: this.formBuilder.control('', [Validators.required, Validators.minLength(2), Validators.pattern(this.pattern)]),
+      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+      repassword: new FormControl('', Validators.required,)
+    }, {
+
+    })
+  }
+
+
+  showNameError(): any {
+
+    const name: any = this.signUpForm.get('name');
+    if (!name.valid) {
       if (name.errors.required) {
-        return 'Name is required';
+        return "Name is required"
       }
+
 
       if (name.errors.minlength) {
         return 'Name should be of minimum 2 characters';
       }
+      if (name.errors.pattern) {
+        return 'Name should only contain alphabetic characters';
+      }
+  
     }
   }
-  showEmailError():any  {
-     
-    const email:any= this.signUpForm.get('email');
-    if (email.touched && !email.valid) {
+  showEmailError(): any {
+
+    const email: any = this.signUpForm.get('email');
+    if (!email.valid) {
       if (email.errors.required) {
         return 'Email is required';
       }
-      if (email.errors.email){
+      if (email.errors.email) {
         return 'Invalid Email'
       }
     }
   }
 
-  showPasswordError():any  {
-     
-    const password:any= this.signUpForm.get('password');
-    if (password.touched && !password.valid) {
+  showPasswordError(): any {
+
+    const password: any = this.signUpForm.get('password');
+    if (!password.valid) {
       if (password.errors.required) {
         return 'Password is required';
       }
@@ -58,22 +77,71 @@ export class SignupComponent {
       if (password.errors.minlength) {
         return 'Password should be of minimum 6 characters';
       }
+      if(password.errors.pattern){
+        return 'Your password is too common'
+      }
     }
   }
 
   showReEnterPasswordError(): any {
     const repassword = this.signUpForm.get('repassword');
-    const password:any= this.signUpForm.get('password');
-    if (repassword?.touched && !repassword?.valid) {
+    const password: any = this.signUpForm.get('password')?.value;
+    if (!repassword?.valid) {
       if (repassword?.hasError('required')) {
         return 'Password is required';
       }
     }
   }
-  
-   signUp(){
-         if(!this.signUpForm.valid){
-          return
-         }
-   }
+
+  signUp() {
+    if (!this.signUpForm.valid) {
+      if (this.showNameError()) {
+        this.toastr.warning(this.showNameError())
+        return
+      }
+      if (this.showEmailError()) {
+        this.toastr.warning(this.showEmailError())
+        return
+      }
+      if (this.showPasswordError()) {
+        this.toastr.warning(this.showPasswordError())
+        return
+      }
+      if (this.showReEnterPasswordError()) {
+        this.toastr.warning(this.showReEnterPasswordError())
+        return
+      }
+      return
+    }
+    
+    const repassword = this.signUpForm.get('repassword')?.value;
+    const name: string = this.signUpForm.get('name')?.value
+    const email: string = this.signUpForm.get('email')?.value
+    const password: string = this.signUpForm.get('password')?.value
+    if(repassword!==password){
+      this.toastr.warning("Password mismatch")
+      return
+    }
+    console.log("name is : ", name);
+
+    this.service.signup(name, email, password).subscribe(
+      (response) => {
+        // Handle successful response here
+        console.log('API Response:', response);
+        
+        this.toastr.success(`"You have successfully registered. Please proceed to log in with your email and password."`);
+        this.router.navigate(['/login']);
+
+      },
+      (error) => {
+        // Handle error here
+        console.error('API Error:', error.error);
+        this.errorMsg = error.error.error
+
+        this.toastr.error(error.error.error);
+
+      }
+    );
+
+  }
 }

@@ -71,6 +71,7 @@
     background-color: rgb(0, 0, 0);
     width: 70%;
     height: 70%;
+    /* font-size:small; */
   }
 
   .custom-input:hover {
@@ -80,6 +81,7 @@
    .custom-input:focus {
     border-bottom: 1px solid rgb(21, 255, 0) !important;
   }
+  
   
   /* Placeholder color
   ::ng-deep .custom-mat-form-field input::placeholder {

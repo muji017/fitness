@@ -11,6 +11,11 @@ import { FooterComponent } from './components/user/footer/footer.component';
 import { HomeComponent } from './components/user/home/home.component';
 import { SignupComponent } from './components/user/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { OtpDialogComponent } from './components/user/otp-dialog/otp-dialog.component';
+import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    OtpDialogComponent,
+    ResetPasswordComponent,
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -27,9 +37,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    provideToastr({
+      timeOut: 5000,
+      positionClass: 'toast-center-center',
+      preventDuplicates: true,
+      progressBar:true
+    })
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
