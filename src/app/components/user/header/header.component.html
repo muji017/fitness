@@ -58,7 +58,7 @@
             [ngClass]="{'bg-gray-900': isVideoRoute()}"
             routerLinkActive="active"
             >Videos</a>
-            <a [routerLink]="['/bmi']"  class=" hover:bg-gray-700 text-white  rounded-md px-3 py-2 text-sm font-medium" style="font-weight: bold;
+            <a [routerLink]="['/bmicalculator']"  class=" hover:bg-gray-700 text-white  rounded-md px-3 py-2 text-sm font-medium" style="font-weight: bold;
             text-transform: uppercase; text-shadow:  2px 2px 4px rgb(114, 114, 114);"
             [ngClass]="{'bg-gray-900': isBmiRoute()}"
             routerLinkActive="active"
@@ -148,15 +148,17 @@
   <div [class]="smallview" id="mobile-menu">
     <div class=" space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a [routerLink]="['/home']" class=" bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-        aria-current="page">Home</a>
-      <a
+      <a [routerLink]="['/home']" class="  text-white block rounded-md px-3 py-2 text-base font-medium"
+        aria-current="page"
+        [ngClass]="{'bg-gray-900': isHomeRoute()}"
+        >Home</a>
+      <a  [routerLink]="['/trainers']" [ngClass]="{'bg-gray-900': isTrainerRoute()}"
         class="text-gray-300 hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Trainers</a>
-      <a
+      <a [routerLink]="['/dietplans']" [ngClass]="{'bg-gray-900': isDietRoute()}"
         class="text-gray-300 hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Dietplans</a>
-      <a
+      <a [routerLink]="['/videos']" [ngClass]="{'bg-gray-900': isVideoRoute()}"
         class="text-gray-300 hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Videos</a>
-      <a
+      <a [routerLink]="['/bmicalculator']" [ngClass]="{'bg-gray-900': isBmiRoute()}"
         class="text-gray-300 hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">BMI-Calculator</a>
     </div>
   </div>

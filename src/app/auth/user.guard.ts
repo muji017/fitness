@@ -9,7 +9,7 @@ export class UserGuard implements CanActivate {
     constructor(private router: Router) {}
   
     canActivate(): boolean {
-      const isAuthenticated = localStorage.getItem('userToken') !== null;
+      const isAuthenticated = localStorage.getItem('token') !== null;
   
       if (isAuthenticated) {
         this.router.navigate(['/home']);

@@ -73,7 +73,7 @@ export class LoginComponent {
         
         this.toastr.success("Successfully loggedIn")
         const userJSON = JSON.stringify(response);
-        localStorage.setItem('userToken', userJSON);
+        localStorage.setItem('token', userJSON);
         this.router.navigate(['/home'])
 
       },

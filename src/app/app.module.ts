@@ -11,10 +11,21 @@ import { FooterComponent } from './components/user/footer/footer.component';
 import { HomeComponent } from './components/user/home/home.component';
 import { SignupComponent } from './components/user/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { OtpDialogComponent } from './components/user/otp-dialog/otp-dialog.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
+import { InterceptorService } from './services/interceptor.service';
+import { UsertrainerslistComponent } from './components/user/usertrainerslist/usertrainerslist.component';
+import { BmicalculatorComponent } from './components/user/bmicalculator/bmicalculator.component';
+import { SubscriptionComponent } from './components/user/subscription/subscription.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { UserEffects } from './store/effects';
+import { alltrainersStateName } from './store/selector';
+import { allTrainersReducer } from './store/reducer';
+import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 
 
 @NgModule({
@@ -27,8 +38,10 @@ import { ResetPasswordComponent } from './components/user/reset-password/reset-p
     SignupComponent,
     OtpDialogComponent,
     ResetPasswordComponent,
-
-
+    UsertrainerslistComponent,
+    BmicalculatorComponent,
+    SubscriptionComponent,
+    UserTrainerProfileComponent
 
   ],
   imports: [
@@ -39,15 +52,25 @@ import { ResetPasswordComponent } from './components/user/reset-password/reset-p
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    EffectsModule.forRoot([]),
+    StoreModule.forRoot({}),
+    ToastrModule.forRoot(),
+    EffectsModule.forFeature([UserEffects]),
+    StoreModule.forFeature(alltrainersStateName,allTrainersReducer)
   ],
   providers: [
+
     provideToastr({
       timeOut: 5000,
       positionClass: 'toast-center-center',
       preventDuplicates: true,
-      progressBar:true
-    })
+      progressBar: true
+    }),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

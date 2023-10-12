@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class AdminAuthService {
 
   checkLogin(): Observable<boolean> {
-    const isLoggedIn = !!localStorage.getItem('adminToken');
+    const isLoggedIn = !!localStorage.getItem('token');
 
     return new Observable<boolean>((observer) => {
       observer.next(isLoggedIn);

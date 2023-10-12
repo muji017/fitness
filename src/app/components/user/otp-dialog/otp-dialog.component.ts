@@ -51,7 +51,7 @@ export class OtpDialogComponent {
         (response)=>{
           this.dialoge.closeAll()
           const userToken=JSON.stringify(response)
-          localStorage.setItem('userToken',userToken)
+          localStorage.setItem('token',userToken)
           this.toastr.info("Got to Profile and reset your password")
               this.router.navigate(['/home'])
         },

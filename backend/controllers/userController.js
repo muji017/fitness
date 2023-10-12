@@ -6,6 +6,7 @@ const dotenv = require('dotenv').config();
 const usermodel = require('../models/userModel');
 const utilities = require('../utilities/userUtilities');
 const userModel = require('../models/userModel');
+const trainerModel = require('../models/trainerModel');
 
 
 
@@ -47,7 +48,7 @@ const login = async (req, res) => {
                     const options = {
                         expiresIn: '1h'
                     };
-                    const token = jwt.sign({ _id: userData._id }, 'mysecretkey', options);
+                    const token = jwt.sign({userId: userData._id }, process.env.JWTSECRET, options);
                     //   const tokencookie = jwt.sign(req.body,'mysecretkey')
                     res.cookie("jwt", token, {
                         httpOnly: true,
@@ -97,7 +98,7 @@ const otpVerify = async (req, res) => {
             const options = {
                 expiresIn: '1h'
             };
-            const token = jwt.sign({ _id: userData._id }, 'mysecretkey', options);
+            const token = jwt.sign({userId: userData._id }, 'mysecretkey', options);
             console.log(userData.email);
             res.status(200).json({ userId: userData._id, userToken: token });
         }
@@ -165,11 +166,31 @@ const sendOtp = async (req, res) => {
 }
 
 
+// Get trainers list 
+
+const getTrainers=async(req,res)=>{
+    try{
+    const trainers=await trainerModel.find({})
+       const trainerlist=trainers.map((t)=>({
+          id :t._id,
+          name:t.name,
+          qualification:t.qualification,
+          level:t.level,
+          image:t.image
+       }))
+     res.status(200).json({trainers:trainerlist})
+    }
+    catch(error){
+        res.status(500).json({message:error})
+    }
+}
+
 module.exports = {
     signup,
     login,
     otpVerify,
     resendOtp,
-    sendOtp
+    sendOtp,
+    getTrainers
 }
 

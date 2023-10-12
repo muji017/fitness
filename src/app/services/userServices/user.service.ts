@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { userToken } from 'src/app/model/userModel';
+import { trainerlist, userToken } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +32,9 @@ export class UserService {
   sendOtp(email: string):Observable<string>{
     const payload  = {email}
     return this.http.post<string>(`${this.apiUrl}/sendOtp`,payload)
+  }
+
+  getTrainersList():Observable<trainerlist>{
+    return this.http.get<trainerlist>(`${this.apiUrl}/trainerslist`)
   }
 }

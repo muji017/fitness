@@ -19,11 +19,14 @@ const trainer = mongoose.Schema({
     otp: {
         type: String
     },
+    level:{
+        type: String
+    },
     isVerified: {
         type: Boolean,
         default: false
     },
-    Qualification: {
+    qualification: {
         type: String,
         
     }

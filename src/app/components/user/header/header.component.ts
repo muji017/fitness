@@ -18,7 +18,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(){
-    const user:userToken|any = localStorage.getItem('userToken')
+    const user:userToken|any = localStorage.getItem('token')
     // console.log("dcdwscwdswdcds",usertoken)
     if(user){
       this.usertoken=user
@@ -52,11 +52,11 @@ export class HeaderComponent {
   }
 
   isBmiRoute(): boolean {
-    return this.router.url === '/bmi'; 
+    return this.router.url === '/bmicalculator'; 
   }
 
   onLogout() {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('token');
     window.location.reload();
   }
   tog() {
