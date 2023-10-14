@@ -36,6 +36,9 @@ const trainer = mongoose.Schema({
     
     jobPosition:{
         type:String
+    },
+    description:{
+        type:String
     }
     
 })

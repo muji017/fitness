@@ -12,24 +12,24 @@ background-size: cover; background-position: center ; height: 100vh;">
           SignUp
     
         </span>
-          <div style="text-align: center;">
+          <div class="mt-4" style="text-align: center; ">
             <div class="md:flex">
             <div   class="custom-mat-form-field">
-              <input  class="custom-input"  placeholder="Enter your name" formControlName="name">
+              <input  class="custom-input focus:ring-0" type="text" placeholder="Enter your name" formControlName="name">
               <!-- <h5 style="color: red; font-weight: bold;">{{showNameError()}}</h5> -->
             </div>
             <div   class="custom-mat-form-field">
-                <input  class="custom-input"  placeholder="Enter your email" formControlName="email">
+                <input  class="custom-input focus:ring-0" type="text"  placeholder="Enter your email" formControlName="email">
                 <!-- <h5 style="color: red; font-weight: bold;">{{showEmailError()}}</h5> -->
             </div>
             </div>
             <div class="md:flex">
             <div  class="custom-mat-form-field">
-              <input type="password" class="custom-input"  placeholder="Enter your Password" formControlName="password"> 
+              <input type="password" class="custom-input focus:ring-0 "  placeholder="Enter your Password" formControlName="password"> 
               <!-- <h5 style="color: red; font-weight: bold;">{{showPasswordError()}}</h5> -->
             </div>
             <div class="custom-mat-form-field">
-              <input type="password" class="custom-input" placeholder="Re-enter password" formControlName="repassword">
+              <input type="password" class="custom-input focus:ring-0" placeholder="Re-enter password" formControlName="repassword">
             
             </div>
             
@@ -38,7 +38,7 @@ background-size: cover; background-position: center ; height: 100vh;">
             matTooltip="SignUp to fitness"
              class="custom-button">SignUp</button>
         </div>
-        <div  class="cust p-3 " style="background-color: black !important;">
+        <div  class="cust p-3 ">
             <p class="text-xs text-white">Already have account..? <a [routerLink]="['/login']"  style="text-decoration-line: underline;">Login</a></p>
             
             

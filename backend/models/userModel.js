@@ -31,7 +31,8 @@ const user=mongoose.Schema({
     },
     paymentMethode:{
         type:String
-    }
+    },
+    
 })
 
 module.exports=mongoose.model('User',user);

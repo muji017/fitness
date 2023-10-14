@@ -178,7 +178,8 @@ const getTrainers=async(req,res)=>{
           level:t.level,
           image:t.image,
           location:t.location??"Kerala , Indian",
-          jobPosition:t.jobPosition??"Fitness Trainer"
+          jobPosition:t.jobPosition??"Fitness Trainer",
+          description:t.description
        }))
      res.status(200).json({trainers:trainerlist})
     }
