@@ -1,5 +1,5 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { Injectable } from "@angular/core";
 import { getTrainersListApi, getTrainersListApiSuccess } from "./action";
 import { UserService } from "../services/userServices/user.service";
@@ -16,7 +16,7 @@ export class UserEffects {
     getTrainersList$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(getTrainersListApi),
-            exhaustMap(() => {
+        mergeMap(() => {
                 return this.service.getTrainersList().pipe(
                     map((res) => {
 

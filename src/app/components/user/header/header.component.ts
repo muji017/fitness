@@ -54,6 +54,9 @@ export class HeaderComponent {
   isBmiRoute(): boolean {
     return this.router.url === '/bmicalculator'; 
   }
+  isChat(): boolean {
+    return this.router.url === '/chat'; 
+  }
 
   onLogout() {
     localStorage.removeItem('token');

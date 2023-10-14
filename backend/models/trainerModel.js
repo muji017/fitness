@@ -29,7 +29,15 @@ const trainer = mongoose.Schema({
     qualification: {
         type: String,
         
+    },
+    location:{
+        type:String
+    },
+    
+    jobPosition:{
+        type:String
     }
+    
 })
 
 module.exports = mongoose.model('Trainer', trainer);

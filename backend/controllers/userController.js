@@ -176,7 +176,9 @@ const getTrainers=async(req,res)=>{
           name:t.name,
           qualification:t.qualification,
           level:t.level,
-          image:t.image
+          image:t.image,
+          location:t.location??"Kerala , Indian",
+          jobPosition:t.jobPosition??"Fitness Trainer"
        }))
      res.status(200).json({trainers:trainerlist})
     }

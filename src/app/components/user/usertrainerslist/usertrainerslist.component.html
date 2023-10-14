@@ -20,7 +20,7 @@
                 <img src="../assets/images/gymworkout.jpg" alt="Background Image" class="w-full md:h-auto lg:h-60">
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{trainer.name}}</h2>
                 <p class="text-gray-300">Level  :   {{trainer.level}}</p>
-                <button mat-raised-button   >View profile</button>
+                <button mat-raised-button  (click)="getTrainerProfile(trainer.id)"  >View profile</button>
             </div>
         </div>
     </div>

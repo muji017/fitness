@@ -22,7 +22,8 @@ const routes:Routes=[{
   {path: 'signup',component:SignupComponent,canActivate: [UserGuard]},
   { path:"home",component:HomeComponent,},
   {path:"bmicalculator",component:BmicalculatorComponent},
-  {path:"trainers",component:UsertrainerslistComponent}
+  {path:"trainers",component:UsertrainerslistComponent},
+  {path:"trainersprofile/:trainerId",component:UserTrainerProfileComponent}
 
   ]
 }]

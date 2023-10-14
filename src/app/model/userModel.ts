@@ -18,7 +18,9 @@ export interface trainer{
     name:string,
     qualification:string,
     level:string,
-    image:string
+    image:string,
+    location:String,
+    jobPosition:String
 }
 
 export interface trainerlist extends trainer{
