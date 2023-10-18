@@ -6,6 +6,9 @@ import { UserService } from 'src/app/services/userServices/user.service';
 import { OtpDialogComponent } from '../otp-dialog/otp-dialog.component';
 import { Router } from '@angular/router';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { Store } from '@ngrx/store';
+import { loginStart } from 'src/app/store/action';
+import { getLoginSuccess } from 'src/app/store/selector';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +20,7 @@ export class LoginComponent {
   errorMsg: string = ""
 
   constructor(private service: UserService, private dialoge: MatDialog,
+       private store:Store<any>,
     private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router
   ) { }
 
@@ -66,7 +70,8 @@ export class LoginComponent {
     }
     const email = this.loginForm.get('email')?.value
     const password = this.loginForm.get('password')?.value
-    this.service.login(email, password).subscribe(
+
+    this.service.login(email,password).subscribe(
       (response) => {
         console.log("api respons", response);
 

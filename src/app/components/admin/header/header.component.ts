@@ -12,7 +12,7 @@ export class HeaderComponent {
   constructor(private router:Router){}
 
   onLogout(){
-    localStorage.removeItem('adminToken')
+    localStorage.removeItem('token')
     this.router.navigate(['/admin/login'])
   }
 

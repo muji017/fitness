@@ -92,7 +92,7 @@ showReEnterPasswordError(): any {
           adminId:response.adminId
         }
         const adminJSON = JSON.stringify(admin);
-        localStorage.setItem('adminToken', adminJSON);
+        localStorage.setItem('token', adminJSON);
         this.toastr.success("Password updated succesfully")
         this.router.navigate(['/admin/home'])
 

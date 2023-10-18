@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 
 @Component({
   selector: 'app-login',
@@ -88,6 +89,9 @@ export class LoginComponent {
 
 
   resetPassword(){
-
+    this.dialoge.open(ForgetPasswordComponent, {
+      enterAnimationDuration: 1000,
+      exitAnimationDuration: 1000,
+    });
   }
 }

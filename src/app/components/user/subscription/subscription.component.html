@@ -1,1 +1,85 @@
-<p>subscription works!</p>
+
+<app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
+<section class="py-20 relative  " style="background-color: rgb(255, 255, 255);" >
+    <div class="container">
+        <div class="mx-auto max-w-2xl sm:text-center">
+            <span class="font-medium text-gray-400 tracking-widest">your fitness journey</span>
+            <h2 class="md:text-5xl text-3xl font-medium tracking-tight mt-7">Fitness Plans</h2>
+            <div class="w-10 mx-auto mt-5 bg-gradient-to-r from-cyan-500 to-blue-500 h-[2px]"></div>
+            <p class="mt-6 text-xl/8 text-gray-600 dark:text-gray-400">Choose the plan that best aligns with your fitness goals and embark on a journey to a healthier you.</p>
+          </div>
+          
+
+        <div *ngIf="plans" class=" grid lg:grid-cols-3 grid-cols-1 gap-10 2xl:px-28 mt-20">
+
+            <div *ngFor="let plan of plans" class="card flex flex-col border border-gray-300 rounded-xl overflow-hidden dark:border-gray-700"
+            >
+                <div class="text-center pt-10">
+                    <h2 class="text-xl font-semibold">{{plan.title}}</h2>
+                    <h2 class="text-5xl mt-8 mb-1 items-center align-middle">
+                        ₹ {{plan.amount}}
+                    </h2>
+                    <span>per month</span>
+                </div>
+
+                <div class="p-10 h-full">
+                    <ul class="h-full text-center">
+                        <li class="my-4">
+                            <h5 class="font-medium dark:text-gray-300">For {{plan.duration}} months</h5>
+                        </li>
+                        <li class="my-4">
+                            <h5 class="font-medium dark:text-gray-300">{{plan.description}}</h5>
+                        </li>
+                    </ul>
+                    
+                </div>
+                <div class="mb-3 flex justify-center">
+                    <a (click)="planSelected(plan._id)"  class="py-3 px-6 font-medium border rounded-lg border-purple-900 text-purple-500 
+                    hover:bg-purple-500 hover:text-white transition-all duration-500" >
+                    <i class="fas fa-crown mr-2"></i>Get {{plan.title}}</a>
+                </div>
+               
+            </div>
+        </div>
+        <h5 class="text-center font-medium mt-22">Choose a plan make your body healthy</h5>
+    </div>
+    <div *ngIf="selectedPlanId" class="payDiv max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
+        <form>
+          <div class="mb-4">
+            <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount ( ₹ )</label>
+            <div class="mb-4 flex">
+                <span class="text-gray-700 text-4xl font-bold px-2">₹</span> <!-- Currency symbol -->
+                <input
+                  type="text"
+                  id="amount"
+                  name="amount"
+                  placeholder="Choose a plan"
+                  class="w-full px-3 py-2 border rounded-lg"
+                  [(ngModel)]="selectedAmount"
+                />
+              </div>
+          </div>
+      
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Payment Method</label>
+            <div>
+              <label class="inline-flex items-center">
+                <input type="radio" class="form-radio text-purple-600" name="paymentMethod" value="razorpay" checked />
+                <span class="ml-2">Razorpay</span>
+              </label>
+            </div>
+          </div>
+      
+          <div class="text-center">
+            <button
+              type="submit" (click)=" payNow()" 
+              class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
+            >
+              Pay Now
+            </button>
+          </div>
+        </form>
+      </div>
+      
+</section>
+<app-footer></app-footer>

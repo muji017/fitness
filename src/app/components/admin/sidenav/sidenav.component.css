@@ -16,7 +16,7 @@
   }
   
   .active-link {
-    background-color: #007bff; /* Change this to your desired background color */
-    color: white; /* Change this to your desired text color */
-    font-weight: bold; /* Optionally, make the text bold */
+    background-color: #007bff; 
+    color: white;
+    font-weight: bold; 
   }

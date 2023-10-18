@@ -54,7 +54,7 @@ export class LoginComponent {
           adminId: response.adminId,
         };
         const adminJSON = JSON.stringify(admin);
-        localStorage.setItem('adminToken', adminJSON);
+        localStorage.setItem('token', adminJSON)
         this.router.navigate(['/admin/home']);
       },
       (error) => {

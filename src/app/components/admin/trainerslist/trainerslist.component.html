@@ -1,13 +1,15 @@
-<app-header></app-header>
+<app-header class="w-auto"></app-header>
 <div>
-<div class="flex">
-<app-sidenav></app-sidenav>
-<div class="flex-col m-3">
+<div class=" flex">
+  <div style="width: 350px !important; ">
+<app-sidenav  style="width: 100% !important;" ></app-sidenav>
+</div>
+<div class="w-full  flex-col m-3">
 <div >
 <h1>Trainers List</h1>
 </div>
-<div style="border: 1px solid blue;">
-<table mat-table [dataSource]="dataSource" class="mat-elevation">
+<div style="border-radius: 10px;">
+<table  mat-table [dataSource]="dataSource" class="mat-elevation ">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -29,6 +31,11 @@
     <ng-container matColumnDef="qualification">
         <th mat-header-cell *matHeaderCellDef>Qualification</th>
         <td mat-cell *matCellDef="let element">{{ element.qualification }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
       </ng-container>
   
       

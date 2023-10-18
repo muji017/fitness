@@ -1,6 +1,6 @@
-import { UserModel, trainer } from "../model/userModel"
+import { UserModel, trainer, userToken } from "../model/userModel"
 
-export const initialState: UserModel = {
+export const userState: UserModel = {
     name: '',
     email: '',
     password: "",
@@ -10,4 +10,10 @@ export const initialState: UserModel = {
 }
 
 export const alltrainersState: trainer[] = []
- 
+
+export const authState: userToken = {
+
+    userToken: "",
+    userId:"",
+    error:"",
+}

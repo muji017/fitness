@@ -1,20 +1,40 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { inject } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import {Observable, map} from "rxjs"
+import { AdminAuthService } from "./adminAuth.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+export const UserhomeAuthGuard: CanActivateFn = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot):
+    Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    const authService = inject(AdminAuthService);
+    const router = inject(Router);
+    return authService.checkLogin().pipe(
+      map((isLoggedIn) => {
+        if (isLoggedIn) {
+          return true;
+        } else {
+          router.navigate(['/login']);
+          return false;
+        }
+      })
+    );
+  };
 
-export class UserGuard implements CanActivate {
-    constructor(private router: Router) {}
-  
-    canActivate(): boolean {
-      const isAuthenticated = localStorage.getItem('token') !== null;
-  
-      if (isAuthenticated) {
-        this.router.navigate(['/home']);
-        return false; 
-      }
-      return true; 
-    }
-  }
+  export const UserLoginAuthGuard: CanActivateFn = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot):
+    Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    const authService = inject(AdminAuthService);
+    const router = inject(Router);
+    return authService.checkLogin().pipe(
+      map((isLoggedIn) => {
+        if (!isLoggedIn) {
+          return true;
+        } else {
+          router.navigate(['/home']);
+          return false;
+        }
+      })
+    );
+  };

@@ -95,10 +95,8 @@ const otpVerify = async (req, res) => {
         if (userData.otp === otp) {
             userData.isVerified = true
             await userData.save()
-            const options = {
-                expiresIn: '1h'
-            };
-            const token = jwt.sign({userId: userData._id }, 'mysecretkey', options);
+            const payload={userId: userData._id }
+            const token = jwt.sign(payload, 'mysecretkey');
             console.log(userData.email);
             res.status(200).json({ userId: userData._id, userToken: token });
         }
@@ -188,12 +186,35 @@ const getTrainers=async(req,res)=>{
     }
 }
 
+// get user profile 
+
+const getProfile=async(req,res)=>{
+    try{
+        const userId = req.userId; // Convert the object to a JSON string
+console.log("UserId as a JSON string:",typeof userId);
+    const userData=await userModel.findOne({_id:userId})
+    console.log(userData)
+    //    const user=userData.map((u)=>({
+    //       id :u._id,
+    //       name:u.name,
+    //       email:u.email,
+    //       subscriptionDate:u?.subscriptionDate,
+    //       expiryDate:u?.expiryDate
+    //    }))
+     res.status(200).json({user:userData})
+    }
+    catch(error){
+        res.status(500).json({message:error})
+    }
+}
+
 module.exports = {
     signup,
     login,
     otpVerify,
     resendOtp,
     sendOtp,
-    getTrainers
+    getTrainers,
+    getProfile
 }
 

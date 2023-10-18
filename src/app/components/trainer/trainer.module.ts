@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 const routes:Routes=[
   {
@@ -32,7 +33,8 @@ const routes:Routes=[
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     

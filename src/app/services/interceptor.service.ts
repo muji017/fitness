@@ -7,21 +7,33 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserService } from './userServices/user.service';
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
 
-  constructor() {}
-  private token=localStorage.getItem('token')
+  constructor(
+    private userservice:UserService
+  ) {}
+  
+ 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<any>> { 
+    const user:any= localStorage.getItem('token')
+    if(user){
+    const userparse=JSON.parse(user)
+    console.log("get user token",userparse.userToken)
+    const token=userparse?.userToken
     const modifiedReq = req.clone({
       
-      headers: req.headers.set('Authorization',`Bearer ${this.token}` ),
+      headers: req.headers.set('Authorization',`Bearer ${token}` ),
     });
 
     return next.handle(modifiedReq);
   }
+  return next.handle(req)
+}
+  
 }

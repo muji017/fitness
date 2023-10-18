@@ -1,16 +1,19 @@
 export interface UserModel{
-    userToken: string,
+    userToken?: string,
     _id:any,
     userId?:any,
     name:string,
     email:string,
-    password:string,
-    image:string
+    subscriptionDate?:Date,
+    expiryDate?:Date,
+    password?:string,
+    image?:string
 }
 
 export interface userToken{
     userToken:string,
-    userId:any
+    userId:any,
+    error:any
 }
 
 export interface trainer{
@@ -26,4 +29,16 @@ export interface trainer{
 
 export interface trainerlist extends trainer{
     trainers:trainer[]
+}
+
+export interface AuthModel {
+    error:string
+}
+
+export interface PlansModel{
+_id:any,
+title:String,
+duration:Number,
+amount:Number,
+description:String,
 }

@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { trainerlist, userToken } from 'src/app/model/userModel';
+import { PlansModel, UserModel, trainerlist, userToken } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  
    private apiUrl:string = 'http://localhost:3000';
   constructor( private http:HttpClient) { }
 
@@ -17,6 +18,7 @@ export class UserService {
     return this.http.post<userToken>(`${this.apiUrl}/signup`,payload); 
   } 
   login(email: string, password: string):Observable<userToken> {
+    console.log("in loginservice")
     const payload = {email, password };
     return this.http.post<userToken>(`${this.apiUrl}/login`,payload); 
   } 
@@ -37,4 +39,26 @@ export class UserService {
   getTrainersList():Observable<trainerlist>{
     return this.http.get<trainerlist>(`${this.apiUrl}/trainerslist`)
   }
+  getProfile():Observable<UserModel>{
+    console.log("get profile sevice");
+    
+    return this.http.get<UserModel>(`${this.apiUrl}/getProfile`)
+  }
+
+  getPlans():Observable<PlansModel>{
+    return this.http.get<PlansModel>(`${this.apiUrl}/getPlans`)
+  }
+
+  createSubscription(planId:string):Observable<any>{
+    const payload  = {planId}
+    return this.http.post<any>(`${this.apiUrl}/createSubscription`,payload)
+  }
+
+  paymentss(planId:any,paymentMethod:any):Observable<any>{
+    console.log("inside payment process");
+    
+    const payload ={planId,paymentMethod}
+    return this.http.post<any>(`${this.apiUrl}/processPayment`,payload)
+  }
+
 }

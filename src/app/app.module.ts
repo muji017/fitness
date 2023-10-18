@@ -23,9 +23,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { UserEffects } from './store/effects';
-import { alltrainersStateName } from './store/selector';
-import { allTrainersReducer } from './store/reducer';
+import { alltrainersStateName, authStateName } from './store/selector';
+import { AuthReducer, allTrainersReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 
 @NgModule({
@@ -41,7 +42,9 @@ import { UserTrainerProfileComponent } from './components/user/user-trainer-prof
     UsertrainerslistComponent,
     BmicalculatorComponent,
     SubscriptionComponent,
-    UserTrainerProfileComponent
+    UserTrainerProfileComponent,
+    
+    ProfileComponent
 
   ],
   imports: [
@@ -56,6 +59,7 @@ import { UserTrainerProfileComponent } from './components/user/user-trainer-prof
     StoreModule.forRoot({}),
     ToastrModule.forRoot(),
     EffectsModule.forFeature([UserEffects]),
+    StoreModule.forFeature(authStateName,AuthReducer),
     StoreModule.forFeature(alltrainersStateName,allTrainersReducer)
   ],
   providers: [

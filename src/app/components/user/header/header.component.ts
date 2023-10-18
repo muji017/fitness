@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { userToken } from 'src/app/model/userModel';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +14,16 @@ export class HeaderComponent {
   mobileMenuActive: boolean = false;
   usertoken!:userToken
 
-  constructor(private router: Router) { 
+  constructor(private router: Router,
+      private userService:UserService
+    ) { 
   
   }
 
   ngOnInit(){
     const user:userToken|any = localStorage.getItem('token')
-    // console.log("dcdwscwdswdcds",usertoken)
+    const userparse=JSON.parse(user)
+    console.log("dcdwscwdswdcds",userparse?.userToken)
     if(user){
       this.usertoken=user
     }
@@ -69,5 +73,15 @@ export class HeaderComponent {
     }
     this.smallview = ""
 
+  }
+  getProfile(){
+   this.userService.getProfile().subscribe(
+    (res)=>{
+      this.router.navigate(['/profile'])
+  },
+  (error)=>{
+    console.log(error)
+  }
+   )
   }
 }

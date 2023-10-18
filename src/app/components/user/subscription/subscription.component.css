@@ -1,0 +1,11 @@
+.card,.payDiv {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.623);
+    transition: box-shadow 0.3s; /* Add a transition for a smooth hover effect */
+  }
+  
+  .card:hover {
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    background-color: rgb(245, 245, 245) !important;
+
+  }
+  

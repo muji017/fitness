@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class HeaderComponent {
 
+
+  constructor(
+    private router:Router
+  ){}
+
+  isloginRoute(){
+    return this.router.url!==('/trainer/login')
+  }
+  onLogout(){
+
+  }
 }

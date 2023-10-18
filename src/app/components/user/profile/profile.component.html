@@ -1,0 +1,60 @@
+
+<app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
+
+<div class="mt-0 min-h-screen flex items-center justify-center bg-center bg-cover bg-gray-100  "style="
+background-image: url(../assets/images/background1.jpg);
+">
+    <div *ngIf="user" class="max-w-3xl md:mt-0 mx-auto p-6 bg-white shadow-md rounded-lg grid gap-6 grid-cols-1 lg:grid-cols-2">
+      <!-- Profile Section -->
+      <div  class="text-center">
+        <img src="../assets/images/atheletic.jpg" alt="Profile Image" class="w-32 h-32 mx-auto rounded-full">
+        <button class="mt-2 text-blue-500 hover:underline">Change Image</button>
+        <h1 class="text-2xl font-semibold mt-2">{{user.name}}</h1>
+        <p class="text-gray-600">{{user.email}}</p>
+        <p class="text-gray-600">Subscription Date: 2023-01-15</p>
+        <p class="text-gray-600">Expiry Date: 2024-01-15</p>
+        <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded-full" (click)="subscribe()">
+          <i class="fas fa-crown mr-2"></i>Add Subscription
+        </button>
+      </div>
+  
+      <!-- Edit Profile Section -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Edit Profile</h2>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+          <input
+            class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+            type="text" placeholder="{{user.name}}"
+          >
+          <button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
+            Change Name
+          </button>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="newPassword">New Password</label>
+          <input
+            class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+            type="password"
+            placeholder="********"
+          >
+        </div>
+        
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="reenterPassword">Re-enter Password</label>
+          <input
+            class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+            type="password"
+            placeholder="********"
+          >
+        </div>
+        
+        <button class="w-full px-4 py-2 bg-blue-500 text-white rounded-full">
+          Change Password
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <app-footer></app-footer>
