@@ -10,7 +10,7 @@ body{
     align-items: center;
     justify-content: center;
   
-    background-color: rgba(0, 0, 0, 0.034) !important;
+    /* background-color: rgba(0, 0, 0, 0.034) !important; */
     height: 100%;
   }
   .login {
@@ -36,5 +36,9 @@ body{
   .button:hover {
     background: linear-gradient(to bottom, #4400ff, #00aeff) !important;
     /* Adjust the colors and direction as needed */
+  }
+  .no-focus-ring:focus {
+    outline: none;
+    box-shadow: none;
   }
   

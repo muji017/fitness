@@ -14,6 +14,7 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 import { UserTrainerProfileComponent } from './user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserLoginAuthGuard, UserhomeAuthGuard } from 'src/app/auth/user.guard';
+import { SetUserPasswordComponent } from './set-user-password/set-user-password.component';
 
 const routes:Routes=[{
   path:'',
@@ -36,6 +37,8 @@ const routes:Routes=[{
     // OtpDialogComponent
 
   
+  
+    SetUserPasswordComponent
   ],
   imports: [
     CommonModule,

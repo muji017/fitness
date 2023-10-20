@@ -1,17 +1,16 @@
-import { Dialog } from '@angular/cdk/dialog';
-import { Component , Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component ,Inject} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
-  selector: 'app-set-password',
-  templateUrl: './set-password.component.html',
-  styleUrls: ['./set-password.component.css']
+  selector: 'app-set-user-password',
+  templateUrl: './set-user-password.component.html',
+  styleUrls: ['./set-user-password.component.css']
 })
-export class SetPasswordComponent {
+export class SetUserPasswordComponent {
 
   setPasswordForm!:FormGroup
   email!:string
@@ -19,7 +18,7 @@ export class SetPasswordComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder:FormBuilder,
     private toastr:ToastrService,
-    private service:AdminService,
+    private service:UserService,
     private router:Router,
     private dialoge:MatDialog
 
@@ -87,14 +86,11 @@ showReEnterPasswordError(): any {
       (response) => {
         // Handle successful response here
         this.dialoge.closeAll()
-        const admin={
-          adminToken:response.adminToken,
-          adminId:response.adminId
-        }
-        const adminJSON = JSON.stringify(admin);
-        localStorage.setItem('admintoken', adminJSON);
-        this.toastr.success("Password updated succesfully")
-        this.router.navigate(['/admin/home'])
+
+        this.toastr.success("Password updated successfully")
+        const userJSON = JSON.stringify(response);
+        localStorage.setItem('usertoken', userJSON);
+        this.router.navigate(['/home'])
 
       },
       (error) => {

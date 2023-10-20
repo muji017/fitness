@@ -1,17 +1,19 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import {Observable, map} from "rxjs"
-import { AdminAuthService } from "./adminAuth.service";
+import { UserAuthService } from "./userAuth.service";
 
 export const UserhomeAuthGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-    const authService = inject(AdminAuthService);
+    const authService = inject(UserAuthService);
     const router = inject(Router);
     return authService.checkLogin().pipe(
       map((isLoggedIn) => {
         if (isLoggedIn) {
+          console.log("inside auth function");
+          
           return true;
         } else {
           router.navigate(['/login']);
@@ -25,7 +27,7 @@ export const UserhomeAuthGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-    const authService = inject(AdminAuthService);
+    const authService = inject(UserAuthService);
     const router = inject(Router);
     return authService.checkLogin().pipe(
       map((isLoggedIn) => {

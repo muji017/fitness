@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { getTrainersListApi } from 'src/app/store/action';
 import { getAllTrainers } from 'src/app/store/selector';
 
 @Component({
@@ -13,31 +14,24 @@ import { getAllTrainers } from 'src/app/store/selector';
 export class TrainerslistComponent {
 
   trainers!:trainer[]
+  searchQuery!:string
+
+  dataSource!:trainer[]
+
+  displayedColumns: string[] = ['image', 'name', 'email', 'qualification','jobPosition', 'specification','discription',
+'location',];
+
   constructor(
     private adminService: AdminService,
     private store:Store<trainer[]>
   ) { }
 
   ngOnInit(){
+    this.store.dispatch(getTrainersListApi())
     this.store.select(getAllTrainers).subscribe((res)=>{
-      this.trainers=res
-      console.log(this.trainers)
+      console.log(res)
+      this.dataSource=res
     })
   }
-
-
-
-
-
-
-
-
-  dataSource = [
-
-    { No: '1', name: 'Mujeeb', email: 'muji@gmaiil.com', qualification: 'BSc ', Level: '3' },
-    { No: '2', name: 'Vishnu', email: 'vishnu@gmail.com', qualification: 'BSc ', Level: '3' },
-  ]
-
-  displayedColumns: string[] = ['id', 'name', 'email', 'qualification', 'level'];
 
 }

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { EnterOtpComponent } from '../enter-otp/enter-otp.component';
+import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -13,7 +14,7 @@ export class ForgetPasswordComponent {
   sendOtpForm!: FormGroup
   constructor(private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private service:AdminService,
+    private service:TrainerService,
     private dialoge:MatDialog
   ) {
 
@@ -36,27 +37,27 @@ export class ForgetPasswordComponent {
     const data={
       email:email
     }
-    // this.service.sendOtp(email).subscribe(
-    //   (response)=>{
-    //     this.dialoge.closeAll()
-    //     this.dialoge.open(AdminOtpComponent, {
+    this.service.sendOtp(email).subscribe(
+      (response)=>{
+        this.dialoge.closeAll()
+        this.dialoge.open(EnterOtpComponent, {
 
-    //       enterAnimationDuration: 1200,
-    //       exitAnimationDuration: 1200,
-    //       data: data
-    //     })
+          enterAnimationDuration: 1200,
+          exitAnimationDuration: 1200,
+          data: data
+        })
 
-    //   }
-    //   ,
-    //   (error)=>{
-    //     if(error.status==404){
-    //       this.toastr.error(error.error.message)
+      }
+      ,
+      (error)=>{
+        if(error.status==404){
+          this.toastr.error(error.error.message)
 
-    //     }
-    //     else{
-    //       this.toastr.error(error.error.message)
-    //     }
-    //   }
-    // )
+        }
+        else{
+          this.toastr.error(error.error.message)
+        }
+      }
+    )
       }  }
 }

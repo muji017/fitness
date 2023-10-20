@@ -37,3 +37,7 @@ body{
       background: linear-gradient(to bottom, #4400ff, #00aeff) !important;
       /* Adjust the colors and direction as needed */
     }
+    .no-focus-ring:focus {
+      outline: none;
+      box-shadow: none;
+    }

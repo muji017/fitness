@@ -17,5 +17,23 @@ export class TrainerService {
     const payload = {email, password };
     return this.http.post<any>(`${this.apiUrl}/trainer/login`,payload); 
   } 
+  sendOtp(email: string):Observable<any>{
+    const payload  = {email}
+    return this.http.post<any>(`${this.apiUrl}/trainer/sendOtp`,payload)
+  }
+  verifyOtp(email: string,otp:string):Observable<any>{
+    const payload = {email,otp}
+    return this.http.post<any>(`${this.apiUrl}/trainer/verifyOtp`,payload)
+  }
+  resendOtp(email: string):Observable<any>{
+   console.log(email)
+    const payload  = {email}
+    return this.http.put<any>(`${this.apiUrl}/trainer/resendOtp`,payload)
+  }
+  setPassword(email: string,password:string):Observable<any>{
+    console.log(email)
+     const payload  = {email,password}
+     return this.http.put<any>(`${this.apiUrl}/trainer/setPassword`,payload)
+   }
 }
 

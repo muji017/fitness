@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {
-
+  
+  smallview: string = "hidden"
   constructor(private router:Router){}
 
   onLogout(){
-    localStorage.removeItem('token')
+    localStorage.removeItem('admintoken')
     this.router.navigate(['/admin/login'])
   }
 
@@ -20,5 +21,12 @@ export class HeaderComponent {
     return this.router.url!=='/admin/login'
   }
 
-  
+  tog() {
+    if (this.smallview == "") {
+      this.smallview = "hidden"
+      return
+    }
+    this.smallview = ""
+
+  }
 }

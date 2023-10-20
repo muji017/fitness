@@ -26,4 +26,13 @@ const upload =multer({storage:storage});
 trainerroute.post('/login',trainercontroller.login)
 
 
+trainerroute.post('/verifyOtp',trainercontroller.otpVerify);
+
+trainerroute.put('/resendOtp',trainercontroller.resendOtp)
+
+trainerroute.post('/sendOtp',trainercontroller.sendOtp)
+
+trainerroute.put('/setPassword',trainercontroller.setPassword)
+
+
 module.exports=trainerroute

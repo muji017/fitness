@@ -1,0 +1,11 @@
+.navbigscreen .navlist a{
+    font-size: 12px !important;
+}
+
+  @media(max-width: 768px)  {
+    .navbigscreen .navlist a{
+        font-size: 10px !important;
+    }
+    
+  }
+  

@@ -19,22 +19,21 @@ const trainer = mongoose.Schema({
     otp: {
         type: String
     },
-    level:{
+    specification:{
+        type: String
+    },
+    jobPosition:{
         type: String
     },
     isVerified: {
         type: Boolean,
-        default: false
+        default: true
     },
     qualification: {
         type: String,
         
     },
     location:{
-        type:String
-    },
-    
-    jobPosition:{
         type:String
     },
     description:{

@@ -8,4 +8,7 @@
     background-color: rgb(245, 245, 245) !important;
 
   }
+  .max-w-800{
+    max-width: 800px !important;
+  }
   

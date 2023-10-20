@@ -1,25 +1,23 @@
-import { Dialog } from '@angular/cdk/dialog';
-import { Component , Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component,Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
 
 @Component({
-  selector: 'app-set-password',
-  templateUrl: './set-password.component.html',
-  styleUrls: ['./set-password.component.css']
+  selector: 'app-enter-new-password',
+  templateUrl: './enter-new-password.component.html',
+  styleUrls: ['./enter-new-password.component.css']
 })
-export class SetPasswordComponent {
-
+export class EnterNewPasswordComponent {
   setPasswordForm!:FormGroup
   email!:string
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder:FormBuilder,
     private toastr:ToastrService,
-    private service:AdminService,
+    private service:TrainerService,
     private router:Router,
     private dialoge:MatDialog
 
@@ -87,14 +85,14 @@ showReEnterPasswordError(): any {
       (response) => {
         // Handle successful response here
         this.dialoge.closeAll()
-        const admin={
-          adminToken:response.adminToken,
-          adminId:response.adminId
+        const trainer={
+          trainerToken:response.trainerToken,
+          trainerId:response.trainerId
         }
-        const adminJSON = JSON.stringify(admin);
-        localStorage.setItem('admintoken', adminJSON);
+        const trainerJSON = JSON.stringify(trainer);
+        localStorage.setItem('trainertoken', trainerJSON);
         this.toastr.success("Password updated succesfully")
-        this.router.navigate(['/admin/home'])
+        this.router.navigate(['/trainer/home'])
 
       },
       (error) => {

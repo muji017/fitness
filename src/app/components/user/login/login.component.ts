@@ -20,13 +20,13 @@ export class LoginComponent {
   errorMsg: string = ""
 
   constructor(private service: UserService, private dialoge: MatDialog,
-       private store:Store<any>,
+    private store: Store<any>,
     private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router
   ) { }
 
 
   ngOnInit(): void {
-    
+
 
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
@@ -54,7 +54,7 @@ export class LoginComponent {
     }
   }
 
-//  login 
+  //  login 
   login() {
     if (!this.loginForm.valid) {
 
@@ -71,24 +71,21 @@ export class LoginComponent {
     const email = this.loginForm.get('email')?.value
     const password = this.loginForm.get('password')?.value
 
-    this.service.login(email,password).subscribe(
+    this.service.login(email, password).subscribe(
       (response) => {
-        console.log("api respons", response);
-
-        
         this.toastr.success("Successfully loggedIn")
         const userJSON = JSON.stringify(response);
-        localStorage.setItem('token', userJSON);
+        localStorage.setItem('usertoken', userJSON);
         this.router.navigate(['/home'])
 
       },
       (error) => {
         const data = {
-          email: email
+          email: email,
+          resetPass:false
         }
         if (error.status == 403) {
           this.dialoge.open(OtpDialogComponent, {
-
             enterAnimationDuration: 1200,
             exitAnimationDuration: 1200,
             data: data

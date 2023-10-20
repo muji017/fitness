@@ -61,4 +61,10 @@ export class UserService {
     return this.http.post<any>(`${this.apiUrl}/processPayment`,payload)
   }
 
+  setPassword(email: string,password:string):Observable<any>{
+    console.log(email)
+     const payload  = {email,password}
+     return this.http.put<any>(`${this.apiUrl}/setPassword`,payload)
+   }
+
 }

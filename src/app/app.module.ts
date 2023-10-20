@@ -27,6 +27,7 @@ import { alltrainersStateName, authStateName } from './store/selector';
 import { AuthReducer, allTrainersReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     BmicalculatorComponent,
     SubscriptionComponent,
     UserTrainerProfileComponent,
-    
+    ErrorPageComponent,
     ProfileComponent
 
   ],

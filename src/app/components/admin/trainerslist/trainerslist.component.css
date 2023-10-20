@@ -2,3 +2,23 @@ body{
     background-color: rgba(0, 0, 0, 0.034) !important;
     height: 100%;
 }
+.no-focus-ring:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    /* Adjust the column width for smaller screens */
+    th.mat-header-cell,
+    td.mat-cell {
+      font-size: 12px; /* Reduce font size */
+      padding: 4px; /* Reduce padding */
+    }
+  }
+  .scrollable-div {
+    overflow: auto;
+  }
+  .scrollable-content {
+    max-height: 100px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+  }
+ 

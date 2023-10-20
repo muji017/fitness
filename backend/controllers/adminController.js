@@ -13,18 +13,9 @@ const login = async (req, res) => {
         const adminData = await adminModel.findOne({ email: email })
         console.log(adminData)
         if (adminData) {
-            // const passmatch = await bcrypt.compare(password, adminData.password);
-            if (password == adminData.password) {
-
-                const options = {
-                    expiresIn: '1h'
-                };
-                const token = jwt.sign({ _id: adminData._id }, 'mysecretkey', options);
-                //   const tokencookie = jwt.sign(req.body,'mysecretkey')
-                // res.cookie("jwt", token, {
-                //     httpOnly: true,
-                //     maxAge: 24 * 60 * 60 * 1000
-                // })
+            const passmatch = await bcrypt.compare(password, adminData.password);
+            if (passmatch) {
+                const token=utilities.tokenGenerator(adminData._id)
 
                 console.log(adminData.email);
                 res.status(200).json({ adminId: adminData._id, adminToken: token });
@@ -104,6 +95,7 @@ const resendOtp = async (req, res) => {
 const otpVerify = async (req, res) => {
     try {
         const { email, otp } = req.body
+        console.log("mail in verify otp admin",email)
         const adminData = await adminModel.findOne({ email: email })
         console.log("in database", adminData.otp)
         console.log("in req.body", otp)
@@ -126,15 +118,14 @@ const otpVerify = async (req, res) => {
 const setPassword = async (req, res) => {
     try {
         const { email, password } = req.body
-
+console.log(email,password);
         const adminData = await adminModel.findOne({ email: email })
-        adminData.password = password
+        const securePassword=await utilities.securePassword(password)
+        console.log(securePassword);
+        adminData.password=securePassword
         await adminData.save()
 
-        const options = {
-            expiresIn: '1h'
-        };
-        const token = jwt.sign({ _id: adminData._id }, 'mysecretkey', options);
+        const token=utilities.tokenGenerator(adminData._id)
         console.log(adminData.email);
         res.status(200).json({ adminId: adminData._id, adminToken: token });
 

@@ -14,7 +14,7 @@ export class SignupComponent {
 
   signUpForm!: FormGroup
   errorMsg: string = ""
-  pattern="[a-zA-Z][a-zA-Z ]+"
+  pattern = "[a-zA-Z][a-zA-Z ]+"
   constructor(private service: UserService, private toastr: ToastrService
     , private router: Router, private formBuilder: FormBuilder) {
 
@@ -22,12 +22,12 @@ export class SignupComponent {
 
 
   ngOnInit(): void {
-    
+
     this.signUpForm = this.formBuilder.group({
       name: this.formBuilder.control('', [Validators.required, Validators.minLength(2), Validators.pattern(this.pattern)]),
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
       password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
       repassword: new FormControl('', Validators.required,)
     }, {
 
@@ -50,7 +50,7 @@ export class SignupComponent {
       if (name.errors.pattern) {
         return 'Name should only contain alphabetic characters';
       }
-  
+
     }
   }
   showEmailError(): any {
@@ -77,7 +77,7 @@ export class SignupComponent {
       if (password.errors.minlength) {
         return 'Password should be of minimum 6 characters';
       }
-      if(password.errors.pattern){
+      if (password.errors.pattern) {
         return 'Your password is too common'
       }
     }
@@ -113,12 +113,12 @@ export class SignupComponent {
       }
       return
     }
-    
+
     const repassword = this.signUpForm.get('repassword')?.value;
     const name: string = this.signUpForm.get('name')?.value
     const email: string = this.signUpForm.get('email')?.value
     const password: string = this.signUpForm.get('password')?.value
-    if(repassword!==password){
+    if (repassword !== password) {
       this.toastr.warning("Password mismatch")
       return
     }
@@ -126,16 +126,11 @@ export class SignupComponent {
 
     this.service.signup(name, email, password).subscribe(
       (response) => {
-        // Handle successful response here
-        console.log('API Response:', response);
-        
         this.toastr.success(`"You have successfully registered. Please proceed to log in with your email and password."`);
         this.router.navigate(['/login']);
 
       },
       (error) => {
-        // Handle error here
-        console.error('API Error:', error.error);
         this.errorMsg = error.error.error
 
         this.toastr.error(error.error.error);

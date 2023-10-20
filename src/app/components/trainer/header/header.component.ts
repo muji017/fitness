@@ -18,6 +18,7 @@ export class HeaderComponent {
     return this.router.url!==('/trainer/login')
   }
   onLogout(){
-
+    localStorage.removeItem('trainerToken')
+    this.router.navigate(['/trainer/login'])
   }
 }

@@ -1,6 +1,7 @@
 const dotenv = require('dotenv').config();
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const jwt=require('jsonwebtoken')
 
 
 
@@ -8,6 +9,7 @@ const bcrypt = require('bcrypt');
 const securePassword = async (password) => {
     try {
         const passwordHash = await bcrypt.hash(password, 10);
+        console.log(passwordHash)
         return passwordHash;
     } catch (error) {
         console.log(error.message);
@@ -50,17 +52,26 @@ const sendOtpMail = async (name, email, otp) => {
 
 
 //  otp generator
-const otpGenerator=()=>{
-var digits = '0123456789';
-        let OTP = '';
-        for (let i = 0; i < 6; i++) {
-            OTP += digits[Math.floor(Math.random() * 10)];
-        }
-return OTP
+const otpGenerator = () => {
+    var digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 6; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP
 }
 
-module.exports={
+const tokenGenerator = (id) => {
+    console.log('token generator');
+    const options = {
+        expiresIn: '1h'
+    };
+    const token = jwt.sign({ userId: id }, process.env.JWTSECRET, options)
+    return token
+}
+module.exports = {
     otpGenerator,
     sendOtpMail,
     securePassword,
+    tokenGenerator,
 }

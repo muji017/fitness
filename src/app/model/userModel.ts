@@ -19,9 +19,10 @@ export interface userToken{
 export interface trainer{
     id:any,
     name:string,
-    qualification:string,
-    level:string,
+    email:string,
     image:string,
+    qualification:string,
+    specification:string,
     location:String,
     jobPosition:String,
     description:string

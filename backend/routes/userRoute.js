@@ -34,6 +34,8 @@ userroute.put('/resendOtp',usercontroller.resendOtp)
 
 userroute.post('/sendOtp',usercontroller.sendOtp)
 
+userroute.put('/setPassword',usercontroller.setPassword)
+
 userroute.get('/trainerslist',usercontroller.getTrainers)
 
 userroute.get('/getProfile',checkAuth,usercontroller.getProfile)

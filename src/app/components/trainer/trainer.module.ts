@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { EnterOtpComponent } from './enter-otp/enter-otp.component';
+import { TrainerLoginAuthGuard, TrainerhomeAuthGuard } from 'src/app/auth/trainer.guard';
+import { EnterNewPasswordComponent } from './enter-new-password/enter-new-password.component';
 
 const routes:Routes=[
   {
@@ -18,10 +21,10 @@ const routes:Routes=[
         path:'',redirectTo:'login',pathMatch:'full'
       },
       {
-        path:'login',component:LoginComponent
+        path:'login',component:LoginComponent,canActivate:[TrainerLoginAuthGuard]
       },
       {
-        path:'home',component:HomeComponent
+        path:'home',component:HomeComponent,canActivate:[TrainerhomeAuthGuard]
       },
     ]
   }
@@ -34,7 +37,9 @@ const routes:Routes=[
     HomeComponent,
     HeaderComponent,
     SidenavComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    EnterOtpComponent,
+    EnterNewPasswordComponent
   ],
   imports: [
     

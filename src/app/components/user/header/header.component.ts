@@ -21,7 +21,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(){
-    const user:userToken|any = localStorage.getItem('token')
+    const user:userToken|any = localStorage.getItem('usertoken')
     const userparse=JSON.parse(user)
     console.log("dcdwscwdswdcds",userparse?.userToken)
     if(user){
@@ -63,7 +63,7 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('usertoken');
     window.location.reload();
   }
   tog() {

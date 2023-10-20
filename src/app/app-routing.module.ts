@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TrainerModule } from './components/trainer/trainer.module';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 const routes: Routes = [
   { 
@@ -15,6 +16,9 @@ const routes: Routes = [
   {
     path:'trainer',
     loadChildren:()=>import('./components/trainer/trainer.module').then((m)=>TrainerModule)
+  },
+  {
+    path:'**',component:ErrorPageComponent,
   }
 ];
 

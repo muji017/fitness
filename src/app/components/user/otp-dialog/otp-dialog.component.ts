@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/userServices/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { SetUserPasswordComponent } from '../set-user-password/set-user-password.component';
 
 
 @Component({
@@ -17,13 +18,15 @@ export class OtpDialogComponent {
   countdown: number = 60
   timerInterval: any
   email!: string
+  resetPass!: boolean
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    private formBulider: FormBuilder, private service:UserService, private router:Router,
-    private toastr:ToastrService, private dialoge:MatDialog
+    private formBulider: FormBuilder, private service: UserService, private router: Router,
+    private toastr: ToastrService, private dialoge: MatDialog
   ) {
 
     this.email = data.email
+    this.resetPass = data.resetPass
   }
 
   ngOnInit() {
@@ -45,26 +48,39 @@ export class OtpDialogComponent {
 
 
   submitOtp() {
-       const otp:string=this.otpForm.get('otp')?.value
-       console.log(otp)
-       this.service.verifyOtp(this.email,otp).subscribe(
-        (response)=>{
+    const otp: string = this.otpForm.get('otp')?.value
+    console.log(otp)
+    this.service.verifyOtp(this.email, otp).subscribe(
+      (response) => {
+        if (this.resetPass) {
+          const data={
+             email:this.email
+          }
           this.dialoge.closeAll()
-          const userToken=JSON.stringify(response)
-          localStorage.setItem('token',userToken)
-          this.toastr.info("Got to Profile and reset your password")
-              this.router.navigate(['/home'])
-        },
-        (error)=>{
-              if(error.status==401){
-                this.toastr.error(error.error.message)
-
-              }
-              else{
-                this.toastr.error(error.error.message)
-              }
+          this.dialoge.open(SetUserPasswordComponent, {
+            enterAnimationDuration: 1100,
+            exitAnimationDuration: 1100,
+            data: data
+          })
         }
-       )
+        else {
+          this.dialoge.closeAll()
+          const userToken = JSON.stringify(response)
+          localStorage.setItem('usertoken', userToken)
+          this.toastr.success("successfully varified your email")
+          this.router.navigate(['/home'])
+        }
+      },
+      (error) => {
+        if (error.status == 401) {
+          this.toastr.error(error.error.message)
+
+        }
+        else {
+          this.toastr.error(error.error.message)
+        }
+      }
+    )
   }
 
   clearTimerInterval() {
@@ -76,15 +92,15 @@ export class OtpDialogComponent {
 
   resendOtp() {
     this.service.resendOtp(this.email).subscribe(
-    (response)=>{
-          this.countdown=60
-          this.clearTimerInterval(); 
-          this.startCountdown(); 
-    },
-    (error)=>{
-      this.toastr.error(error.error.message)
-    }
-      )
+      (response) => {
+        this.countdown = 60
+        this.clearTimerInterval();
+        this.startCountdown();
+      },
+      (error) => {
+        this.toastr.error(error.error.message)
+      }
+    )
   }
- 
+
 }

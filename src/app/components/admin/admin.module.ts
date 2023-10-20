@@ -32,10 +32,6 @@ const routes:Routes=[
       {
         path:'trainers',component:TrainerslistComponent,canActivate:[AdminhomeAuthGuard]
       },
-      {
-        path:'*',redirectTo:'admin/login',pathMatch:'full'
-      }
-
     ]
   }
 ]

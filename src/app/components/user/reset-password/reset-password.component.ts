@@ -29,15 +29,16 @@ export class ResetPasswordComponent {
     const email:string=this.sendOtpForm.get('email')?.value
     console.log(email)
     const data = {
-      email: email
+      email: email,
+      resetPass: true
     }
     this.service.sendOtp(email).subscribe(
       (response)=>{
         this.dialoge.closeAll()
         this.dialoge.open(OtpDialogComponent, {
 
-          enterAnimationDuration: 1200,
-          exitAnimationDuration: 1200,
+          enterAnimationDuration: 1100,
+          exitAnimationDuration: 1100,
           data: data
         })
 
