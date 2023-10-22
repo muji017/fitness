@@ -13,12 +13,11 @@ export class UserService {
   constructor( private http:HttpClient) { }
 
   signup(name:string,email: string, password: string):Observable<userToken> {
-    console.log(name)
     const payload = {name, email, password };
     return this.http.post<userToken>(`${this.apiUrl}/signup`,payload); 
   } 
   login(email: string, password: string):Observable<userToken> {
-    console.log("in loginservice")
+
     const payload = {email, password };
     return this.http.post<userToken>(`${this.apiUrl}/login`,payload); 
   } 
@@ -40,7 +39,6 @@ export class UserService {
     return this.http.get<trainerlist>(`${this.apiUrl}/trainerslist`)
   }
   getProfile():Observable<UserModel>{
-    console.log("get profile sevice");
     
     return this.http.get<UserModel>(`${this.apiUrl}/getProfile`)
   }
@@ -55,14 +53,12 @@ export class UserService {
   }
 
   paymentss(planId:any,paymentMethod:any):Observable<any>{
-    console.log("inside payment process");
-    
+  
     const payload ={planId,paymentMethod}
     return this.http.post<any>(`${this.apiUrl}/processPayment`,payload)
   }
 
   setPassword(email: string,password:string):Observable<any>{
-    console.log(email)
      const payload  = {email,password}
      return this.http.put<any>(`${this.apiUrl}/setPassword`,payload)
    }

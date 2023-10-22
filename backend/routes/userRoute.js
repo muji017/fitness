@@ -14,7 +14,7 @@ const { checkAuth } = require('../middlewares/auth');
 
 const storage=multer.diskStorage({
     destination:function(req,_file,callb){
-        callb(null,path.join('./public/images/user'));
+        callb(null,path.join('./public/images'));
     },
     imagename:function(req,file,cb){
         const name=Date.now()+'-'+file.originalname;

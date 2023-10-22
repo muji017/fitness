@@ -1,11 +1,12 @@
 export interface UserModel{
     userToken?: string,
-    _id:any,
     userId?:any,
     name:string,
     email:string,
     subscriptionDate?:Date,
     expiryDate?:Date,
+    paymentMethod?:string,
+    amount?:number
     password?:string,
     image?:string
 }
@@ -25,8 +26,14 @@ export interface trainer{
     specification:string,
     location:String,
     jobPosition:String,
-    description:string
+    description:string,
+    isVerified:string
 }
+
+export interface userlist extends UserModel{
+    users:UserModel[]
+}
+
 
 export interface trainerlist extends trainer{
     trainers:trainer[]

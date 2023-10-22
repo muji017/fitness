@@ -22,3 +22,6 @@ body{
     overflow-y: auto;
   }
  
+  .bg-green-500{
+    background-color: green !important;
+  }

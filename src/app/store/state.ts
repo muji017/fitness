@@ -1,13 +1,6 @@
 import { UserModel, trainer, userToken } from "../model/userModel"
 
-export const userState: UserModel = {
-    name: '',
-    email: '',
-    password: "",
-    userToken: "",
-    image:"",
-    _id:""
-}
+export const allUserState: UserModel[] = []
 
 export const alltrainersState: trainer[] = []
 

@@ -15,7 +15,7 @@ import { ResetPasswordComponent } from '../reset-password/reset-password.compone
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-
+  hide = true;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

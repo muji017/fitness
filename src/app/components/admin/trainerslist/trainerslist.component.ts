@@ -1,9 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
-import { getTrainersListApi } from 'src/app/store/action';
+import { changeTrainerStatusApi, getTrainersListApi } from 'src/app/store/action';
 import { getAllTrainers } from 'src/app/store/selector';
+import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-trainerslist',
@@ -13,25 +16,48 @@ import { getAllTrainers } from 'src/app/store/selector';
 })
 export class TrainerslistComponent {
 
-  trainers!:trainer[]
-  searchQuery!:string
+  trainers!: trainer[]
+  searchQuery!: string
+  
 
-  dataSource!:trainer[]
+  dataSource: MatTableDataSource<trainer> = new MatTableDataSource<trainer>();
 
-  displayedColumns: string[] = ['image', 'name', 'email', 'qualification','jobPosition', 'specification','discription',
-'location',];
+  displayedColumns: string[] = ['image', 'name', 'email', 'qualification', 'jobPosition', 'specification', 'discription',
+    'location', 'options'];
 
   constructor(
     private adminService: AdminService,
-    private store:Store<trainer[]>
+    private dialoge:MatDialog,
+    private store: Store<trainer[]>
   ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.store.dispatch(getTrainersListApi())
-    this.store.select(getAllTrainers).subscribe((res)=>{
-      console.log(res)
-      this.dataSource=res
+    this.getTrainers()
+  }
+  changeStatus(trainerId: any) {
+    this.store.dispatch(changeTrainerStatusApi({ trainerId }))
+    this.getTrainers()
+  }
+  getTrainers() {
+    this.store.select(getAllTrainers).subscribe((res) => {
+      this.dataSource.data = res
+      console.log(this.dataSource.data)
     })
   }
+  applyFilter() {
+    const filterValue = this.searchQuery.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 
+  addTrainer() {
+       this.dialoge.open(AddTrainerComponent,{
+        enterAnimationDuration:1100,
+        exitAnimationDuration:1100,
+        maxHeight: '500px'
+       })
+  }
+  ngOnDestroy(){
+    
+  }
 }

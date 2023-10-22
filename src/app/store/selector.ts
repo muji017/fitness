@@ -1,26 +1,29 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store"
-import { AuthModel, trainer, userToken } from "../model/userModel"
+import { AuthModel, UserModel, trainer, userToken } from "../model/userModel"
 
 export const alltrainersStateName = "alltrainersStateName"
 export const authStateName = "authStateName"
+export const allUsersStateName ="allUsersStateName"
 
 export const alltrainersState = createFeatureSelector<trainer[]>(alltrainersStateName)
-
 export const getAllTrainers = createSelector(alltrainersState,
     (state: trainer[]) => {
         return state
     }
 )
 
+export const allUsersState = createFeatureSelector<UserModel[]>(allUsersStateName)
+export const getAllUsers = createSelector(allUsersState,
+    (state: UserModel[]) => {
+        return state
+    }
+)
+
+
 export const loginSuccessState = createFeatureSelector<userToken>(authStateName)
-
 export const getLoginSuccess = createSelector(loginSuccessState, (state: userToken) => {
-
-
     return state
 })
-
 export const getLoginFail = createSelector(loginSuccessState, (state: userToken) => {
-
     return state
 })

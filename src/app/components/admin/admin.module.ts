@@ -14,6 +14,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AdminOtpComponent } from './admin-otp/admin-otp.component';
 import { SetPasswordComponent } from './set-password/set-password.component';
 import { TrainerslistComponent } from './trainerslist/trainerslist.component';
+import { AddTrainerComponent } from './add-trainer/add-trainer.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 const routes:Routes=[
@@ -32,6 +34,9 @@ const routes:Routes=[
       {
         path:'trainers',component:TrainerslistComponent,canActivate:[AdminhomeAuthGuard]
       },
+      {
+        path:'users',component:UserListComponent,canActivate:[AdminhomeAuthGuard]
+      },
     ]
   }
 ]
@@ -48,6 +53,8 @@ const routes:Routes=[
     AdminOtpComponent,
     SetPasswordComponent,
     TrainerslistComponent,
+    AddTrainerComponent,
+    UserListComponent,
     
   ],
   imports: [

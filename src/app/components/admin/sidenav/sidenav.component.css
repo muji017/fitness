@@ -1,5 +1,9 @@
 /* sidebar.component.css */
 
+.active-link {
+  background-color: darkgray;
+  color: white;
+}
 .sidenav-container {
     margin-top: 20px !important;
     height: 100% !important;

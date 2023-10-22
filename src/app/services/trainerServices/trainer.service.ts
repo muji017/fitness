@@ -26,12 +26,10 @@ export class TrainerService {
     return this.http.post<any>(`${this.apiUrl}/trainer/verifyOtp`,payload)
   }
   resendOtp(email: string):Observable<any>{
-   console.log(email)
     const payload  = {email}
     return this.http.put<any>(`${this.apiUrl}/trainer/resendOtp`,payload)
   }
   setPassword(email: string,password:string):Observable<any>{
-    console.log(email)
      const payload  = {email,password}
      return this.http.put<any>(`${this.apiUrl}/trainer/setPassword`,payload)
    }

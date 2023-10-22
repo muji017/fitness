@@ -209,7 +209,8 @@ const getTrainers = async (req, res) => {
             image: t.image,
             location: t.location ,
             jobPosition: t.jobPosition,
-            description: t.description
+            description: t.description,
+            isVerified:t.isVerified
         }))
         res.status(200).json({ trainers: trainerlist })
     }

@@ -23,7 +23,10 @@
     
     <mat-form-field  class ="ancho"  appearance="fill">
         <mat-label class="text-sm" >Enter Admin Password</mat-label>
-        <input class="no-focus-ring"    type = "password" matInput  autocomplete="off" formControlName = "password">
+        <input class="no-focus-ring" [type]="hide ? 'password' : 'text'"   type = "password" matInput  autocomplete="off" formControlName = "password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
       </mat-form-field>
     
     

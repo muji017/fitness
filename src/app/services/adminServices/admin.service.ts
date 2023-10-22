@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserModel, trainer, userlist } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +26,26 @@ export class AdminService {
     return this.http.post<any>(`${this.apiUrl}/admin/verifyOtp`,payload)
   }
   resendOtp(email: string):Observable<any>{
-   console.log(email)
     const payload  = {email}
     return this.http.put<any>(`${this.apiUrl}/admin/resendOtp`,payload)
   }
   setPassword(email: string,password:string):Observable<any>{
-    console.log(email)
      const payload  = {email,password}
      return this.http.put<any>(`${this.apiUrl}/admin/setPassword`,payload)
+   }
+   changeTrainerStatus(trainerId:string):Observable<any>{
+    const payload={trainerId}
+    return this.http.put<any>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)
+   }
+   addTrainer(trainer:FormData):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/admin/addTrainer`,trainer)
+   }
+
+   getUsersList():Observable<userlist>{
+    return this.http.get<userlist>(`${this.apiUrl}/admin/getUsersList`)
+   }
+   changeUserStatus(userId:string):Observable<any>{
+    const payload={userId}
+    return this.http.put<any>(`${this.apiUrl}/admin/changeUserStatus`,payload)
    }
 }

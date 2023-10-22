@@ -1,0 +1,69 @@
+<mat-icon class="fixed z-index-0 ">closed</mat-icon>
+<div class="relative container flex-col mb-2  "style=" overflow-y: auto;">
+    <div class="absolute container bg-white h-12 p-2 fixed-top top-0 ">   
+         <span class="font-bold text-2xl  ">Add Trainer</span>
+        </div>
+ <form [formGroup]="registrationForm" (submit)="submitForm()" class="mt-5 container form-container">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name" formControlName="name" >
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email" formControlName="email" >
+  </div>
+
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Qualification</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="qualification" type="text" placeholder="Qualification" formControlName="qualification">
+  </div>
+   
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Specification</label>
+    <input class="shadow appearance-none border rounded w-full
+     py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" type="text" placeholder="Specififcation" formControlName="specification" >
+  </div>
+
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Description</label>
+    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description" formControlName="description" ></textarea>
+  </div>
+
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">JobPosition</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="jobPosition" type="text" placeholder="jobPosition" formControlName="jobPosition">
+  </div>
+
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Location</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="location" type="text" placeholder="Location" formControlName="location">
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" formControlName="password">
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="reEnterPassword">Re-enter Password</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="reEnterPassword" type="password" placeholder="Re-enter Password" formControlName="reEnterPassword">
+  </div>
+
+  <div class="mb-4">
+    <div class="file-drop-zone border-dashed border-2 rounded-lg border-gray-300 p-4">
+      <p class="text-gray-700">Drag and drop files here or click to select files</p>
+      <input type="file"  multiple (change)="onFilesSelected($event)">
+    </div>
+  </div>
+
+  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" >Submit</button>
+</form>
+
+      
+</div>
