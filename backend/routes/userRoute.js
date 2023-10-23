@@ -46,8 +46,10 @@ userroute.post('/createSubscription',checkAuth,subscriptionContoller.createSubsc
 
 userroute.post('/processPayment',checkAuth,subscriptionContoller.processPayment)
 
-// userroute.post('/uploadprofpic',upload.single('image'),usercontroller.uploadprofpic)
+userroute.put('/uploadPic',upload.single('image'),checkAuth,usercontroller.uploadPic)
 
+userroute.put('/changeName',checkAuth,upload.none(),usercontroller.changeName)
 
+userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePassword)
 
 module.exports=userroute;

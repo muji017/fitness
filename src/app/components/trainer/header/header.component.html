@@ -1,27 +1,82 @@
 <mat-toolbar class="bg-white">
-    <!-- Company Icon -->
-    <div class="container row">
-        <div class="col">
-     <img class=" h-8 w-auto" src="../assets/images/logoSEcond-removebg-preview.png" >
-        </div>
-     <div  class="col">
-     <p class="font-bold text-lg mt-0 ">Fit<a class="text-red-700">ness</a><br>
-     </div>
-     </div>
-    <span class="company-name">Trainer</span>
-  
-    <!-- Spacer -->
-    <span class="spacer"></span>
-  
-    <!-- Profile Icon (replace 'account_circle' with your desired icon) -->
-    <mat-icon class="profile-icon" *ngIf="isloginRoute()">account_circle</mat-icon >
-  
-    <!-- Profile Menu -->
-    <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="isloginRoute()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
+  <!-- Company Icon -->
+  <div class="md:hidden">
+    <button (click)="tog()" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white-900 hover:bg-gray-700
+    hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu"
+      aria-expanded="false">
+      <span class="absolute -inset-0.5"></span>
+      <span class="sr-only">Open main menu</span>
+      <!--
+       Icon when menu is closed.
+
+       Menu open: "hidden", Menu closed: "block"
+     -->
+      <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+      <!--
+       Icon when menu is open.
+
+       Menu open: "block", Menu closed: "hidden"
+     -->
+      <svg [class]="smallview" class=" h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
     </button>
-    <mat-menu #profileMenu="matMenu" >
-      <button mat-menu-item>Profile</button>
-      <button mat-menu-item (click)="onLogout()">Logout</button>
-    </mat-menu>
-  </mat-toolbar>
+  </div>
+  <div class="container row">
+    <div class="col hidden sm:block">
+      <img class="h-8 w-auto" src="../assets/images/logoSEcond-removebg-preview.png">
+    </div>
+    <div class="col flex md:justify-start  justify-center  text-center">
+      <p class="font-bold text-2xl sm:text-lg mt-0">Fit<a class="text-red-700">ness</a></p>
+    </div>
+  </div>
+
+
+  <span class="font-bold sm:text-lg text-xs ">Trainer</span>
+
+  <!-- Spacer -->
+  <span class="spacer"></span>
+
+  <!-- Profile Icon (replace 'account_circle' with your desired icon) -->
+  <div class="sm:block hidden">
+    <mat-icon class="profile-icon " *ngIf="isloginRoute()">account_circle</mat-icon>
+  </div>
+  <!-- Profile Menu -->
+  <mat-icon [matMenuTriggerFor]="profileMenu" *ngIf="isloginRoute()">keyboard_arrow_down</mat-icon>
+
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-menu-item (click)="onLogout()">Logout</button>
+  </mat-menu>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+
+</mat-toolbar>
+<div class="" [class]="smallview" class="fixed " id="mobile-menu">
+  <div class="bg-gray-200 space-y-1 px-2 pb-3 pt-2">
+    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+    <a [routerLink]="['/trainer/home']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Dashboard</a>
+    <a [routerLink]="['/trainer/live']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Live Classes </a>
+
+    <a [routerLink]="['/trainer/chat']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Notifications</a>
+
+    <a [routerLink]="['/trainer/videos']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Videos</a>
+
+    <a [routerLink]="['/trainer/dietplans']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Diet Plans</a>
+
+  </div>
+</div>

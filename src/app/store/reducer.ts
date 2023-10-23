@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
-import { allPlansState, alltrainersState, allUserState, authState } from "./state"
-import {  getPlansListApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
+import { allDietPlansState, allPlansState, alltrainersState, allUserState, authState } from "./state"
+import {  getDietPlansListApiSuccess, getPlansListApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
 import { UserModel, userToken } from "../model/userModel"
 
 
@@ -34,8 +34,6 @@ const _allTrainersReducer= createReducer(
   const _allPlansReducer= createReducer(
     allPlansState,
     on(getPlansListApiSuccess, (_state, { plans}) => {
-      console.log("inthe reducer",plans);
-      
       return  Object.values(plans)
       
     }),
@@ -44,6 +42,19 @@ const _allTrainersReducer= createReducer(
     return _allPlansReducer(state,action)
   }
 
+
+    // Diet plans
+  
+    const _allDietPlansReducer= createReducer(
+      allDietPlansState,
+      on(getDietPlansListApiSuccess, (_state, { Dietplans}) => {
+      return  Object.values(Dietplans)
+        
+      }),
+    )
+    export function allDietPlansReducer(state:any, action:any){
+      return _allDietPlansReducer(state,action)
+    }
 
 
   const _authReducer = createReducer(

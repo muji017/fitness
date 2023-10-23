@@ -3,13 +3,14 @@ import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs"
 import { Injectable } from "@angular/core";
 import {
   changePlanStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, getPlansListApi, getPlansListApiSuccess, getTrainersListApi,
+  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainersListApi,
   getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
 import { UserService } from "../services/userServices/user.service";
 import { Router } from "@angular/router";
 import { AdminService } from "../services/adminServices/admin.service";
+import { TrainerService } from "../services/trainerServices/trainer.service";
 
 @Injectable()
 export class UserEffects {
@@ -18,7 +19,8 @@ export class UserEffects {
     private actions$: Actions,
     private service: UserService,
     private router: Router,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private trainerService:TrainerService
   ) { }
 
 
@@ -116,8 +118,6 @@ export class UserEffects {
       mergeMap(() => {
         return this.adminService.getPlans().pipe(
           map((res) => {
-            console.log(res);
-            
             return getPlansListApiSuccess({ plans: Object.values(res.plans) })
           })
         )
@@ -136,6 +136,38 @@ export class UserEffects {
         })
       )
     })
+    )
+  })
+
+
+  // diet plans
+
+  
+  getDietPlansList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getDietPlansListApi),
+      mergeMap(() => {
+        return this.trainerService.getDietPlans().pipe(
+          map((res) => {
+            return getDietPlansListApiSuccess({ Dietplans: Object.values(res.DietPlans) })
+          })
+        )
+      })
+    )
+  })
+
+  // delete dietplan
+
+  deleteDietPlan$= createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteDietPlanApi),
+      mergeMap((action) => {
+        return this.trainerService.deleteDietPlan(action.planId).pipe(
+          map((res) => {
+            return getDietPlansListApi()
+          })
+        )
+      })
     )
   })
 

@@ -1,6 +1,7 @@
 const express=require('express');
 const trainerroute=express();
 const trainercontroller=require('../controllers/trainetrController');
+const dierPlanController=require('../controllers/dietPlanController')
 
 
 
@@ -11,10 +12,11 @@ trainerroute.use(bodyparser.urlencoded({extended:true}));
 
 const multer= require('multer');
 const path=require('path');
+const { checkAuth } = require('../middlewares/auth');
 
 const storage=multer.diskStorage({
     destination:function(req,_file,callb){
-        callb(null,path.join('./public/images/user'));
+        callb(null,path.join('./public/images'));
     },
     imagename:function(req,file,cb){
         const name=Date.now()+'-'+file.originalname;
@@ -34,5 +36,12 @@ trainerroute.post('/sendOtp',trainercontroller.sendOtp)
 
 trainerroute.put('/setPassword',trainercontroller.setPassword)
 
+trainerroute.post('/addDietPlan',upload.single('image'),dierPlanController.addDietPlan)
+
+trainerroute.get('/getDietPlans',dierPlanController.getDietPlans)
+
+trainerroute.put('/updateDietPlan',upload.single('image'),dierPlanController.updateDietPlan)
+
+trainerroute.delete('/deleteDietPlan',dierPlanController.deleteDietPlan)
 
 module.exports=trainerroute

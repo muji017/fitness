@@ -17,7 +17,7 @@
         <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
             <div *ngFor="let trainer of trainers" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <img src="../assets/images/gymworkout.jpg" alt="Background Image" class="w-full md:h-auto lg:h-60">
+                <img [src]="'http://localhost:3000/public/images/' + trainer?.image" alt="Background Image" class="w-full md:h-auto lg:h-60">
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{trainer.name}}</h2>
                 <p class="text-gray-300">{{trainer.jobPosition}}</p>
                 <p class="text-gray-300">{{trainer.specification}}</p>

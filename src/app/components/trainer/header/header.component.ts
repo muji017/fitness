@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-
+  smallview: string = "hidden"
   constructor(
     private router:Router
   ){}
@@ -20,5 +20,14 @@ export class HeaderComponent {
   onLogout(){
     localStorage.removeItem('trainerToken')
     this.router.navigate(['/trainer/login'])
+  }
+
+  tog() {
+    if (this.smallview == "") {
+      this.smallview = "hidden"
+      return
+    }
+    this.smallview = ""
+
   }
 }

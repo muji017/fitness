@@ -13,6 +13,9 @@ import { EnterOtpComponent } from './enter-otp/enter-otp.component';
 import { TrainerLoginAuthGuard, TrainerhomeAuthGuard } from 'src/app/auth/trainer.guard';
 import { EnterNewPasswordComponent } from './enter-new-password/enter-new-password.component';
 import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
+import { TrainerDietPlanComponent } from './trainer-diet-plan/trainer-diet-plan.component';
+import { AddDietPlanComponent } from './add-diet-plan/add-diet-plan.component';
+import { EditDietPlanComponent } from './edit-diet-plan/edit-diet-plan.component';
 
 const routes:Routes=[
   {
@@ -26,6 +29,12 @@ const routes:Routes=[
       },
       {
         path:'home',component:HomeComponent,canActivate:[TrainerhomeAuthGuard]
+      },
+      {
+        path:'dietplans',component:TrainerDietPlanComponent,canActivate:[TrainerhomeAuthGuard]
+      },
+      {
+        path:'profile',component:TrainerProfileComponent,canActivate:[TrainerhomeAuthGuard]
       },
     ]
   }
@@ -41,7 +50,10 @@ const routes:Routes=[
     ForgetPasswordComponent,
     EnterOtpComponent,
     EnterNewPasswordComponent,
-    TrainerProfileComponent
+    TrainerProfileComponent,
+    TrainerDietPlanComponent,
+    AddDietPlanComponent,
+    EditDietPlanComponent
   ],
   imports: [
     

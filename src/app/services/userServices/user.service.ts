@@ -63,4 +63,18 @@ export class UserService {
      return this.http.put<any>(`${this.apiUrl}/setPassword`,payload)
    }
 
+   uploadPic(form:FormData):Observable<any>{
+    return this.http.put<any>(`${this.apiUrl}/uploadPic`,form)
+   }
+
+   changeName(name:string):Observable<any>{
+    const payload={name}
+    return this.http.put<any>(`${this.apiUrl}/changeName`,payload)
+   }
+
+   changePassword(password:string):Observable<any>{
+    const payload={password}
+    return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
+   }
+
 }

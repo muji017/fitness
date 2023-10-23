@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { PlansModel, UserModel, trainer, userToken } from "../model/userModel";
+import { DietPlansModel, PlansModel, UserModel, trainer, userToken } from "../model/userModel";
 
 export const loginStart=createAction("loginStart",props<{ email:string,password:string }>())
 
@@ -29,4 +29,10 @@ export const getPlansListApiSuccess=createAction("getPlansListApiSuccess",props<
 
 export const changePlanStatusApi=createAction("changePlanStatusApi",props<{planId:any}>())
 
-// trainer login
+// diet Plans
+
+export const getDietPlansListApi=createAction("getDietPlansListApi")
+
+export const getDietPlansListApiSuccess=createAction("getDietPlansListApiSuccess",props<{ Dietplans:DietPlansModel[]}>())
+
+export const deleteDietPlanApi=createAction("deleteDietPlanApi",props<{planId:any}>())

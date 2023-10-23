@@ -29,9 +29,9 @@ export class InterceptorService implements HttpInterceptor {
       
       headers: req.headers.set('Authorization',`Bearer ${token}` ),
     });
-
     return next.handle(modifiedReq);
   }
+   
   return next.handle(req)
 }
   

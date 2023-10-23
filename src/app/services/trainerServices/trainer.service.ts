@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DietPlanList } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -8,30 +9,55 @@ import { Observable } from 'rxjs';
 export class TrainerService {
 
 
-  private apiUrl:string = 'http://localhost:3000';
+  private apiUrl: string = 'http://localhost:3000';
 
-  constructor( private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 
-  login(email: string, password: string):Observable<any> {
-    const payload = {email, password };
-    return this.http.post<any>(`${this.apiUrl}/trainer/login`,payload); 
-  } 
-  sendOtp(email: string):Observable<any>{
-    const payload  = {email}
-    return this.http.post<any>(`${this.apiUrl}/trainer/sendOtp`,payload)
+  login(email: string, password: string): Observable<any> {
+    const payload = { email, password };
+    return this.http.post<any>(`${this.apiUrl}/trainer/login`, payload);
   }
-  verifyOtp(email: string,otp:string):Observable<any>{
-    const payload = {email,otp}
-    return this.http.post<any>(`${this.apiUrl}/trainer/verifyOtp`,payload)
+  sendOtp(email: string): Observable<any> {
+    const payload = { email }
+    return this.http.post<any>(`${this.apiUrl}/trainer/sendOtp`, payload)
   }
-  resendOtp(email: string):Observable<any>{
-    const payload  = {email}
-    return this.http.put<any>(`${this.apiUrl}/trainer/resendOtp`,payload)
+  verifyOtp(email: string, otp: string): Observable<any> {
+    const payload = { email, otp }
+    return this.http.post<any>(`${this.apiUrl}/trainer/verifyOtp`, payload)
   }
-  setPassword(email: string,password:string):Observable<any>{
-     const payload  = {email,password}
-     return this.http.put<any>(`${this.apiUrl}/trainer/setPassword`,payload)
-   }
+  resendOtp(email: string): Observable<any> {
+    const payload = { email }
+    return this.http.put<any>(`${this.apiUrl}/trainer/resendOtp`, payload)
+  }
+  setPassword(email: string, password: string): Observable<any> {
+    const payload = { email, password }
+    return this.http.put<any>(`${this.apiUrl}/trainer/setPassword`, payload)
+  }
+
+  addDietPlan(form: FormData): Observable<any> {
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    form.append('trainerId', trainerId)
+    return this.http.post<any>(`${this.apiUrl}/trainer/addDietPlan`, form)
+  }
+
+  updateDietPlan(form: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/trainer/updateDietPlan`, form)
+  }
+  getDietPlans(): Observable<DietPlanList> {
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    const params = new HttpParams().set('trainerId', trainerId);
+    return this.http.get<DietPlanList>(`${this.apiUrl}/trainer/getDietPlans?`, { params: params })
+  }
+
+  deleteDietPlan(planId: any): Observable<any> {
+    const params = new HttpParams().set('planId', planId);
+    return this.http.delete<any>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
+
+  }
 }
 

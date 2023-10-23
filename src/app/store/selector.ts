@@ -1,10 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store"
-import { AuthModel, PlansModel, UserModel, trainer, userToken } from "../model/userModel"
+import { AuthModel, DietPlansModel, PlansModel, UserModel, trainer, userToken } from "../model/userModel"
+
 
 export const alltrainersStateName = "alltrainersStateName"
 export const authStateName = "authStateName"
 export const allUsersStateName ="allUsersStateName"
 export const allPlansStateName="allPlanStateName"
+export const allDietPlansStateName="allDietPlanStateName"
 
 export const alltrainersState = createFeatureSelector<trainer[]>(alltrainersStateName)
 export const getAllTrainers = createSelector(alltrainersState,
@@ -27,6 +29,12 @@ export const getAllPlans = createSelector(allPlansState,
     }
 )
 
+export const allDietPlansState = createFeatureSelector<DietPlansModel[]>(allDietPlansStateName)
+export const getAllDietPlans = createSelector(allDietPlansState,
+    (state: DietPlansModel[]) => {
+        return state
+    }
+)
 
 export const loginSuccessState = createFeatureSelector<userToken>(authStateName)
 export const getLoginSuccess = createSelector(loginSuccessState, (state: userToken) => {

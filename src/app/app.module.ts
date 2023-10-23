@@ -21,10 +21,11 @@ import { BmicalculatorComponent } from './components/user/bmicalculator/bmicalcu
 import { SubscriptionComponent } from './components/user/subscription/subscription.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { UserEffects } from './store/effects';
-import { allPlansStateName, allUsersStateName, alltrainersStateName, authStateName } from './store/selector';
-import { AuthReducer, allPlansReducer, allTrainersReducer, allUsersReducer } from './store/reducer';
+import { allDietPlansStateName, allPlansStateName, allUsersStateName, alltrainersStateName, authStateName } from './store/selector';
+import { AuthReducer, allDietPlansReducer, allPlansReducer, allTrainersReducer, allUsersReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
@@ -59,11 +60,13 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     EffectsModule.forRoot([]),
     StoreModule.forRoot({}),
     ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
     EffectsModule.forFeature([UserEffects]),
     StoreModule.forFeature(authStateName,AuthReducer),
     StoreModule.forFeature(alltrainersStateName,allTrainersReducer),
     StoreModule.forFeature(allUsersStateName,allUsersReducer),
     StoreModule.forFeature(allPlansStateName,allPlansReducer),
+    StoreModule.forFeature(allDietPlansStateName,allDietPlansReducer),
   ],
   providers: [
 
