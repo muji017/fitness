@@ -1,11 +1,11 @@
 
 
-<div class=" container" style="width: 100%;">
+<div class=" container mb-3" style="width: 100%;">
 <mat-sidenav-container class="sidenav-container container-fluid">
     <div class="sidenav" style="width: 100%;" >
       <mat-nav-list >
     
-        <a mat-list-item [routerLink]="['/admin/home']">
+        <a mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active-link">
             <span class="flex items-center text-sm hover:text-blue-700"
           
             >
@@ -26,12 +26,20 @@
           User Management
           </span>
         </a>
-        <a mat-list-item >
+        <a mat-list-item [routerLink]="['/admin/plans']" [routerLinkActive]="'active-link'">
             <span class="flex items-center text-sm hover:text-blue-700">
           <img class="h-5 w-auto mr-2 " src="../assets/images/dashboardicon.png" alt="Subscriptions Icon">
-          Subscriptions
+          Plan Management
           </span>
         </a>
+
+        <a mat-list-item [routerLink]="['/admin/subscribers']" [routerLinkActive]="'active-link'">
+          <span class="flex items-center text-sm hover:text-blue-700">
+        <img class="h-5 w-auto mr-2 " src="../assets/images/dashboardicon.png" alt="Subscriptions Icon">
+        Subscribers
+        </span>
+      </a>
+
         <a mat-list-item >
             <span class="flex items-center text-sm hover:text-blue-700">
           <img class="h-5 w-auto mr-2 " src="../assets/images/dashboardicon.png" alt="Videos Icon">

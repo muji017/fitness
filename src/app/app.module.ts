@@ -23,8 +23,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { UserEffects } from './store/effects';
-import { allUsersStateName, alltrainersStateName, authStateName } from './store/selector';
-import { AuthReducer, allTrainersReducer, allUsersReducer } from './store/reducer';
+import { allPlansStateName, allUsersStateName, alltrainersStateName, authStateName } from './store/selector';
+import { AuthReducer, allPlansReducer, allTrainersReducer, allUsersReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
@@ -62,7 +62,8 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     EffectsModule.forFeature([UserEffects]),
     StoreModule.forFeature(authStateName,AuthReducer),
     StoreModule.forFeature(alltrainersStateName,allTrainersReducer),
-    StoreModule.forFeature(allUsersStateName,allUsersReducer)
+    StoreModule.forFeature(allUsersStateName,allUsersReducer),
+    StoreModule.forFeature(allPlansStateName,allPlansReducer),
   ],
   providers: [
 

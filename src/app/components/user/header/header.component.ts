@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { userToken } from 'src/app/model/userModel';
+import { UserModel, userToken } from 'src/app/model/userModel';
 import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class HeaderComponent {
   smallview: string = "hidden"
   mobileMenuActive: boolean = false;
   usertoken!:userToken
+  userData!:UserModel
 
   constructor(private router: Router,
       private userService:UserService
@@ -27,6 +28,11 @@ export class HeaderComponent {
     if(user){
       this.usertoken=user
     }
+    this.userService.getProfile().subscribe(
+      (res:any)=>{
+      this.userData=res.user
+      }
+    )
   }
 
    // Check if the current route is '/login'

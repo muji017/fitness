@@ -15,11 +15,13 @@ body{
     }
   }
   .scrollable-div {
-    overflow: auto;
+    overflow-y: auto;
   }
   .scrollable-content {
-    max-height: 100px; /* Adjust the maximum height as needed */
-    overflow-y: auto;
+    max-width: 150px;
+    max-height: 110px !important; /* Adjust the maximum height as needed */
+    overflow-y: auto !important;
+
   }
  
   .bg-green-500{

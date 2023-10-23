@@ -12,6 +12,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { EnterOtpComponent } from './enter-otp/enter-otp.component';
 import { TrainerLoginAuthGuard, TrainerhomeAuthGuard } from 'src/app/auth/trainer.guard';
 import { EnterNewPasswordComponent } from './enter-new-password/enter-new-password.component';
+import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
 
 const routes:Routes=[
   {
@@ -39,7 +40,8 @@ const routes:Routes=[
     SidenavComponent,
     ForgetPasswordComponent,
     EnterOtpComponent,
-    EnterNewPasswordComponent
+    EnterNewPasswordComponent,
+    TrainerProfileComponent
   ],
   imports: [
     

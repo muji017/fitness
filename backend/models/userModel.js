@@ -23,6 +23,10 @@ const user=mongoose.Schema({
         type:Boolean,
         default:false
     },
+    isBlocked:{
+        type:Boolean,
+        default:false
+    },
     subcriptionDate:{
         type:Date
     },

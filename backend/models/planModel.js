@@ -1,3 +1,4 @@
+
 const mongoose=require('mongoose')
 
 const subscriptionplan=mongoose.Schema({
@@ -17,7 +18,11 @@ const subscriptionplan=mongoose.Schema({
     description:{
         type:String,
         required:true
+    },
+    isVerified:{
+        type:Boolean
     }
+    
 })
 
 module.exports=mongoose.model('Subscriptionplan',subscriptionplan);

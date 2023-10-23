@@ -58,8 +58,15 @@ const createSubscription = async (req, res) => {
 const getPlans = async (req, res) => {
     try {
         const plans = await planModel.find({})
-        console.log(plans)
-        res.status(200).json({ plans: plans })
+        const planList = plans.map((t) => ({
+            _id: t._id,
+            title: t.title,
+            duration: t.duration,
+            amount: t.amount,
+            description: t.description,
+            isVerified:t.isVerified
+        }))
+        res.status(200).json({ plans: planList })
 
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -72,8 +79,8 @@ const processPayment = async (req, res) => {
     try {
         console.log("payment");
         const userId = req.userId
-        const {planId,paymentMethod} = req.body
-      
+        const { planId, paymentMethod } = req.body
+
         const date = new Date()
         const filter = { userId: userId };
         const update = {
@@ -91,8 +98,79 @@ const processPayment = async (req, res) => {
     }
 }
 
+const addPlan = async (req, res) => {
+    try {
+        const title = req.body.title
+        console.log("inside", req.body)
+        const planExists = await planModel.findOne({ title: title })
+
+        if (planExists) {
+            return res.status(409).json({ message: 'title already exist' })
+        }
+        const planData = new planModel()
+        planData.title = title
+        planData.duration = req.body.duration
+        planData.amount = req.body.amount
+        planData.description = req.body.description
+        planData.isVerified = true
+        await planData.save()
+        return res.status(200).json({ message: "Success" })
+    } catch (error) {
+
+        res.status(500).json({ error: error })
+    }
+}
+
+
+const updatePlan = async (req, res) => {
+    try {
+        const title = req.body.title;
+        const planId = req.body.planId;
+        const existingPlan = await planModel.findOne({ title: title, _id: { $ne: planId } });
+
+        if (existingPlan) {
+            return res.status(409).json({ message: 'title already exist' })
+        }
+        const updates = {
+            title: title,
+            duration: req.body.duration,
+            amount: req.body.amount,
+            description: req.body.description,
+            isVerified: true
+        }
+        const updatedPlan = await planModel.findOneAndUpdate(
+            { _id: planId },
+            updates,
+            { new: true })
+        return res.status(200).json({ message: "Success" })
+    } catch (error) {
+
+        res.status(500).json({ error: error })
+    }
+}
+
+const changePlanStatus = async (req, res) => {
+    try {
+        const { planId } = req.body
+        console.log(planId);
+        const plan = await planModel.findOne({ _id: planId })
+        console.log("hc",plan);
+        if (plan) {
+            plan.isVerified = !plan.isVerified
+            await plan.save()
+            await getPlans(req, res);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+
 module.exports = {
     getPlans,
     createSubscription,
-    processPayment
+    processPayment,
+    addPlan,
+    updatePlan,
+    changePlanStatus
 }

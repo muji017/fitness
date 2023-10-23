@@ -8,7 +8,8 @@ export interface UserModel{
     paymentMethod?:string,
     amount?:number
     password?:string,
-    image?:string
+    image?:string,
+    isBlocked?:boolean
 }
 
 export interface userToken{
@@ -27,7 +28,7 @@ export interface trainer{
     location:String,
     jobPosition:String,
     description:string,
-    isVerified:string
+    isVerified:boolean
 }
 
 export interface userlist extends UserModel{
@@ -49,4 +50,9 @@ title:String,
 duration:Number,
 amount:Number,
 description:String,
+isVerified:boolean,
+}
+
+export interface PlanList extends PlansModel{
+    plans:PlansModel[]
 }

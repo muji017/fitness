@@ -29,14 +29,7 @@ export class UserTrainerProfileComponent {
     this.store.select(getAllTrainers).subscribe((res) => {
       this.trainers=res
     })
-    console.log(this.trainers);
-    console.log(this.trainerId);
-    
-    
      this.trainer=this.trainers.find((tr)=>tr.id===this.trainerId)
-     console.log(this.trainer);
-     
-     
   }
 
   connect(){

@@ -1,10 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { UserModel, trainer, userToken } from "../model/userModel";
+import { PlansModel, UserModel, trainer, userToken } from "../model/userModel";
 
 export const loginStart=createAction("loginStart",props<{ email:string,password:string }>())
 
 export const loginSuccess=createAction("loginSuccess",props<{userToken:userToken}>())
-
+// traines list
 export const getTrainersListApi=createAction("getTrainersListApi")
 
 export const getTrainersListApiSuccess=createAction("getTrainersListApiSuccess",props<{ trainers:trainer[] }>())
@@ -13,8 +13,20 @@ export const loginFail =createAction("loginFail",props<{error:Error}>());
 
 export const changeTrainerStatusApi=createAction("changeTrainerStatusApi",props<{trainerId:any}>())
 
+// get users list and operations
 export const getUsersListApi=createAction("getUsersListApi")
 
 export const getUsersListApiSuccess=createAction("getUsersListApiSuccess",props<{ users:UserModel[]}>())
 
 export const changeUserStatusApi=createAction("changeUserStatusApi",props<{userId:any}>())
+
+// get plans list and operations
+
+
+export const getPlansListApi=createAction("getPlansListApi")
+
+export const getPlansListApiSuccess=createAction("getPlansListApiSuccess",props<{ plans:PlansModel[]}>())
+
+export const changePlanStatusApi=createAction("changePlanStatusApi",props<{planId:any}>())
+
+// trainer login

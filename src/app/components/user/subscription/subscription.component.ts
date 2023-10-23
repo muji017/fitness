@@ -25,8 +25,8 @@ export class SubscriptionComponent {
   ngOnInit(){
     this.userServicer.getPlans().subscribe(
       (res:any)=>{
-       this.plans=res.plans
-       console.log("qsdes",this.plans)
+       const data=res.plans
+       this.plans=data.filter((dat:any)=>dat.isVerified==true)
       }
     )
     

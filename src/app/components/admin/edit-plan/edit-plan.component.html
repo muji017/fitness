@@ -1,0 +1,35 @@
+
+<div class="relative container flex-col mb-2  "style=" overflow-y: auto;">
+   
+    <div class="flex underline absolute container bg-white h-12 p-2 fixed-top top-0 ">   
+         <span class="font-bold text-2xl  ">Edit Plans</span>
+        
+        </div>
+ <form [formGroup]="addPlanForm" (submit)="submitForm()" class="mt-5 container form-container">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tittle" type="text" placeholder="Enter title for plan" formControlName="title" >
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Duration</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="duration" type="number" placeholder="Enter duration of plan in months" formControlName="duration" >
+  </div>
+
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Amount</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="amount" type="number" placeholder="Enter amount" formControlName="amount">
+  </div>
+ 
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Description</label>
+    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description" formControlName="description" ></textarea>
+  </div>
+
+
+  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" >Submit</button>
+</form>
+
+      
+</div>

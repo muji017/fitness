@@ -21,7 +21,7 @@ export class UserListComponent {
   displayedColumns: string[] = ['image', 'name', 'email', 'options'];
   constructor(
     private adminService: AdminService,
-    private store: Store<UserModel>
+    private store: Store<UserModel[]>
   ) { }
 
   ngOnInit() {

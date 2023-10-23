@@ -2,7 +2,8 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { Injectable } from "@angular/core";
 import {
-  changeTrainerStatusApi, changeUserStatusApi, getTrainersListApi,
+  changePlanStatusApi,
+  changeTrainerStatusApi, changeUserStatusApi, getPlansListApi, getPlansListApiSuccess, getTrainersListApi,
   getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
@@ -84,7 +85,6 @@ export class UserEffects {
       mergeMap((action) => {
         return this.adminService.changeTrainerStatus(action.trainerId).pipe(
           map((data) => {
-            // The status change is completed, so reload the page
             return getTrainersListApiSuccess({ trainers: Object.values(data.trainers) })
           })
         );
@@ -99,6 +99,40 @@ export class UserEffects {
       return this.adminService.changeUserStatus(action.userId).pipe(
         map((data)=>{
           return getUsersListApiSuccess({users:Object.values(data.users)})
+        })
+      )
+    })
+    )
+  })
+
+
+  // plans part effects
+
+  // plans list
+
+  getPlansList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getPlansListApi),
+      mergeMap(() => {
+        return this.adminService.getPlans().pipe(
+          map((res) => {
+            console.log(res);
+            
+            return getPlansListApiSuccess({ plans: Object.values(res.plans) })
+          })
+        )
+      })
+    )
+  })
+
+
+  changePlanStaus$=createEffect(()=>{
+    return this.actions$.pipe(
+    ofType(changePlanStatusApi),
+    mergeMap((action)=>{
+      return this.adminService.changePlanStatus(action.planId).pipe(
+        map((data)=>{
+          return getPlansListApiSuccess({plans:Object.values(data.plans)})
         })
       )
     })

@@ -60,20 +60,33 @@
   </mat-toolbar>
   <div class=""
    [class]="smallview" class="fixed "  id="mobile-menu">
-    <div class="bg-white rounded-lg space-y-1 px-2 pb-3 pt-2">
+    <div class="bg-gray-200 space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <a [routerLink]="['/admin/home']"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Dashboard</a>
       <a [routerLink]="['/admin/trainers']"
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
-        Trainers</a>
-      <a [routerLink]="['/dietplans']" 
+        Trainer Management</a>
+        
+      <a [routerLink]="['/admin/user']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      User Managment</a>
+
+      <a [routerLink]="['/admin/subscribers']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+       Subscribers</a>
+
+       <a [routerLink]="['/admin/plans']"
+      class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
+      Plan Management</a>
+
+      <a [routerLink]="['/admin/dietplans']" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Dietplans</a>
-      <a [routerLink]="['/videos']" 
+      <a [routerLink]="['/admin/videos']" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Videos</a>
-      <a [routerLink]="['/bmicalculator']" 
-        class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">BMI-Calculator</a>
+      <a [routerLink]="['/admin/salesreport']" 
+        class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Sales Report</a>
 
 
     </div>

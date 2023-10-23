@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlansModel, UserModel, trainerlist, userToken } from 'src/app/model/userModel';
+import { PlanList, PlansModel, UserModel, trainerlist, userToken } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +43,8 @@ export class UserService {
     return this.http.get<UserModel>(`${this.apiUrl}/getProfile`)
   }
 
-  getPlans():Observable<PlansModel>{
-    return this.http.get<PlansModel>(`${this.apiUrl}/getPlans`)
+  getPlans():Observable<PlanList>{
+    return this.http.get<PlanList>(`${this.apiUrl}/getPlans`)
   }
 
   createSubscription(planId:string):Observable<any>{

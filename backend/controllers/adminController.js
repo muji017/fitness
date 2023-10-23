@@ -207,7 +207,8 @@ const getUsersList = async (req, res) => {
             name: t.name,
             email: t.email,
             image: t.image,
-            isVerified: t.isVerified
+            isVerified: t.isVerified,
+            isBlocked:t.isBlocked
         }))
         return res.status(200).json({ users: userList })
     } catch (error) {
@@ -224,7 +225,7 @@ const changeUserStatus = async (req, res) => {
         const user = await userModel.findOne({ _id: userId })
         console.log(user)
         if (user) {
-            user.isVerified = !user.isVerified
+            user.isBlocked = !user.isBlocked
             await user.save()
             await getUsersList(req, res);
         }
@@ -232,6 +233,8 @@ const changeUserStatus = async (req, res) => {
         res.status(500).json({ message: "Internal server Error" })
     }
 }
+
+
 
 module.exports = {
     login,

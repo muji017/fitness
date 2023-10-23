@@ -16,6 +16,10 @@ import { SetPasswordComponent } from './set-password/set-password.component';
 import { TrainerslistComponent } from './trainerslist/trainerslist.component';
 import { AddTrainerComponent } from './add-trainer/add-trainer.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { PlansComponent } from './plans/plans.component';
+import { AddPlanComponent } from './add-plan/add-plan.component';
+import { EditPlanComponent } from './edit-plan/edit-plan.component';
+import { SubscribersComponent } from './subscribers/subscribers.component';
 
 
 const routes:Routes=[
@@ -37,6 +41,9 @@ const routes:Routes=[
       {
         path:'users',component:UserListComponent,canActivate:[AdminhomeAuthGuard]
       },
+      {
+        path:'plans',component:PlansComponent,canActivate:[AdminhomeAuthGuard]
+      },
     ]
   }
 ]
@@ -55,6 +62,10 @@ const routes:Routes=[
     TrainerslistComponent,
     AddTrainerComponent,
     UserListComponent,
+    PlansComponent,
+    AddPlanComponent,
+    EditPlanComponent,
+    SubscribersComponent,
     
   ],
   imports: [

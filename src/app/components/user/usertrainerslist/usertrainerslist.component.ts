@@ -23,7 +23,8 @@ export class UsertrainerslistComponent {
 
     this.store.dispatch(getTrainersListApi())
     this.store.select(getAllTrainers).subscribe((res)=>{
-      this.trainers=res
+      const data=res
+      this.trainers=data.filter((data)=>data.isVerified==true)
     })
   }
 

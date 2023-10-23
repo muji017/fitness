@@ -1,6 +1,7 @@
 const express=require('express');
 const adminroute=express();
 const admincontroller=require('../controllers/adminController');
+const subscriptionController=require('../controllers/subscriptionController')
 
 
 
@@ -40,5 +41,13 @@ adminroute.post('/addTrainer',upload.single('image'),admincontroller.addTrainer)
 adminroute.get('/getUsersList',admincontroller.getUsersList)
 
 adminroute.put('/changeUserStatus',admincontroller.changeUserStatus)
+
+adminroute.get('/getPlans',subscriptionController.getPlans)
+
+adminroute.post('/addPlan',upload.none(),subscriptionController.addPlan)
+
+adminroute.put('/updatePlan',upload.none(),subscriptionController.updatePlan)
+
+adminroute.put('/changePlanStatus',subscriptionController.changePlanStatus)
 
 module.exports=adminroute

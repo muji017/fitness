@@ -25,7 +25,7 @@ const checkAuth= async(req,res,next)=>{
         console.log(typeof userId)
         const user=await userModel.findOne({_id:userId})
         console.log(user)
-        if(user){
+        if(user&&!user.isBlocked){
           req.userId=userId
           next()
         }
