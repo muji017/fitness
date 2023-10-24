@@ -16,6 +16,13 @@ import { TrainerProfileComponent } from './trainer-profile/trainer-profile.compo
 import { TrainerDietPlanComponent } from './trainer-diet-plan/trainer-diet-plan.component';
 import { AddDietPlanComponent } from './add-diet-plan/add-diet-plan.component';
 import { EditDietPlanComponent } from './edit-diet-plan/edit-diet-plan.component';
+import { TrainerVideosListComponent } from './trainer-videos-list/trainer-videos-list.component';
+import { AddVideoComponent } from './add-video/add-video.component';
+import { VideoPlayerComponent } from './video-player/video-player.component';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 const routes:Routes=[
   {
@@ -36,6 +43,9 @@ const routes:Routes=[
       {
         path:'profile',component:TrainerProfileComponent,canActivate:[TrainerhomeAuthGuard]
       },
+      {
+        path:'videos',component:TrainerVideosListComponent,canActivate:[TrainerhomeAuthGuard]
+      },
     ]
   }
 ]
@@ -53,10 +63,16 @@ const routes:Routes=[
     TrainerProfileComponent,
     TrainerDietPlanComponent,
     AddDietPlanComponent,
-    EditDietPlanComponent
+    EditDietPlanComponent,
+    TrainerVideosListComponent,
+    AddVideoComponent,
+    VideoPlayerComponent
   ],
   imports: [
-    
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,

@@ -1,0 +1,26 @@
+body{
+    background-color: rgba(0, 0, 0, 0.034) !important;
+    height: 100%;
+}
+.no-focus-ring:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    th.mat-header-cell,
+    td.mat-cell {
+      font-size: 12px; 
+      padding: 4px;
+    }
+  }
+  .scrollable-div {
+    overflow: auto;
+  }
+  .scrollable-content {
+    max-height: 100px; 
+    overflow-y: auto;
+  }
+ 
+  .bg-green-500{
+    background-color: green !important;
+  }

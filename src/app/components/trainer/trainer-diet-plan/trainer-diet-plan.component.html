@@ -20,6 +20,7 @@
             </button>
         </div>
         <div class="container bg-white" style=" overflow-x: auto;">
+            <h2 *ngIf="dietPlans.length<1">No results found</h2>
             <!-- Cards Section -->
             <div *ngFor="let plan of dietPlans" class="container mt-2 mx-auto">
                 <div class="grid grid-cols-1  gap-8">
@@ -29,12 +30,12 @@
                         <div>
                             <button (click)="deletePlan(plan._id)" mat-mini-fab class="red"
                                 matTooltip="Delete DietPlan"><mat-icon>delete</mat-icon></button>
-                            <img [src]="'http://localhost:3000/public/images/' + plan?.image" alt="Background Image"
+                            <img [src]="apiUrl+plan?.image" alt="Background Image"
                                 class="w-full md:h-auto lg:h-60">
                             <h2 class="text-xl text-gray-800 font-semibold mb-2 hover:text-red-500 hover:underline">
                                 {{plan.title}}</h2>
                             <p class="text-gray-800">{{plan.foodType}}</p>
-                            <p class="text-gray-800">{{plan.uploadDate}}</p>
+                            <p class="text-gray-800">{{plan.uploadDate|date:"dd/mm/yyyy"}}</p>
                             <button (click)="updatePlan(plan._id)" mat-raised-button matTooltip="Edit DietPlan">Edit
                                 Plan</button>
                         </div>

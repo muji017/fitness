@@ -14,17 +14,17 @@ export class HeaderComponent {
   mobileMenuActive: boolean = false;
   usertoken!:userToken
   userData!:UserModel
+  apiUrl!:string
 
   constructor(private router: Router,
       private userService:UserService
     ) { 
-  
+    this.apiUrl=userService.getapiUrl()
   }
 
   ngOnInit(){
     const user:userToken|any = localStorage.getItem('usertoken')
     const userparse=JSON.parse(user)
-    console.log("dcdwscwdswdcds",userparse?.userToken)
     if(user){
       this.usertoken=user
     }

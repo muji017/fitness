@@ -1,0 +1,93 @@
+<app-header class="w-full"></app-header>
+<div class="container-fluid flex justify-start ">
+    <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
+  min-width: 250px; ">
+        <app-sidenav style="width: 100%; min-width: 350px;"></app-sidenav>
+    </div>
+    <div class="container flex-col m-3" style="overflow-x: auto;">
+        <div class="m-3 flex flex-wrap justify-between">
+            <h2 class="font-extrabold">Trainers List</h2>
+            <div class="flex rounded-lg bg-white justify-center">
+                <mat-icon class="m-2 p-1" matTooltip="Search dietPlans">search</mat-icon>
+                <input matTooltip="Search dietPlans" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
+                    [(ngModel)]="searchQuery" placeholder="Search">
+            </div>
+        </div>
+        <div class="container bg-white" style=" overflow-x: auto;">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation">
+
+
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef>Image</th>
+                    <td class="max-w-md" mat-cell *matCellDef="let element">
+                        <img [src]="'http://localhost:3000/public/images/' + element.image" alt="Image">
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef>Title</th>
+                    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                    <td mat-cell *matCellDef="let element">{{ element.uploadDate | date:'dd/MM/yyyy' }}</td>
+                </ng-container>
+                <ng-container matColumnDef="foodtype">
+                    <th mat-header-cell *matHeaderCellDef>FoodType</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.foodType }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="scrollable-content"> {{ element.description }}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="options">
+                    <th mat-header-cell *matHeaderCellDef>Options</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <button (click)="changeStatus(element?._id)" matTooltip="Make it not available"
+                                *ngIf="!element.isVerified" class="m-1" mat-mini-fab color="warn"
+                                aria-label="Example icon button with a plus one icon">
+                                <mat-icon>block</mat-icon>
+                            </button>
+                            <button (click)="changeStatus(element?._id)" matTooltip="Make it available"
+                                *ngIf="element?.isVerified" class="m-1 bg-green-500" mat-mini-fab
+                                aria-label="Example icon button with a plus one icon">
+                                <mat-icon>check_circle</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="premium">
+                    <th mat-header-cell *matHeaderCellDef>Premium</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <button (click)="premiumChanged(element._id)" matTooltip="Make it not available"
+                                *ngIf="!element.isPremium" class="m-1" mat-mini-fab color="warn"
+                                aria-label="Example icon button with a plus one icon">
+                                <mat-icon>block</mat-icon>
+                            </button>
+                            <button (click)="premiumChanged(element._id)" matTooltip="Make it available"
+                                *ngIf="element?.isPremium" class="m-1 bg-green-500" mat-mini-fab
+                                aria-label="Example icon button with a plus one icon">
+                                <mat-icon>check_circle</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

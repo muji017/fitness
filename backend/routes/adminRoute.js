@@ -2,6 +2,7 @@ const express=require('express');
 const adminroute=express();
 const admincontroller=require('../controllers/adminController');
 const subscriptionController=require('../controllers/subscriptionController')
+const dietPlanController=require('../controllers/dietPlanController')
 
 
 
@@ -49,5 +50,9 @@ adminroute.post('/addPlan',upload.none(),subscriptionController.addPlan)
 adminroute.put('/updatePlan',upload.none(),subscriptionController.updatePlan)
 
 adminroute.put('/changePlanStatus',subscriptionController.changePlanStatus)
+
+adminroute.put('/changeDietPremium',upload.none(),dietPlanController.changeDietPremium)
+
+adminroute.get('/getDietPlan',dietPlanController.getAllDietPlans)
 
 module.exports=adminroute

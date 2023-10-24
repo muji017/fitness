@@ -1,0 +1,48 @@
+<mat-icon class="fixed z-index-0 ">closed</mat-icon>
+<div class="relative container flex-col mb-2  " style=" overflow-y: auto;">
+  <div class="absolute container bg-white h-12 p-2 fixed-top top-0 ">
+    <span class="font-bold text-2xl  ">Upload Video</span>
+  </div>
+  <form [formGroup]="uploadVideoForm" (submit)="submitForm()" class="mt-5 container form-container">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Title</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title" type="text" placeholder="Enter title for video" formControlName="title">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">workout-Type</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text" placeholder="Specify workout-Type" formControlName="workoutType">
+    </div>
+
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Body-Part</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text" placeholder="Specify Body-Part" formControlName="bodyPart">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Description</label>
+      <textarea
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="description" type="text" placeholder="Description" formControlName="description"></textarea>
+    </div>
+
+    <div class="mb-4">
+      <div class="file-drop-zone border-dashed border-2 rounded-lg border-gray-300 p-4">
+        <p class="text-gray-700">Drag and drop files here or click to select files</p>
+        <input type="file" accept="video/*" multiple (change)="onFilesSelected($event)">
+      </div>
+    </div>
+
+    <button type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Submit</button>
+  </form>
+
+
+</div>

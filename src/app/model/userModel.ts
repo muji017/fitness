@@ -4,6 +4,7 @@ export interface UserModel {
     name: string,
     email: string,
     subscriptionDate?: string,
+    planName?:string
     expiryDate?: string,
     paymentMethod?: string,
     amount?: number
@@ -73,4 +74,22 @@ export interface DietPlansModel {
 
 export interface DietPlanList extends DietPlansModel {
     DietPlans: DietPlansModel[]
+}
+
+export interface VideoModel{
+    _id:any,
+    trainerId:any,
+    title: String,
+    uploadDate:string,
+    workoutType: string,
+    bodyPart:string,
+    description: String,
+    isAprooved: boolean,
+    isPremium:boolean,
+    video:string,
+    isLive:string
+}
+
+export interface VideoList extends VideoModel {
+    VideoModel: VideoModel[]
 }

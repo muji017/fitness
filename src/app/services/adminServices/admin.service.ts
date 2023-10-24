@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlanList, UserModel, trainer, userlist } from 'src/app/model/userModel';
+import { DietPlanList, PlanList, UserModel, trainer, userlist } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -68,9 +68,19 @@ export class AdminService {
     return this.http.put<any>(`${this.apiUrl}/admin/updatePlan`,plan)
   }
 
+  getDietPlans():Observable<DietPlanList>{
+    return this.http.get<DietPlanList>(`${this.apiUrl}/admin/getDietPlan`)
+  }
   changePlanStatus(planId:string):Observable<any>{
     const payload={planId}
     return this.http.put<any>(`${this.apiUrl}/admin/changePlanStatus`,payload)
+   }
+
+   changeDietPremium(planId:string):Observable<any>{
+    const payload={planId}
+    console.log("srvic",planId);
+    
+    return this.http.put<any>(`${this.apiUrl}/admin/changeDietPremium`,payload)
    }
 
 }

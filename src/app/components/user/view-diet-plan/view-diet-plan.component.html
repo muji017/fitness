@@ -21,8 +21,10 @@
                 <img [src]="'http://localhost:3000/public/images/' + plan?.image" alt="Background Image" class="w-full md:h-auto lg:h-60">
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}</h2>
                 <p class="text-gray-300">{{plan.foodType}}</p>
-                <p class="text-gray-300">{{plan.uploadDate}}</p>
-                <button mat-raised-button  (click)="viewPlan(plan._id)"  >View profile</button>
+                <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}
+                    Time : {{ plan.uploadDate | date:'HH:mm:ss' }}
+                </p>
+                <button mat-raised-button  (click)="viewPlan(plan._id)"  >View plan detais</button>
             </div>
         </div>
     </div>

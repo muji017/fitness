@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DietPlanList, trainer } from 'src/app/model/userModel';
+import { DietPlanList, VideoList, trainer } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +88,23 @@ export class TrainerService {
     return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
    }
 
+
+   getAllVideos():Observable< VideoList>{
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    const params = new HttpParams().set('trainerId', trainerId);
+    return this.http.get< VideoList>(`${this.apiUrl}/trainer/getAllVideos?`, { params: params })
+  }
+
+
+  addVideo(form: FormData): Observable<any> {
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    form.append('trainerId', trainerId)
+    return this.http.post<any>(`${this.apiUrl}/trainer/addVideo`, form)
+  }
 
 }
 

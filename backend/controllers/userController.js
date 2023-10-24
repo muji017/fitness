@@ -8,6 +8,7 @@ const utilities = require('../utilities/userUtilities');
 const userModel = require('../models/userModel');
 const trainerModel = require('../models/trainerModel');
 const paymentDetailModel = require('../models/paymentDetailModel');
+const planModel = require('../models/planModel')
 
 
 
@@ -231,7 +232,7 @@ const getProfile = async (req, res) => {
         const subscriber = await paymentDetailModel.findOne({ userId: userId }).populate('planId')
 
         if (subscriber) {
-
+             
             const subscriptionDate = subscriber.subscriptionDate;
             const sday = subscriptionDate.getDate();
             const smonth = subscriptionDate.getMonth() + 1;
@@ -254,6 +255,7 @@ const getProfile = async (req, res) => {
                 password: user.password,
                 isVerified: user.isVerified,
                 isBlocked: user.isBlocked,
+                planName:subscriber.planId.title,
                 image: user.image,
                 subscriptionDate: formattedSubscriptionDate,
                 expiryDate: formattedExpiryDate
@@ -320,6 +322,7 @@ const changePassword = async (req, res) => {
         res.status(500).json({ message: error })
     }
 }
+
 
 module.exports = {
     signup,

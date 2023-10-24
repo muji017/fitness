@@ -1,0 +1,11 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .preview-image {
+    max-width: 400px;
+    max-height: 400px; 
+    margin: 10px;
+  }
+  

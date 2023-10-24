@@ -11,13 +11,14 @@ import { TrainerService } from 'src/app/services/trainerServices/trainer.service
 })
 export class AddDietPlanComponent {
   addPlanForm!: FormGroup
-  files!:FileList
+  files!: FileList
+  imageSrc: string[]=[]
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private trainerService: TrainerService,
-    private dialoge:MatDialog
+    private dialoge: MatDialog
   ) {
     this.addPlanForm = this.fb.group({
       title: fb.control('', [Validators.required, Validators.minLength(3)]),
@@ -67,13 +68,29 @@ export class AddDietPlanComponent {
 
     }
   }
-  
-  onFilesSelected(event:any){
+
+  onFilesSelected(event: any): any {
     const files: FileList = event.target.files;
     this.files = files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith('image/')) {
+        console.log('File type is:', file.type);
+        return this.toastr.warning('Image type is invalid');
+      }
+    }
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        console.log(e.target.result);
+        this.imageSrc.push(e.target.result);
+      };
+
+      reader.readAsDataURL(this.files[i]);
+    }
     console.log(this.files);
   }
-
   submitForm() {
     if (!this.addPlanForm.valid) {
       if (this.showTitleError()) {
@@ -95,7 +112,7 @@ export class AddDietPlanComponent {
     for (const controlName of Object.keys(this.addPlanForm.controls)) {
       const control = this.addPlanForm.get(controlName);
       console.log("in loop", controlName, control?.value);
-       plan.append(controlName, control?.value);
+      plan.append(controlName, control?.value);
     }
     const file = this.files[0];
     plan.append('image', file, file.name);
