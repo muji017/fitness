@@ -52,4 +52,6 @@ userroute.put('/changeName',checkAuth,upload.none(),usercontroller.changeName)
 
 userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePassword)
 
+
+
 module.exports=userroute;

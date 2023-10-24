@@ -3,7 +3,7 @@ import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs"
 import { Injectable } from "@angular/core";
 import {
   changePlanStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainersListApi,
+  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListApi,
   getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
@@ -23,7 +23,7 @@ export class UserEffects {
     private trainerService:TrainerService
   ) { }
 
-
+// trainer part
   getTrainersList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getTrainersListApi),
@@ -36,6 +36,22 @@ export class UserEffects {
       })
     )
   })
+
+  getTrainerProfile$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getTrainerProfileApi),
+      mergeMap(() => {
+        return this.trainerService.getTrainerProfile().pipe(
+          map((res) => {
+            console.log(res)
+            return getTrainerProfileApiSuccess({trainer: Object.values(res) })
+          })
+        )
+      })
+    )
+  })
+
+
 
 
   getUsersList$ = createEffect(() => {

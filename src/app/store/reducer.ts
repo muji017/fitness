@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
-import { allDietPlansState, allPlansState, alltrainersState, allUserState, authState } from "./state"
-import {  getDietPlansListApiSuccess, getPlansListApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
+import { allDietPlansState, allPlansState, alltrainersState, allUserState, authState, trainerState } from "./state"
+import {  getDietPlansListApiSuccess, getPlansListApiSuccess, getTrainerProfileApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
 import { UserModel, userToken } from "../model/userModel"
 
 
@@ -17,6 +17,22 @@ const _allTrainersReducer= createReducer(
     return _allTrainersReducer(state,action)
   }
 
+  // single trainer
+
+  const _trainerReducer = createReducer(
+    trainerState,
+    on(getTrainerProfileApiSuccess, (_state, { trainer }) => {
+      // Update the trainer state with the data from the action
+      return {
+        ..._state,
+        ...trainer,
+      };
+    })
+  );
+  
+  export function trainerReducer(state:any | undefined, action: any) {
+    return _trainerReducer(state, action);
+  }
 // user
   const _allUsersReducer= createReducer(
     allUserState,

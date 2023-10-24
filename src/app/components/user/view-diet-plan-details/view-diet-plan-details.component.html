@@ -1,0 +1,50 @@
+ <!-- Image Section -->
+ <div class="bg-black" style="  background-image: url(../assets/images/food.jpeg);
+ background-size: cover; background-position: center ; height: 100vh;">
+    <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
+     <div class="mt-16 p-3 bg-black" style="text-align: center !important; opacity: 0.5;">
+        <span  
+                        style="text-align: center; color: rgb(240, 240, 240); font-size: 24px; font-weight: bold;
+             text-transform: uppercase; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+
+        Best Diet Plans 
+
+     </span>>
+     </div>
+    <!-- Cards Section -->
+    <div class="container mt-2 bg-white" style=" overflow-x: auto;">
+        <!-- Cards Section -->
+        <div *ngIf="plan" class="container mt-2 mx-auto">
+            <div class="grid grid-cols-1  gap-8">
+                <!-- Card -->
+
+                <div class="flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
+                    <div>
+                        <img [src]="'http://localhost:3000/public/images/' + plan.image" alt="Background Image"
+                            class="w-full md:h-auto lg:h-60">
+                        <h2 class="text-xl text-gray-800 font-semibold mb-2 hover:text-red-500 hover:underline">
+                            {{plan.title}}</h2>
+                        <p class="text-gray-800">{{plan.foodType}}</p>
+                        <p class="text-gray-800">{{plan.uploadDate}}</p>
+                    </div>
+                    <div class="p-4 w-full" style="overflow-x: auto; flex: 2; max-height: 400px;">
+                        <!-- Adjust the max-height as needed -->
+                        <p class="text-gray-800 text-2xl">Description</p>
+                        <p class="text-gray-800">{{plan.description}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="container m-5 flex items-center justify-center mx-auto">
+        <button class=" btn  border-gray-300 border-1 p-6 rounded-full shadow-lg">
+           <span class="text-xs text-white"><a href="" class="underline">Click here</a> for more home workout videos and tips</span>
+        </button>
+    </div>
+
+    <app-footer></app-footer>
+
+</div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DietPlanList } from 'src/app/model/userModel';
+import { DietPlanList, trainer } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,35 @@ export class TrainerService {
     return this.http.delete<any>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
 
   }
+
+  getTrainerProfile():Observable<any>{
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    const params = new HttpParams().set('trainerId', trainerId);
+    return this.http.get<any>(`${this.apiUrl}/trainer/getTrainerProfile?`, { params: params })
+  }
+
+  uploadPic(form:FormData):Observable<any>{
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    form.append('trainerId', trainerId)
+    return this.http.put<any>(`${this.apiUrl}/trainer/uploadPic`,form)
+   }
+
+   updateProfile(profile:FormData):Observable<any>{
+    return this.http.put<any>(`${this.apiUrl}/trainer/updateProfile`,profile)
+  }
+
+   changePassword(password:string):Observable<any>{
+    const trainer: any = localStorage.getItem('trainerToken')
+    const trainerparse = JSON.parse(trainer)
+    const trainerId = trainerparse?.trainerId
+    const payload={password,trainerId}
+    return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
+   }
+
+
 }
 

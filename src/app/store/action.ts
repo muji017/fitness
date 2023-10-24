@@ -13,6 +13,13 @@ export const loginFail =createAction("loginFail",props<{error:Error}>());
 
 export const changeTrainerStatusApi=createAction("changeTrainerStatusApi",props<{trainerId:any}>())
 
+// trainer profile
+
+export const getTrainerProfileApi=createAction("getTrainerProfileApi")
+
+
+export const getTrainerProfileApiSuccess=createAction("getTrainerProfileApiSuccess",props<{ trainer:any}>())
+
 // get users list and operations
 export const getUsersListApi=createAction("getUsersListApi")
 

@@ -15,20 +15,24 @@ import { UserTrainerProfileComponent } from './user-trainer-profile/user-trainer
 import { ProfileComponent } from './profile/profile.component';
 import { UserLoginAuthGuard, UserhomeAuthGuard } from 'src/app/auth/user.guard';
 import { SetUserPasswordComponent } from './set-user-password/set-user-password.component';
+import { ViewDietPlanComponent } from './view-diet-plan/view-diet-plan.component';
+import { ViewDietPlanDetailsComponent } from './view-diet-plan-details/view-diet-plan-details.component';
 
-const routes:Routes=[{
-  path:'',
-  children:[
-  {path: '', redirectTo :'login',pathMatch: 'full'},
-  {path: 'login',component:LoginComponent,canActivate: [UserLoginAuthGuard],},
-  {path: 'signup',component:SignupComponent,canActivate: [UserLoginAuthGuard]},
-  { path:"home",component:HomeComponent,},
-  {path:"bmicalculator",component:BmicalculatorComponent},
-  {path:"trainers",component:UsertrainerslistComponent},
-  {path:"trainersprofile/:trainerId",component:UserTrainerProfileComponent},
-  {path:"subscription",component:SubscriptionComponent, canActivate:[UserhomeAuthGuard]},
-  {path:'profile',component:ProfileComponent,canActivate:[UserhomeAuthGuard]},
-   {path:'*',redirectTo :'login',pathMatch:'full'}
+const routes: Routes = [{
+  path: '',
+  children: [
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent, canActivate: [UserLoginAuthGuard], },
+    { path: 'signup', component: SignupComponent, canActivate: [UserLoginAuthGuard] },
+    { path: "home", component: HomeComponent, },
+    { path: "bmicalculator", component: BmicalculatorComponent },
+    { path: "trainers", component: UsertrainerslistComponent },
+    { path: "trainersprofile/:trainerId", component: UserTrainerProfileComponent },
+    { path: "subscription", component: SubscriptionComponent, canActivate: [UserhomeAuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [UserhomeAuthGuard] },
+    { path: 'dietplans', component: ViewDietPlanComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "viewdietplans/:planId", component: ViewDietPlanDetailsComponent },
+   { path: '*', redirectTo: 'login', pathMatch: 'full', }
   ]
 }]
 
@@ -36,16 +40,17 @@ const routes:Routes=[{
   declarations: [
     // OtpDialogComponent
 
-  
-  
-    SetUserPasswordComponent
+
+
+    SetUserPasswordComponent,
+
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    
-    
+
+
     RouterModule.forChild(routes)
   ]
 })

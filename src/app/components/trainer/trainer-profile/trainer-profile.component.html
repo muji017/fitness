@@ -1,12 +1,101 @@
 <app-header></app-header>
-<div class="container-fluid flex justify-start " >
+<div class="container-fluid flex justify-start ">
     <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
     min-width: 250px; ">
-      <app-sidenav  style="width: 100%; min-width: 350px;"></app-sidenav>
+        <app-sidenav style="width: 100%; min-width: 350px;"></app-sidenav>
+    </div>
+    <div class="container flex-col m-3" style="overflow-x: auto;">
+        <section class="mt-60 relative  " style=" background-color: rgb(255, 255, 255);">
+
+            <div class="container mx-auto px-4">
+
+                <div class="max-w-800 container-fluid break-words bg-white  mb-6 shadow-xl rounded-lg -mt-64">
+                    <div *ngIf="trainer"
+                        class="justify-between max-w-3xl md:mt-0 mx-auto p-6 bg-white shadow-md rounded-lg grid gap-6 grid-cols-1 lg:grid-cols-2">
+                        <!-- Profile Section -->
+                        <div class="text-center mt-4">
+                            <img alt="Profile Image" class="w-32 h-32 mx-auto rounded-full"
+                                [src]="trainer.image ? 'http://localhost:3000/public/images/' + trainer.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
+                                alt="">
+                            <button class="mt-2 text-blue-500 hover:underline" (click)="fileInput.click()">Change
+                                Image</button>
+                            <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none">
+
+
+                            <h1 class="text-2xl font-semibold mt-2">{{trainer.name}}</h1>
+                            <p class="text-gray-600">{{trainer.email}}</p>
+                            <p class="text-gray-600">Qualification: {{trainer.qualification}}</p>
+                            <p class="text-gray-600">Job / Role: {{trainer.jobPosition}}</p>
+                            <p class="text-gray-600">Locatuon: {{trainer.location}}</p>
+                            <p class="text-gray-600">Specification {{trainer.specification}}</p>
+                            <div class="scrollable-content">
+                            <p class="text-gray-600">Description: {{trainer.description}}</p>
+                            </div>
+
+                        </div>
+
+                        <!-- Edit Profile Section -->
+                        <div>
+                            <h2 class="text-xl font-semibold mb-2">Edit Profile</h2>
+                            <div class="mb-4">
+                                <form [formGroup]="editForm" (submit)="submitForm()">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+                                <input formControlName="name" value="{{trainer.name}}"
+                                    class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                    type="text"/>
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Job / Role</label>
+                                <input formControlName="jobPosition"
+                                    class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                    type="text"/>
+                                <label class="block text-gray-700 text-sm font-bold mb-2"
+                                    for="name">Qualification</label>
+                                <input formControlName="qualification"
+                                    class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                    type="text"/>
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Location</label>
+                                <input formControlName="location"
+                                    class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                    type="text"/>
+                                <label class="block text-gray-700 text-sm font-bold mb-2"
+                                    for="email">Description</label>
+                                <textarea
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="description" type="text" placeholder="Description"
+                                    formControlName="description"></textarea>
+
+                                <button type="submit"
+                                    class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
+                                    Update Profile
+                                </button>
+                            </form>
+                            </div>
+                            <form [formGroup]="passForm" (submit)="changePassword()">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="newPassword">New
+                                        Password</label>
+                                    <input formControlName="password"
+                                        class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                        type="password" placeholder="********">
+                                </div>
+
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2"
+                                        for="reenterPassword">Re-enter Password</label>
+                                    <input formControlName="reEnterPassword"
+                                        class="w-full px-3 py-2 leading-tight border rounded shadow-sm focus:outline-none focus:shadow-outline focus:border-blue-500"
+                                        type="password" placeholder="********">
+                                </div>
+
+                                <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-full">
+                                    Change Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-<h1>
 
-    Trainer Frofile
-</h1>
 </div>

@@ -7,6 +7,9 @@ export const authStateName = "authStateName"
 export const allUsersStateName ="allUsersStateName"
 export const allPlansStateName="allPlanStateName"
 export const allDietPlansStateName="allDietPlanStateName"
+export const trainerStateName="trainerStateName"
+
+
 
 export const alltrainersState = createFeatureSelector<trainer[]>(alltrainersStateName)
 export const getAllTrainers = createSelector(alltrainersState,
@@ -32,6 +35,13 @@ export const getAllPlans = createSelector(allPlansState,
 export const allDietPlansState = createFeatureSelector<DietPlansModel[]>(allDietPlansStateName)
 export const getAllDietPlans = createSelector(allDietPlansState,
     (state: DietPlansModel[]) => {
+        return state
+    }
+)
+
+export const trainerState = createFeatureSelector<any>(trainerStateName)
+export const getTrainer = createSelector(trainerState,
+    (state: any) => {
         return state
     }
 )

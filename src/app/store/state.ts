@@ -8,6 +8,20 @@ export const allPlansState:PlansModel[]=[]
 
 export const allDietPlansState:DietPlansModel[]=[]
 
+export const trainerState:trainer={
+    _id:"",
+    id: "",
+    name:"" ,
+    email:"",
+    image:"",
+    qualification:"",
+    specification:"",
+    location:"",
+    jobPosition:"",
+    description:"",
+    isVerified:true
+}
+
 export const authState: userToken = {
 
     userToken: "",

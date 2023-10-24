@@ -133,9 +133,77 @@ const setPassword = async (req, res) => {
     }
 }
 
+// get profile
+
+const getTrainerProfile=async(req,res)=>{
+    try {
+        const trainerId=req.query.trainerId
+        const trainer=await trainerModel.findOne({_id:trainerId})
+        res.status(200).json({ trainer });
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error" }); 
+    }
+}
+
+const uploadPic = async (req, res) => {
+    try {
+        const trainerId = req.body.trainerId;
+        const trainerData = await trainerModel.findOne({ _id: trainerId })
+        console.log(trainerData)
+        trainerData.image = req.file.filename
+        await trainerData.save()
+        res.status(200).json({ message:"success" })
+    }
+    catch (error) {
+        res.status(500).json({ message: error })
+    }
+}
+
+
+// change password
+
+const changePassword = async (req, res) => {
+    try {
+        const trainerId = req.body.trainerId
+        const password = req.body.password
+
+        const trainerData = await trainerModel.findOne({ _id: trainerId })
+        trainerData.password = await utilities.securePassword(password)
+        await trainerData.save()
+        res.status(200).json({ message: "success" })
+
+
+    } catch (error) {
+        res.status(500).json({ message: error })
+    }
+}
+
+const updateProfile=async(req,res)=>{
+    try {
+        const trainerId = req.body.trainerId
+        console.log(trainerId);
+        const updates = {
+            name: req.body.name,
+            qualification: req.body.qualification,
+            location: req.body.location,
+            description: req.body.description,
+            jobPosition:req.body.jobPosition
+        }
+        const trainerData = await trainerModel.findOneAndUpdate(
+            { _id: trainerId },
+            updates,
+            { new: true })
+
+        return res.status(200).json({ message: "Success" })
+    } catch (error) {
+        res.status(500).json({ message: error })
+    }
+}
+
 
 module.exports={
     login,
     sendOtp,resendOtp,otpVerify,
-    setPassword
+    setPassword,getTrainerProfile,uploadPic,
+    changePassword,updateProfile
 }

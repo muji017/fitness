@@ -44,4 +44,13 @@ trainerroute.put('/updateDietPlan',upload.single('image'),dierPlanController.upd
 
 trainerroute.delete('/deleteDietPlan',dierPlanController.deleteDietPlan)
 
+trainerroute.get('/getTrainerProfile',trainercontroller.getTrainerProfile)
+
+trainerroute.put('/uploadPic',upload.single('image'),trainercontroller.uploadPic)
+
+
+trainerroute.put('/changePassword',upload.none(),trainercontroller.changePassword)
+
+trainerroute.put('/updateProfile',upload.none(),trainercontroller.updateProfile)
+
 module.exports=trainerroute

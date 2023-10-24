@@ -24,11 +24,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { UserEffects } from './store/effects';
-import { allDietPlansStateName, allPlansStateName, allUsersStateName, alltrainersStateName, authStateName } from './store/selector';
-import { AuthReducer, allDietPlansReducer, allPlansReducer, allTrainersReducer, allUsersReducer } from './store/reducer';
+import { allDietPlansStateName, allPlansStateName, allUsersStateName, alltrainersStateName, authStateName, trainerStateName } from './store/selector';
+import { AuthReducer, allDietPlansReducer, allPlansReducer, allTrainersReducer, allUsersReducer, trainerReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { ViewDietPlanComponent } from './components/user/view-diet-plan/view-diet-plan.component';
+import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-details/view-diet-plan-details.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     SubscriptionComponent,
     UserTrainerProfileComponent,
     ErrorPageComponent,
-    ProfileComponent
+    ProfileComponent,
+    ViewDietPlanComponent,
+    ViewDietPlanDetailsComponent,
 
   ],
   imports: [
@@ -62,6 +66,7 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
     EffectsModule.forFeature([UserEffects]),
+    StoreModule.forFeature(trainerStateName,trainerReducer),
     StoreModule.forFeature(authStateName,AuthReducer),
     StoreModule.forFeature(alltrainersStateName,allTrainersReducer),
     StoreModule.forFeature(allUsersStateName,allUsersReducer),

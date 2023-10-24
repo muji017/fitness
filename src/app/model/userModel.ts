@@ -19,7 +19,8 @@ export interface userToken {
 }
 
 export interface trainer {
-    id: any,
+    _id?:any
+    id?: any,
     name: string,
     email: string,
     image: string,
