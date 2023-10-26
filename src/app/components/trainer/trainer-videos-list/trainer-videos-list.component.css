@@ -1,0 +1,13 @@
+body{
+    background-color: rgba(0, 0, 0, 0.034) !important;
+    height: 100%;
+}
+
+.red{
+    background-color: rgb(255, 255, 255) !important;
+    color: red !important;
+}
+.no-focus-ring:focus {
+    outline: none;
+    box-shadow: none;
+  }

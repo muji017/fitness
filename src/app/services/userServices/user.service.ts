@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlanList, PlansModel, UserModel, trainerlist, userToken } from 'src/app/model/userModel';
+import { DietPlanList, PlanList, PlansModel, UserModel, trainerlist, userToken } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,9 @@ export class UserService {
    private apiUrl:string = 'http://localhost:3000';
   constructor( private http:HttpClient) { }
 
+  getapiUrl():string{
+    return this.apiUrl+'/public/images/'
+  }
   signup(name:string,email: string, password: string):Observable<userToken> {
     const payload = {name, email, password };
     return this.http.post<userToken>(`${this.apiUrl}/signup`,payload); 
@@ -76,5 +79,9 @@ export class UserService {
     const payload={password}
     return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
    }
+
+   getDietPlans(): Observable<DietPlanList> {
+    return this.http.get<DietPlanList>(`${this.apiUrl}/getDietPlans`)
+  }
 
 }

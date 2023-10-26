@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="container-fluid flex justify-start ">
+    <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
+    min-width: 250px; ">
+        <app-sidenav class="fixed-left" style="width: 100%; min-width: 350px;"></app-sidenav>
+    </div>
+
+    <div class="container flex-col m-3" style="overflow-x: auto;">
+        <div class="m-3 flex flex-wrap justify-between">
+            <h2 class="font-extrabold">Videos</h2>
+            <div class="flex rounded-lg bg-white justify-center">
+                <mat-icon class="m-2 p-1" matTooltip="Search Videos">search</mat-icon>
+                <input matTooltip="Search Videos" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
+                    [(ngModel)]="searchQuery" placeholder="Search">
+            </div>
+        </div>
+        <div class="flex justify-end">
+            <button (click)="addVideo()" mat-mini-fab color="accent" matTooltip="Add New Video">
+                <mat-icon>plus_one</mat-icon>
+            </button>
+        </div>
+        <div *ngIf="videos" class="container bg-white" style=" overflow-x: auto;">
+            <h2 *ngIf="videos.length<1">No results found</h2>
+            <!-- Cards Section -->
+            <div *ngFor="let plan of videos" class="container mt-2 mx-auto">
+                <div class="grid grid-cols-1  gap-8">
+                    <!-- Card -->
+
+                    <div class="flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
+                        <div>
+                            <button (click)="deletePlan(plan._id)" mat-mini-fab class="red"
+                                matTooltip="Delete DietPlan"><mat-icon>delete</mat-icon></button>
+                            <video (click)="playVideo(plan._id)"  [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image"
+                                class="w-full md:h-auto lg:h-60"></video>
+                            <h2 class="text-xl text-gray-800 font-semibold mb-2 hover:text-red-500 hover:underline">
+                                {{plan.title}}</h2>
+                            <p class="text-gray-800">{{plan.workoutType}} {{plan.bodyPart}}</p>
+                            <p class="text-gray-800">{{plan.uploadDate|date:'dd/mm/yyyy'}}</p>
+                        </div>
+                        <div class="p-4 w-full" style="overflow-x: auto; flex: 2; max-height: 400px;">
+                            <p class="text-gray-800 text-2xl">Description</p>
+                            <p class="text-gray-800">{{plan?.description}}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DietPlansModel } from 'src/app/model/userModel';
-import { getDietPlansListApi } from 'src/app/store/action';
+import { getAllDietPlansListApi, getDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans } from 'src/app/store/selector';
 
 @Component({
@@ -22,7 +22,7 @@ export class ViewDietPlanComponent {
   ){}
   
   ngOnInit(){
-    this.store.dispatch(getDietPlansListApi())
+    this.store.dispatch(getAllDietPlansListApi())
     this.store.select(getAllDietPlans).subscribe((res)=>{
       const data=res
       this.dietPlans=data

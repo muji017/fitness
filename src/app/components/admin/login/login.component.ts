@@ -26,7 +26,7 @@ export class LoginComponent {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      email: this.formBuilder.control('', [Validators.required,Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
       password: this.formBuilder.control('', Validators.required),
     });
   }
@@ -75,7 +75,7 @@ export class LoginComponent {
     if (!email.valid) {
       if (email.errors.required) {
         return 'Please enter your mail Id';
-      } else if (email.errors.email) {
+      } else if (email.errors.pattern) {
         return 'Email is Invalid';
       }
     }

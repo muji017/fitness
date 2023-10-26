@@ -21,16 +21,21 @@ import { BmicalculatorComponent } from './components/user/bmicalculator/bmicalcu
 import { SubscriptionComponent } from './components/user/subscription/subscription.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 import { UserEffects } from './store/effects';
-import { allDietPlansStateName, allPlansStateName, allUsersStateName, alltrainersStateName, authStateName, trainerStateName } from './store/selector';
-import { AuthReducer, allDietPlansReducer, allPlansReducer, allTrainersReducer, allUsersReducer, trainerReducer } from './store/reducer';
+import { allDietPlansStateName, allPlansStateName, allUsersStateName, alltrainersStateName, authStateName, trainerStateName, videosStateName } from './store/selector';
+import { AuthReducer, allDietPlansReducer, allPlansReducer, allTrainersReducer, allUsersReducer, allVideosReducer, trainerReducer } from './store/reducer';
 import { UserTrainerProfileComponent } from './components/user/user-trainer-profile/user-trainer-profile.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { ViewDietPlanComponent } from './components/user/view-diet-plan/view-diet-plan.component';
 import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-details/view-diet-plan-details.component';
+import { VideosComponent } from './components/user/videos/videos.component';
+import { VideoPlayerComponent } from './components/user/video-player/video-player.component';
 
 
 @NgModule({
@@ -51,9 +56,14 @@ import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-d
     ProfileComponent,
     ViewDietPlanComponent,
     ViewDietPlanDetailsComponent,
-
+    VideosComponent,
+    VideoPlayerComponent,
   ],
   imports: [
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -64,7 +74,6 @@ import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-d
     EffectsModule.forRoot([]),
     StoreModule.forRoot({}),
     ToastrModule.forRoot(),
-    SweetAlert2Module.forRoot(),
     EffectsModule.forFeature([UserEffects]),
     StoreModule.forFeature(trainerStateName,trainerReducer),
     StoreModule.forFeature(authStateName,AuthReducer),
@@ -72,6 +81,7 @@ import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-d
     StoreModule.forFeature(allUsersStateName,allUsersReducer),
     StoreModule.forFeature(allPlansStateName,allPlansReducer),
     StoreModule.forFeature(allDietPlansStateName,allDietPlansReducer),
+    StoreModule.forFeature(videosStateName,allVideosReducer),
   ],
   providers: [
 

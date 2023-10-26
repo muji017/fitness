@@ -21,6 +21,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox"
 import {MatDialogModule} from "@angular/material/dialog"
 import { MatFormFieldModule } from "@angular/material/form-field";
 
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner"
+
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 
@@ -48,6 +50,7 @@ exports:[
     MatCheckboxModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule
     
 ]
 })

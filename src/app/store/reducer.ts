@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
-import { allDietPlansState, allPlansState, alltrainersState, allUserState, authState, trainerState } from "./state"
-import {  getDietPlansListApiSuccess, getPlansListApiSuccess, getTrainerProfileApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
+import { allDietPlansState, allPlansState, alltrainersState, allUserState, allVideosState, authState, trainerState } from "./state"
+import {  getAllVideosApiSuccess, getDietPlansListApiSuccess, getPlansListApiSuccess, getTrainerProfileApiSuccess, getTrainersListApiSuccess, getUsersListApiSuccess, loginFail, loginSuccess } from "./action"
 import { UserModel, userToken } from "../model/userModel"
 
 
@@ -72,6 +72,18 @@ const _allTrainersReducer= createReducer(
       return _allDietPlansReducer(state,action)
     }
 
+// videos 
+    
+const _allVideosReducer= createReducer(
+  allVideosState,
+  on(getAllVideosApiSuccess, (_state, { videos}) => {
+  return  Object.values(videos)
+    
+  }),
+)
+export function allVideosReducer(state:any, action:any){
+  return _allVideosReducer(state,action)
+}
 
   const _authReducer = createReducer(
     authState,

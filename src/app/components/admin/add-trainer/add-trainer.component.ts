@@ -26,7 +26,7 @@ export class AddTrainerComponent {
   ) {
     this.registrationForm = this.fb.group({
       name: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
+      email: this.fb.control('', [Validators.required,Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
       description: this.fb.control('', [Validators.required]),
       qualification: this.fb.control('', [Validators.required]),
       specification: this.fb.control('', Validators.required),
@@ -64,7 +64,7 @@ export class AddTrainerComponent {
       if (email.errors.required) {
         return 'Email is required';
       }
-      if (email.errors.email) {
+      if (email.errors.pattern) {
         return 'Invalid Email'
       }
     }

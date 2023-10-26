@@ -20,6 +20,8 @@ import { PlansComponent } from './plans/plans.component';
 import { AddPlanComponent } from './add-plan/add-plan.component';
 import { EditPlanComponent } from './edit-plan/edit-plan.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
+import { AdminDietPlanViewComponent } from './admin-diet-plan-view/admin-diet-plan-view.component';
+import { VideosViewComponent } from './videos-view/videos-view.component';
 
 
 const routes:Routes=[
@@ -44,6 +46,9 @@ const routes:Routes=[
       {
         path:'plans',component:PlansComponent,canActivate:[AdminhomeAuthGuard]
       },
+      {
+        path:'dietplans',component:AdminDietPlanViewComponent,canActivate:[AdminhomeAuthGuard]
+      },
     ]
   }
 ]
@@ -66,6 +71,8 @@ const routes:Routes=[
     AddPlanComponent,
     EditPlanComponent,
     SubscribersComponent,
+    AdminDietPlanViewComponent,
+    VideosViewComponent,
     
   ],
   imports: [

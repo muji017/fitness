@@ -58,12 +58,16 @@ export class TrainerProfileComponent {
   
   }
 
-  onFileSelected(event:any){
+  onFileSelected(event:any):any{
     const files: FileList = event.target.files;
     this.files = files;
     console.log(this.files);
     const form=new FormData()
     const file = this.files[0];
+    if (!file.type.startsWith('image/')) {
+      console.log('File type is:', file.type);
+      return this.toastr.warning('Image type is invalid');
+  }
     form.append('image', file, file.name);
     this.trainerService.uploadPic(form).subscribe(
       (res)=>{

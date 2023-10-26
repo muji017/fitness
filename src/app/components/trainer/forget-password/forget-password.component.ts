@@ -22,14 +22,25 @@ export class ForgetPasswordComponent {
 
   ngOnInit() {
     this.sendOtpForm = this.formBuilder.group({
-      email: this.formBuilder.control('', Validators.required)
+      email: this.formBuilder.control('', [Validators.required,Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')])
     }
     )
+  }
+  emailValid(): any {
+    const email: any = this.sendOtpForm.get('email')
+    if (!email.valid) {
+      if (email.errors.required) {
+        return 'Please enter your mail Id'
+      }
+      else if (email.errors.pattern) {
+        return 'Email is Invalid'
+      }
+    }
   }
   sendOtp() {
 
     if (!this.sendOtpForm.valid) {
-      this.toastr.warning("Enter your email")
+      this.toastr.warning(this.emailValid())
       return
     }
     else{

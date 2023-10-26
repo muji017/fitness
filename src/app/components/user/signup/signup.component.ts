@@ -25,7 +25,8 @@ export class SignupComponent {
 
     this.signUpForm = this.formBuilder.group({
       name: this.formBuilder.control('', [Validators.required, Validators.minLength(2), Validators.pattern(this.pattern)]),
-      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      email: this.formBuilder.control('', [Validators.required, 
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
       password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
       repassword: new FormControl('', Validators.required,)
@@ -60,7 +61,7 @@ export class SignupComponent {
       if (email.errors.required) {
         return 'Email is required';
       }
-      if (email.errors.email) {
+      if (email.errors.pattern) {
         return 'Invalid Email'
       }
     }

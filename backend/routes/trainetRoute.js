@@ -2,8 +2,7 @@ const express=require('express');
 const trainerroute=express();
 const trainercontroller=require('../controllers/trainetrController');
 const dierPlanController=require('../controllers/dietPlanController')
-
-
+const videoController=require('../controllers/videoContoller')
 
 const bodyparser=require('body-parser');
 trainerroute.use(bodyparser.json());
@@ -52,5 +51,9 @@ trainerroute.put('/uploadPic',upload.single('image'),trainercontroller.uploadPic
 trainerroute.put('/changePassword',upload.none(),trainercontroller.changePassword)
 
 trainerroute.put('/updateProfile',upload.none(),trainercontroller.updateProfile)
+
+trainerroute.get('/getAllVideos',videoController.getAllVideos)
+
+trainerroute.post('/addVideo',upload.single('video'),videoController.addVideo)
 
 module.exports=trainerroute

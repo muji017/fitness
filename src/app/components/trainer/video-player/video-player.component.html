@@ -1,0 +1,18 @@
+<div class="container mt-2  mx-auto">
+    <div  class="grid-cols-1  gap-8">
+        <!-- Card -->
+        <div style="max-width: 800px;" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
+            <div class="w-full " style="height: 400px;">
+                <vg-player>
+                    <video controls>
+                        <source
+                        [src]="'http://localhost:3000/public/images/' + video.video"
+                            type="video/mp4">
+
+                    </video>
+
+                </vg-player>
+            </div>
+        </div>
+    </div>
+</div>
