@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import {
   changeDietPremiumApi,
   changePlanStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
+  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getAllVideoListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
   getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
@@ -22,22 +22,22 @@ export class UserEffects {
     private service: UserService,
     private router: Router,
     private adminService: AdminService,
-    private trainerService:TrainerService
+    private trainerService: TrainerService
   ) { }
 
-// trainer part
-getTrainersListAdmin$ = createEffect(() => {
-  return this.actions$.pipe(
-    ofType(getTrainersListAdminApi),
-    mergeMap(() => {
-      return this.adminService.getTrainersList().pipe(
-        map((res) => {
-          return getTrainersListApiSuccess({ trainers: Object.values(res.trainers) })
-        })
-      )
-    })
-  )
-})
+  // trainer part
+  getTrainersListAdmin$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getTrainersListAdminApi),
+      mergeMap(() => {
+        return this.adminService.getTrainersList().pipe(
+          map((res) => {
+            return getTrainersListApiSuccess({ trainers: Object.values(res.trainers) })
+          })
+        )
+      })
+    )
+  })
 
 
   getTrainersList$ = createEffect(() => {
@@ -60,7 +60,7 @@ getTrainersListAdmin$ = createEffect(() => {
         return this.trainerService.getTrainerProfile().pipe(
           map((res) => {
             console.log(res)
-            return getTrainerProfileApiSuccess({trainer: Object.values(res) })
+            return getTrainerProfileApiSuccess({ trainer: Object.values(res) })
           })
         )
       })
@@ -126,16 +126,16 @@ getTrainersListAdmin$ = createEffect(() => {
     );
   });
 
-  changeUserStaus$=createEffect(()=>{
+  changeUserStaus$ = createEffect(() => {
     return this.actions$.pipe(
-    ofType(changeUserStatusApi),
-    mergeMap((action)=>{
-      return this.adminService.changeUserStatus(action.userId).pipe(
-        map((data)=>{
-          return getUsersListApiSuccess({users:Object.values(data.users)})
-        })
-      )
-    })
+      ofType(changeUserStatusApi),
+      mergeMap((action) => {
+        return this.adminService.changeUserStatus(action.userId).pipe(
+          map((data) => {
+            return getUsersListApiSuccess({ users: Object.values(data.users) })
+          })
+        )
+      })
     )
   })
 
@@ -158,23 +158,23 @@ getTrainersListAdmin$ = createEffect(() => {
   })
 
 
-  changePlanStaus$=createEffect(()=>{
+  changePlanStaus$ = createEffect(() => {
     return this.actions$.pipe(
-    ofType(changePlanStatusApi),
-    mergeMap((action)=>{
-      return this.adminService.changePlanStatus(action.planId).pipe(
-        map((data)=>{
-          return getPlansListApiSuccess({plans:Object.values(data.plans)})
-        })
-      )
-    })
+      ofType(changePlanStatusApi),
+      mergeMap((action) => {
+        return this.adminService.changePlanStatus(action.planId).pipe(
+          map((data) => {
+            return getPlansListApiSuccess({ plans: Object.values(data.plans) })
+          })
+        )
+      })
     )
   })
 
 
   // diet plans
 
-  
+
   getDietPlansList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getDietPlansListApi),
@@ -190,7 +190,7 @@ getTrainersListAdmin$ = createEffect(() => {
 
   // delete dietplan
 
-  deleteDietPlan$= createEffect(() => {
+  deleteDietPlan$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteDietPlanApi),
       mergeMap((action) => {
@@ -204,17 +204,17 @@ getTrainersListAdmin$ = createEffect(() => {
   })
 
 
-  changeDietPremium$=createEffect(()=>{
+  changeDietPremium$ = createEffect(() => {
     return this.actions$.pipe(
-    ofType(changeDietPremiumApi),
-    mergeMap((action)=>{
-      console.log("effect",action.planId)
-      return this.adminService.changeDietPremium(action.planId).pipe(
-        map((data)=>{
-          return getAllDietPlansListApi()
-        })
-      )
-    })
+      ofType(changeDietPremiumApi),
+      mergeMap((action) => {
+        console.log("effect", action.planId)
+        return this.adminService.changeDietPremium(action.planId).pipe(
+          map((data) => {
+            return getAllDietPlansListApi()
+          })
+        )
+      })
     )
   })
 
@@ -245,6 +245,20 @@ getTrainersListAdmin$ = createEffect(() => {
       })
     )
   })
+  // video user
+
+  getAllVideoList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getAllVideoListApi),
+      mergeMap(() => {
+        return this.service.getVideos().pipe(
+          map((res) => {
+            return getAllVideosApiSuccess({ videos: Object.values(res.VideoModel) })
+          })
+        )
+      })
+    )
+  })
 
   // videos trainer
 
@@ -261,14 +275,14 @@ getTrainersListAdmin$ = createEffect(() => {
     )
   })
 
-// delete video trainer
+  // delete video trainer
 
-  deleteVideo$ = createEffect(()=>{
+  deleteVideo$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteVideoApi),
-      mergeMap((action)=>{
+      mergeMap((action) => {
         return this.trainerService.deleteVideo(action.videoId).pipe(
-          map((res)=>{
+          map((res) => {
             return getAllVideosApiSuccess({ videos: Object.values(res.VideoModel) })
           })
         )

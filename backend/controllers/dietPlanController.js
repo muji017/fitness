@@ -49,9 +49,17 @@ const getAllDietPlans = async (req, res) => {
 const updateDietPlan = async (req, res) => {
     try {
         const planId = req.body.planId
+        let image
+        if(req.file){
+            image=req.file.filename
+        }
+        else{
+            const existplan=await dietPlanModel.findOne({_id:planId})
+            image=existplan.image
+        }
         const updates = {
             title: req.body.title,
-            image: req.file.filename,
+            image: image,
             foodType: req.body.foodType,
             description: req.body.description,
             isVerified: true

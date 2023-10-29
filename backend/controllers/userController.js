@@ -256,6 +256,7 @@ const getProfile = async (req, res) => {
                 isVerified: user.isVerified,
                 isBlocked: user.isBlocked,
                 planName:subscriber.planId.title,
+                amount:subscriber.planId.amount,
                 image: user.image,
                 subscriptionDate: formattedSubscriptionDate,
                 expiryDate: formattedExpiryDate

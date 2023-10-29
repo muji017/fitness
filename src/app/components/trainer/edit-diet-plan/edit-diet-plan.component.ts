@@ -110,6 +110,8 @@ export class EditDietPlanComponent {
 }
 
   submitForm() {
+    console.log("submit press");
+    
     if (!this.editPlanForm.valid) {
       if (this.showTitleError()) {
         this.toastr.warning(this.showTitleError())
@@ -131,12 +133,14 @@ export class EditDietPlanComponent {
       console.log("in loop", controlName, control?.value);
       plan.append(controlName, control?.value);
     }
+    if(this.files){
     const file = this.files[0];
     if(file){
     plan.append('image', file, file.name);
     }
-    plan.append('planId',this.planId)
-    this.trainerService.updateDietPlan(plan).subscribe(
+  }
+    plan.append('videoId',this.planId)
+    this.trainerService.updateVideo(plan).subscribe(
       (res) => {
         this.toastr.success("Dietplan Updated successfully")
         this.dialoge.closeAll()

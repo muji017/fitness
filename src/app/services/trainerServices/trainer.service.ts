@@ -81,8 +81,10 @@ export class TrainerService {
 
   deleteVideo(videoId:any):Observable<VideoList>{
     const params = new HttpParams().set('videoId', videoId);
-    return this.http.delete<any>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
+    return this.http.delete<any>(`${this.apiUrl}/trainer/deleteVideo`, { params: params });
   }
-
+  updateVideo(form: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/trainer/updateVideo`, form)
+  }
 }
 

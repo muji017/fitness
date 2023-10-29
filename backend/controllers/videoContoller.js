@@ -15,9 +15,8 @@ const getAllVideos = async (req, res) => {
 
 const addVideo = async (req, res) => {
     try {
-        const trainerId = req.body.trainerId
+        const trainerId = req.trainerId
         const title = req.body.title
-
         const planExists = await videoModel.findOne({ title: title })
         if (planExists) {
             return res.status(409).json({ message: 'title already exist' })
@@ -38,8 +37,20 @@ const addVideo = async (req, res) => {
         res.status(500).json({ error: error })
     }
 }
+const deleteVideo = async (req, res) => {
+    try {
+      
+      const videoId=req.query.videoId
+      await videoModel.deleteOne({_id:videoId})
+      return res.status(200).json({ message: "Success" })
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+}
+
 
 module.exports={
     getAllVideos,
-    addVideo
+    addVideo,
+    deleteVideo
 }

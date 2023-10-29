@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class UsertrainerslistComponent {
   trainers!: trainer[]
+  searchQuery!:string
+  searchTrainer!:trainer[]
   constructor(private service: UserService
     , private store: Store<trainer[]>,
    private router:Router
@@ -26,9 +28,15 @@ export class UsertrainerslistComponent {
     this.store.select(getAllTrainers).subscribe((res)=>{
       const data=res
       this.trainers=data.filter((data)=>data.isVerified==true)
+      this.searchTrainer=data.filter((data)=>data.isVerified==true)
     })
   }
-
+  applyFilter() {
+    const filterValue = this.searchQuery.trim().toLowerCase();
+    this.trainers = this.searchTrainer.filter((tr) => {
+      return tr.name.toLowerCase().includes(filterValue);
+    });
+  }
   getTrainerProfile(trainerId:any){
      this.router.navigate([`/Usertrainerprofile/${trainerId}`])
   }

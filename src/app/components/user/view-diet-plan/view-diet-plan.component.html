@@ -10,9 +10,17 @@
              text-transform: uppercase; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
 
         Best Diet Plans 
-
+        
      </span>>
+    
      </div>
+     <div class="container flex mt-2 mb-4" style="justify-content: end !important;">
+     <div   class="flex rounded-lg bg-white ">
+        <mat-icon class="m-2 p-1" matTooltip="Search DietPans">search</mat-icon>
+        <input matTooltip="Search DietPans" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
+            [(ngModel)]="searchQuery" placeholder="Search">
+    </div>
+    </div>
     <!-- Cards Section -->
     <div  class="container mt-2  mx-auto">
         <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -37,7 +37,7 @@ const routes: Routes = [{
     { path: "viewdietplans/:planId", component: ViewDietPlanDetailsComponent, canActivate: [UserhomeAuthGuard] },
     { path: "usertrainerdiet/:trainerId", component: UserTrainerDietComponent,canActivate: [UserhomeAuthGuard] },
     { path: "videos", component: VideosComponent,canActivate: [UserhomeAuthGuard] },
-    { path:"videoplayer",component:VideoPlayerComponent,canActivate: [UserhomeAuthGuard]},
+    { path:"videoplayer/:videoId",component:VideoPlayerComponent,canActivate: [UserhomeAuthGuard]},
 
    { path: '*', redirectTo: 'login', pathMatch: 'full', }
   ]

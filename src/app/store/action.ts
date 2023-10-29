@@ -53,6 +53,7 @@ export const deleteDietPlanApi=createAction("deleteDietPlanApi",props<{planId:an
 export const changeDietPremiumApi=createAction("changeDietPremiumApi",props<{planId:any}>())
 
 // videos
+export const getAllVideoListApi=createAction("getAllVideoListApi")
 
 export const getAllVideosTrainerApi=createAction("getAllVideosApi")
 

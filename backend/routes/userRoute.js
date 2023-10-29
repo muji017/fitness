@@ -3,6 +3,7 @@ const userroute=express();
 const usercontroller=require('../controllers/userController');
 const subscriptionContoller=require('../controllers/subscriptionController')
 const dietPlanController=require('../controllers/dietPlanController')
+const videoController=require('../controllers/videoContoller')
 
 const bodyparser=require('body-parser');
 userroute.use(bodyparser.json());
@@ -54,5 +55,7 @@ userroute.put('/changeName',checkAuth,upload.none(),usercontroller.changeName)
 userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePassword)
 
 userroute.get('/getDietPlans',checkAuth,dietPlanController.getAllDietPlans)
+
+userroute.get('/getVideos',checkAuth,videoController.getAllVideos)
 
 module.exports=userroute;

@@ -12,12 +12,25 @@
 
      </span>>
      </div>
+     <div class="container flex mt-2 mb-4" style="justify-content: end !important;">
+        <div   class="flex rounded-lg bg-white ">
+           <mat-icon class="m-2 p-1" matTooltip="Search DietPans">search</mat-icon>
+           <input matTooltip="Search DietPans" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
+               [(ngModel)]="searchQuery" placeholder="Search">
+       </div>
+       </div>
     <!-- Cards Section -->
     <div  class="container mt-2  mx-auto">
         <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
-            <div >
-                <button mat-raised-button  (click)="getVideos()"  >Video player</button>
+            <div *ngFor="let plan of videos" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
+                <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image" class="w-full md:h-auto lg:h-60"></video>
+                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}</h2>
+                <p class="text-gray-300">{{plan.bodyPart}}</p>
+                <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}
+                    Time : {{ plan.uploadDate | date:'HH:mm:ss' }}
+                </p>
+                <button mat-raised-button  (click)="getVideos(plan._id)"  >Watch video</button>
             </div>
         </div>
     </div>
