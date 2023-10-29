@@ -9,7 +9,7 @@ import { getAllDietPlans } from 'src/app/store/selector';
   selector: 'app-view-diet-plan',
   templateUrl: './view-diet-plan.component.html',
   styleUrls: ['./view-diet-plan.component.css'],
-  encapsulation:ViewEncapsulation.None
+
 })
 export class ViewDietPlanComponent {
    

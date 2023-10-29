@@ -4,7 +4,7 @@ const dietPlanModel = require('../models/dietPlanModel')
 
 const addDietPlan = async (req, res) => {
     try {
-        const trainerId = req.body.trainerId
+        const trainerId = req.trainerId
         const title = req.body.title
 
         const planExists = await dietPlanModel.findOne({ title: title })
@@ -28,7 +28,8 @@ const addDietPlan = async (req, res) => {
 
 const getDietPlans = async (req, res) => {
     try {
-        const trainerId = req.query.trainerId
+        const trainerId = req.trainerId
+     console.log(trainerId);
         const DietPlans = await dietPlanModel.find({ trainerId: trainerId })
         return res.status(200).json({ DietPlans: DietPlans })
     } catch (error) {

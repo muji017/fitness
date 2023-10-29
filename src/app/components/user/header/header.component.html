@@ -40,7 +40,7 @@
               aria-current="page" style="font-weight: bold; 
             text-transform: uppercase; text-shadow: 2px 2px 4px rgb(114, 114, 114);"
               [ngClass]="{'bg-gray-900': isHomeRoute()}" routerLinkActive="active">Home</a>
-            <a [routerLink]="['/trainers']"
+            <a [routerLink]="['/Usertrainerlist']"
               class=" hover:bg-gray-700 hover:text-white text-white rounded-md px-3 py-2 text-sm font-medium" style="font-weight: bold;
             text-transform: uppercase; text-shadow: 2px 2px 4px rgb(114, 114, 114);"
               [ngClass]="{'bg-gray-900': isTrainerRoute()}" routerLinkActive="active">Trainers</a>
@@ -95,8 +95,8 @@
                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
-                <img *ngIf="userData" class="h-8 w-8 rounded-full"
-                [src]="apiUrl+userData.image "
+                <img *ngIf="userData$ | async as userData" class="h-8 w-8 rounded-full"
+                [src]="apiUrl+userData.user.image "
                 alt="">
               </button>
             </div>

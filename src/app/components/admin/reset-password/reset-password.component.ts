@@ -43,7 +43,7 @@ export class ResetPasswordComponent {
   sendOtp() {
 
     if (!this.sendOtpForm.valid) {
-      this.toastr.warning("Enter your email")
+      this.toastr.warning(this.emailValid())
       return
     }
     else{

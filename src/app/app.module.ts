@@ -36,6 +36,8 @@ import { ViewDietPlanComponent } from './components/user/view-diet-plan/view-die
 import { ViewDietPlanDetailsComponent } from './components/user/view-diet-plan-details/view-diet-plan-details.component';
 import { VideosComponent } from './components/user/videos/videos.component';
 import { VideoPlayerComponent } from './components/user/video-player/video-player.component';
+import { ErrorInterceptor } from './services/errorInterceptor.service';
+import { UserTrainerDietComponent } from './components/user/user-trainer-diet/user-trainer-diet.component';
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import { VideoPlayerComponent } from './components/user/video-player/video-playe
     UserTrainerProfileComponent,
     ErrorPageComponent,
     ProfileComponent,
+    UserTrainerDietComponent,
     ViewDietPlanComponent,
     ViewDietPlanDetailsComponent,
     VideosComponent,
@@ -95,7 +98,12 @@ import { VideoPlayerComponent } from './components/user/video-player/video-playe
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor, 
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -5,6 +5,8 @@ export const loginStart=createAction("loginStart",props<{ email:string,password:
 
 export const loginSuccess=createAction("loginSuccess",props<{userToken:userToken}>())
 // traines list
+export const getTrainersListAdminApi=createAction("getTrainersListAdminApi")
+
 export const getTrainersListApi=createAction("getTrainersListApi")
 
 export const getTrainersListApiSuccess=createAction("getTrainersListApiSuccess",props<{ trainers:trainer[] }>())
@@ -52,6 +54,8 @@ export const changeDietPremiumApi=createAction("changeDietPremiumApi",props<{pla
 
 // videos
 
-export const getAllVideosApi=createAction("getAllVideosApi")
+export const getAllVideosTrainerApi=createAction("getAllVideosApi")
 
 export const getAllVideosApiSuccess=createAction("getAllVideosApiSuccess",props<{videos:VideoModel[]}>())
+
+export const deleteVideoApi=createAction("deleteVideoApi",props<{videoId:any}>())

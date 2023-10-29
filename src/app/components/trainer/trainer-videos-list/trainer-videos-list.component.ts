@@ -4,7 +4,7 @@ import { AddVideoComponent } from '../add-video/add-video.component';
 import { VideoModel } from 'src/app/model/userModel';
 import { Store } from '@ngrx/store';
 import { getAllVideos } from 'src/app/store/selector';
-import { getAllVideosApi } from 'src/app/store/action';
+import { deleteVideoApi, getAllVideosTrainerApi } from 'src/app/store/action';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 @Component({
@@ -16,6 +16,7 @@ import { VideoPlayerComponent } from '../video-player/video-player.component';
 export class TrainerVideosListComponent {
 
   videos!:VideoModel[]
+  searchVideos!:VideoModel[]
   searchQuery!:string
 
 
@@ -25,10 +26,11 @@ export class TrainerVideosListComponent {
   ){}
 
   ngOnInit(){
-    this.store.dispatch(getAllVideosApi())
+    this.store.dispatch(getAllVideosTrainerApi())
     this.store.select(getAllVideos).subscribe(
       (res)=>{
         this.videos=res
+        this.searchVideos=res
         console.log(this.videos);
         
       }
@@ -55,16 +57,16 @@ export class TrainerVideosListComponent {
 
   }
 
-  deletePlan(planId:any){
-    // this.store.dispatch(deleteDietPlanApi({planId}))
-    // this.ngOnInit()
+  deleteVideo(videoId:any){
+    this.store.dispatch(deleteVideoApi({videoId}))
+    this.ngOnInit()
   }
 
 
    applyFilter() {
-    // const filterValue = this.searchQuery.trim().toLowerCase();
-    // this.dietPlans = this.searchPlans.filter((plan) => {
-    //   return plan.title.toLowerCase().includes(filterValue);
-    // });
+    const filterValue = this.searchQuery.trim().toLowerCase();
+    this.videos = this.searchVideos.filter((plan) => {
+      return plan.title.toLowerCase().includes(filterValue);
+    });
   }
 }

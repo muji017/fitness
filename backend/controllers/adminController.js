@@ -26,14 +26,14 @@ const login = async (req, res) => {
 
             }
             else {
-                res.status(401).json({ message: "Email and password don't match" });
+                res.status(401).json({ error: "Email and password don't match" });
             }
         }
         else {
-            res.status(404).json({ message: "Email not found" })
+            res.status(402).json({ error: "Email not found" })
         }
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
@@ -59,7 +59,7 @@ const sendOtp = async (req, res) => {
             }, 60000);
         }
         else {
-            res.status(404).json({ message: 'Email Not Found' })
+            res.status(402).json({ message: 'Email Not Found' })
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -137,6 +137,27 @@ const setPassword = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+// change trainer status
+const getTrainersList = async (req, res) => {
+    try {
+        const trainers = await trainerModel.find({})
+        const trainerlist = trainers.map((t) => ({
+            id: t._id,
+            name: t.name,
+            email: t.email,
+            qualification: t.qualification,
+            specification: t.specification,
+            image: t.image,
+            location: t.location,
+            jobPosition: t.jobPosition,
+            description: t.description,
+            isVerified: t.isVerified
+        }))
+        res.status(200).json({ trainers: trainerlist })
+    } catch (error) {
+        res.status(500).json({message:"Internal Server Error"})
+    }
+}
 
 // change trainer status
 
@@ -208,7 +229,7 @@ const getUsersList = async (req, res) => {
             email: t.email,
             image: t.image,
             isVerified: t.isVerified,
-            isBlocked:t.isBlocked
+            isBlocked: t.isBlocked
         }))
         return res.status(200).json({ users: userList })
     } catch (error) {
@@ -242,6 +263,7 @@ module.exports = {
     resendOtp,
     otpVerify,
     setPassword,
+    getTrainersList,
     changeTrainerStatus,
     addTrainer,
     getUsersList,

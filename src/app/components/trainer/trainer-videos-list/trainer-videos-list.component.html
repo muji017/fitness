@@ -28,7 +28,7 @@
 
                     <div class="flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
                         <div>
-                            <button (click)="deletePlan(plan._id)" mat-mini-fab class="red"
+                            <button (click)="deleteVideo(plan._id)" mat-mini-fab class="red"
                                 matTooltip="Delete DietPlan"><mat-icon>delete</mat-icon></button>
                             <video (click)="playVideo(plan._id)"  [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image"
                                 class="w-full md:h-auto lg:h-60"></video>

@@ -2,6 +2,7 @@ const dotenv=require('dotenv');
 const userModel = require('../models/userModel');
 const jwtDecode = require('jwt-decode');
 const trainerModel = require('../models/trainerModel');
+const adminModel = require('../models/adminModel');
 
 const checkAuth= async(req,res,next)=>{
     try {
@@ -20,12 +21,17 @@ const checkAuth= async(req,res,next)=>{
         const userId=payload.userId
         const user=await userModel.findOne({_id:userId})
         if(user&&!user.isBlocked){
-          req.userId=userId
+          req.userId=userId 
           next()
         }
         const trainer=await trainerModel.findOne({_id:userId})
         if(trainer&&trainer.isVerified){
           req.trainerId=userId
+          next()
+        }
+        const admin=await adminModel.findOne({_id:userId})
+        if(admin){
+          req.adminId=userId
           next()
         }
        

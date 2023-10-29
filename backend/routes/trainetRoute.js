@@ -35,25 +35,25 @@ trainerroute.post('/sendOtp',trainercontroller.sendOtp)
 
 trainerroute.put('/setPassword',trainercontroller.setPassword)
 
-trainerroute.post('/addDietPlan',upload.single('image'),dierPlanController.addDietPlan)
+trainerroute.post('/addDietPlan',checkAuth,upload.single('image'),dierPlanController.addDietPlan)
 
-trainerroute.get('/getDietPlans',dierPlanController.getDietPlans)
+trainerroute.get('/getDietPlans',checkAuth,dierPlanController.getDietPlans)
 
-trainerroute.put('/updateDietPlan',upload.single('image'),dierPlanController.updateDietPlan)
+trainerroute.put('/updateDietPlan',checkAuth,upload.single('image'),dierPlanController.updateDietPlan)
 
-trainerroute.delete('/deleteDietPlan',dierPlanController.deleteDietPlan)
+trainerroute.delete('/deleteDietPlan',checkAuth,dierPlanController.deleteDietPlan)
 
-trainerroute.get('/getTrainerProfile',trainercontroller.getTrainerProfile)
+trainerroute.get('/getTrainerProfile',checkAuth,trainercontroller.getTrainerProfile)
 
-trainerroute.put('/uploadPic',upload.single('image'),trainercontroller.uploadPic)
+trainerroute.put('/uploadPic',checkAuth,upload.single('image'),trainercontroller.uploadPic)
 
 
-trainerroute.put('/changePassword',upload.none(),trainercontroller.changePassword)
+trainerroute.put('/changePassword',checkAuth,upload.none(),trainercontroller.changePassword)
 
-trainerroute.put('/updateProfile',upload.none(),trainercontroller.updateProfile)
+trainerroute.put('/updateProfile',checkAuth,upload.none(),trainercontroller.updateProfile)
 
-trainerroute.get('/getAllVideos',videoController.getAllVideos)
+trainerroute.get('/getAllVideos',checkAuth,videoController.getAllVideos)
 
-trainerroute.post('/addVideo',upload.single('video'),videoController.addVideo)
+trainerroute.post('/addVideo',checkAuth,upload.single('video'),videoController.addVideo)
 
 module.exports=trainerroute

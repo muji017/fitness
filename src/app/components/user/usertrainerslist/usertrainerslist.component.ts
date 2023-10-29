@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store} from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
 import { UserService } from 'src/app/services/userServices/user.service';
@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-usertrainerslist',
   templateUrl: './usertrainerslist.component.html',
-  styleUrls: ['./usertrainerslist.component.css']
+  styleUrls: ['./usertrainerslist.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class UsertrainerslistComponent {
   trainers!: trainer[]
@@ -29,7 +30,7 @@ export class UsertrainerslistComponent {
   }
 
   getTrainerProfile(trainerId:any){
-     this.router.navigate([`/trainersprofile/${trainerId}`])
+     this.router.navigate([`/Usertrainerprofile/${trainerId}`])
   }
 }
 

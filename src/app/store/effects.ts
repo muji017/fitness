@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import {
   changeDietPremiumApi,
   changePlanStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getAllVideosApi, getAllVideosApiSuccess, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListApi,
+  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
   getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
@@ -26,6 +26,20 @@ export class UserEffects {
   ) { }
 
 // trainer part
+getTrainersListAdmin$ = createEffect(() => {
+  return this.actions$.pipe(
+    ofType(getTrainersListAdminApi),
+    mergeMap(() => {
+      return this.adminService.getTrainersList().pipe(
+        map((res) => {
+          return getTrainersListApiSuccess({ trainers: Object.values(res.trainers) })
+        })
+      )
+    })
+  )
+})
+
+
   getTrainersList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getTrainersListApi),
@@ -236,12 +250,10 @@ export class UserEffects {
 
   getAllVideos$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(getAllVideosApi),
+      ofType(getAllVideosTrainerApi),
       mergeMap(() => {
         return this.trainerService.getAllVideos().pipe(
           map((res) => {
-            console.log(res);
-            
             return getAllVideosApiSuccess({ videos: Object.values(res.VideoModel) })
           })
         )
@@ -249,7 +261,20 @@ export class UserEffects {
     )
   })
 
+// delete video trainer
 
+  deleteVideo$ = createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(deleteVideoApi),
+      mergeMap((action)=>{
+        return this.trainerService.deleteVideo(action.videoId).pipe(
+          map((res)=>{
+            return getAllVideosApiSuccess({ videos: Object.values(res.VideoModel) })
+          })
+        )
+      })
+    )
+  })
 
 }
 

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { trainer } from 'src/app/model/userModel';
-import { getTrainersListApi } from 'src/app/store/action';
-import { getAllTrainers } from 'src/app/store/selector';
+import { DietPlansModel, trainer } from 'src/app/model/userModel';
+import { getAllDietPlansListApi, getTrainersListApi } from 'src/app/store/action';
+import { getAllDietPlans, getAllTrainers } from 'src/app/store/selector';
 
 @Component({
   selector: 'app-user-trainer-profile',
@@ -15,10 +15,13 @@ export class UserTrainerProfileComponent {
   trainerId!: any
   trainer!: trainer | undefined
   trainers!:trainer[]
+  dietplans!:number
 
   constructor(
     private store: Store<trainer[]>,
-    private route: ActivatedRoute
+    private dietStore:Store<DietPlansModel[]>,
+    private route: ActivatedRoute,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -30,8 +33,16 @@ export class UserTrainerProfileComponent {
       this.trainers=res
     })
      this.trainer=this.trainers.find((tr)=>tr.id===this.trainerId)
+     this.dietStore.dispatch(getAllDietPlansListApi())
+     this.dietStore.select(getAllDietPlans).subscribe((res)=>{
+      const data=res
+      this.dietplans=data.filter((plan)=>plan.trainerId===this.trainerId).length
+    })
   }
 
+  viewDietPlans(){
+    this.router.navigate([`/usertrainerdiet/${this.trainerId}`])
+  }
   connect(){
     
   }

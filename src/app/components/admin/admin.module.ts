@@ -38,7 +38,7 @@ const routes:Routes=[
         path:'home',component:HomeComponent,canActivate:[AdminhomeAuthGuard]
       },
       {
-        path:'trainers',component:TrainerslistComponent,canActivate:[AdminhomeAuthGuard]
+        path:'admintrainerlist',component:TrainerslistComponent,canActivate:[AdminhomeAuthGuard]
       },
       {
         path:'users',component:UserListComponent,canActivate:[AdminhomeAuthGuard]

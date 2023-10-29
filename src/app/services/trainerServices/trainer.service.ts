@@ -36,10 +36,6 @@ export class TrainerService {
   }
 
   addDietPlan(form: FormData): Observable<any> {
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    form.append('trainerId', trainerId)
     return this.http.post<any>(`${this.apiUrl}/trainer/addDietPlan`, form)
   }
 
@@ -47,63 +43,45 @@ export class TrainerService {
     return this.http.put<any>(`${this.apiUrl}/trainer/updateDietPlan`, form)
   }
   getDietPlans(): Observable<DietPlanList> {
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    const params = new HttpParams().set('trainerId', trainerId);
-    return this.http.get<DietPlanList>(`${this.apiUrl}/trainer/getDietPlans?`, { params: params })
+    return this.http.get<DietPlanList>(`${this.apiUrl}/trainer/getDietPlans?`)
   }
 
-  deleteDietPlan(planId: any): Observable<any> {
+  deleteDietPlan(planId: any): Observable<DietPlanList> {
     const params = new HttpParams().set('planId', planId);
-    return this.http.delete<any>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
+    return this.http.delete<DietPlanList>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
 
   }
 
   getTrainerProfile():Observable<any>{
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    const params = new HttpParams().set('trainerId', trainerId);
-    return this.http.get<any>(`${this.apiUrl}/trainer/getTrainerProfile?`, { params: params })
+    return this.http.get<any>(`${this.apiUrl}/trainer/getTrainerProfile?`)
   }
 
   uploadPic(form:FormData):Observable<any>{
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    form.append('trainerId', trainerId)
     return this.http.put<any>(`${this.apiUrl}/trainer/uploadPic`,form)
    }
 
-   updateProfile(profile:FormData):Observable<any>{
-    return this.http.put<any>(`${this.apiUrl}/trainer/updateProfile`,profile)
+   updateProfile(profile:FormData):Observable<DietPlanList>{
+    return this.http.put<DietPlanList>(`${this.apiUrl}/trainer/updateProfile`,profile)
   }
 
    changePassword(password:string):Observable<any>{
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    const payload={password,trainerId}
+    const payload={password}
     return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
    }
 
 
    getAllVideos():Observable< VideoList>{
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    const params = new HttpParams().set('trainerId', trainerId);
-    return this.http.get< VideoList>(`${this.apiUrl}/trainer/getAllVideos?`, { params: params })
+    return this.http.get< VideoList>(`${this.apiUrl}/trainer/getAllVideos?`)
   }
 
 
   addVideo(form: FormData): Observable<any> {
-    const trainer: any = localStorage.getItem('trainerToken')
-    const trainerparse = JSON.parse(trainer)
-    const trainerId = trainerparse?.trainerId
-    form.append('trainerId', trainerId)
     return this.http.post<any>(`${this.apiUrl}/trainer/addVideo`, form)
+  }
+
+  deleteVideo(videoId:any):Observable<VideoList>{
+    const params = new HttpParams().set('videoId', videoId);
+    return this.http.delete<any>(`${this.apiUrl}/trainer/deleteDietPlan`, { params: params });
   }
 
 }

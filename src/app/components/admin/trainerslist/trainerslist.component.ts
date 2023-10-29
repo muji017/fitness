@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
-import { changeTrainerStatusApi, getTrainersListApi } from 'src/app/store/action';
+import { changeTrainerStatusApi, getTrainersListAdminApi, getTrainersListApi } from 'src/app/store/action';
 import { getAllTrainers } from 'src/app/store/selector';
 import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,7 +32,7 @@ export class TrainerslistComponent {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(getTrainersListApi())
+    this.store.dispatch(getTrainersListAdminApi())
     this.getTrainers()
   }
   changeStatus(trainerId: any) {
