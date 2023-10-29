@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DietPlanList, PlanList, UserModel, trainer, userlist } from 'src/app/model/userModel';
+import { DietPlanList, PlanList, UserModel, trainer, trainerlist, userlist } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,9 @@ export class AdminService {
    }
 
   //  trainers api calls
+  getTrainersList():Observable<trainerlist>{
+    return this.http.get<trainerlist>(`${this.apiUrl}/admin/getTrainersList`)
+  }
    changeTrainerStatus(trainerId:string):Observable<any>{
     const payload={trainerId}
     return this.http.put<any>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)

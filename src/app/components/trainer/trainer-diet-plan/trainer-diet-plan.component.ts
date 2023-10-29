@@ -60,6 +60,13 @@ export class TrainerDietPlanComponent {
      })
 
   }
+  splitIntoParagraphs(description: any | undefined): string[] {
+    if (!description) {
+      return [];
+    }
+  
+    return description.split('\n');
+  }
   deletePlan(planId:any){
     this.store.dispatch(deleteDietPlanApi({planId}))
     this.ngOnInit()

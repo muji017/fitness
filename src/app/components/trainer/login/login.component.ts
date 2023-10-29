@@ -81,7 +81,8 @@ export class LoginComponent {
           this.router.navigate(['/trainer/home'])
         }
         ,(error)=>{
-          this.toastr.error(error.error.message)
+          console.log("here intrainer login error")
+          this.toastr.error(error.error.error)
         }
       )
 

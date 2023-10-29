@@ -19,6 +19,7 @@ import { ViewDietPlanComponent } from './view-diet-plan/view-diet-plan.component
 import { ViewDietPlanDetailsComponent } from './view-diet-plan-details/view-diet-plan-details.component';
 import { VideosComponent } from './videos/videos.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import { UserTrainerDietComponent } from './user-trainer-diet/user-trainer-diet.component';
 
 const routes: Routes = [{
   path: '',
@@ -28,14 +29,15 @@ const routes: Routes = [{
     { path: 'signup', component: SignupComponent, canActivate: [UserLoginAuthGuard] },
     { path: "home", component: HomeComponent, },
     { path: "bmicalculator", component: BmicalculatorComponent },
-    { path: "trainers", component: UsertrainerslistComponent },
-    { path: "trainersprofile/:trainerId", component: UserTrainerProfileComponent },
+    { path: "Usertrainerlist", component: UsertrainerslistComponent,canActivate: [UserhomeAuthGuard] },
+    { path: "Usertrainerprofile/:trainerId", component: UserTrainerProfileComponent,canActivate: [UserhomeAuthGuard] },
     { path: "subscription", component: SubscriptionComponent, canActivate: [UserhomeAuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [UserhomeAuthGuard] },
-    { path: 'dietplans', component: ViewDietPlanComponent },
+    { path: 'dietplans', component: ViewDietPlanComponent,canActivate: [UserhomeAuthGuard] },
     { path: "viewdietplans/:planId", component: ViewDietPlanDetailsComponent, canActivate: [UserhomeAuthGuard] },
-    { path: "videos", component: VideosComponent },
-    { path:"videoplayer",component:VideoPlayerComponent},
+    { path: "usertrainerdiet/:trainerId", component: UserTrainerDietComponent,canActivate: [UserhomeAuthGuard] },
+    { path: "videos", component: VideosComponent,canActivate: [UserhomeAuthGuard] },
+    { path:"videoplayer",component:VideoPlayerComponent,canActivate: [UserhomeAuthGuard]},
 
    { path: '*', redirectTo: 'login', pathMatch: 'full', }
   ]
@@ -43,14 +45,7 @@ const routes: Routes = [{
 
 @NgModule({
   declarations: [
-    // OtpDialogComponent
-
-
-
     SetUserPasswordComponent,
- 
-
-
   ],
   imports: [
     CommonModule,

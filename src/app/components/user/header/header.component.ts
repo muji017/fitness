@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserModel, userToken } from 'src/app/model/userModel';
+import { Observable, map } from 'rxjs';
+import { UserModel, userToken, userlist } from 'src/app/model/userModel';
 import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
 
   smallview: string = "hidden"
   mobileMenuActive: boolean = false;
   usertoken!:userToken
-  userData!:UserModel
+  userData$:Observable<any> | undefined
   apiUrl!:string
 
   constructor(private router: Router,
@@ -28,11 +30,7 @@ export class HeaderComponent {
     if(user){
       this.usertoken=user
     }
-    this.userService.getProfile().subscribe(
-      (res:any)=>{
-      this.userData=res.user
-      }
-    )
+    this.userData$ = this.userService.getProfile();
   }
 
    // Check if the current route is '/login'
@@ -50,7 +48,7 @@ export class HeaderComponent {
   }
 
   isTrainerRoute(): boolean {
-    return this.router.url === '/trainers'; 
+    return this.router.url === '/trainerlistUser'; 
   }
 
   isDietRoute(): boolean {

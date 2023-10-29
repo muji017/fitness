@@ -28,10 +28,10 @@ const login = async (req, res) => {
             }
         }
         else {
-            res.status(404).json({ message: "Email not found" })
+            res.status(402).json({ error: "Email not found" })
         }
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
@@ -57,7 +57,7 @@ const sendOtp = async (req, res) => {
             }, 60000);
         }
         else {
-            res.status(404).json({ message: 'Email Not Found' })
+            res.status(402).json({ message: 'Email Not Found' })
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -137,7 +137,7 @@ const setPassword = async (req, res) => {
 
 const getTrainerProfile=async(req,res)=>{
     try {
-        const trainerId=req.query.trainerId
+        const trainerId=req.trainerId
         const trainer=await trainerModel.findOne({_id:trainerId})
         res.status(200).json({ trainer });
     } catch (error) {
@@ -147,7 +147,7 @@ const getTrainerProfile=async(req,res)=>{
 
 const uploadPic = async (req, res) => {
     try {
-        const trainerId = req.body.trainerId;
+        const trainerId = req.trainerId;
         const trainerData = await trainerModel.findOne({ _id: trainerId })
         console.log(trainerData)
         trainerData.image = req.file.filename
@@ -164,7 +164,7 @@ const uploadPic = async (req, res) => {
 
 const changePassword = async (req, res) => {
     try {
-        const trainerId = req.body.trainerId
+        const trainerId = req.trainerId
         const password = req.body.password
 
         const trainerData = await trainerModel.findOne({ _id: trainerId })
@@ -180,7 +180,7 @@ const changePassword = async (req, res) => {
 
 const updateProfile=async(req,res)=>{
     try {
-        const trainerId = req.body.trainerId
+        const trainerId = req.trainerId
         console.log(trainerId);
         const updates = {
             name: req.body.name,

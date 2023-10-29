@@ -42,7 +42,7 @@
                         <div class="p-4 w-full" style="overflow-x: auto; flex: 2; max-height: 400px;">
                             <!-- Adjust the max-height as needed -->
                             <p class="text-gray-800 text-2xl">Description</p>
-                            <p class="text-gray-800">{{plan?.description}}</p>
+                            <p *ngFor="let paragraph of splitIntoParagraphs(plan?.description)" class="text-gray-800">{{paragraph}}</p>
                         </div>
                     </div>
 

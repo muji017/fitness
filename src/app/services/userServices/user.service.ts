@@ -42,7 +42,6 @@ export class UserService {
     return this.http.get<trainerlist>(`${this.apiUrl}/trainerslist`)
   }
   getProfile():Observable<UserModel>{
-    
     return this.http.get<UserModel>(`${this.apiUrl}/getProfile`)
   }
 

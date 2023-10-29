@@ -30,7 +30,12 @@ ngOnInit() {
    this.plan=this.plans.find((tr)=>tr._id===this.planId)
 }
 
-connect(){
-  
+splitIntoParagraphs(description: any | undefined): string[] {
+  if (!description) {
+    return [];
+  }
+
+  return description.split('\n');
 }
+
 }

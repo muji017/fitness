@@ -18,7 +18,7 @@
             <div class="grid grid-cols-1  gap-8">
                 <!-- Card -->
 
-                <div class="flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
+                <div class="mb-2 flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
                     <div>
                         <img [src]="'http://localhost:3000/public/images/' + plan.image" alt="Background Image"
                             class="w-full md:h-auto lg:h-60">
@@ -30,7 +30,7 @@
                     <div class="p-4 w-full" style="overflow-x: auto; flex: 2; max-height: 400px;">
                         <!-- Adjust the max-height as needed -->
                         <p class="text-gray-800 text-2xl">Description</p>
-                        <p class="text-gray-800">{{plan.description}}</p>
+                        <p *ngFor="let paragraph of splitIntoParagraphs(plan?.description)" class="text-gray-800">{{paragraph}}</p>
                     </div>
                 </div>
 
@@ -39,9 +39,9 @@
         </div>
 
     </div>
-    <div class="container m-5 flex items-center justify-center mx-auto">
+    <div class="mb-3 container m-5 flex items-center justify-center mx-auto">
         <button class=" btn  border-gray-300 border-1 p-6 rounded-full shadow-lg">
-           <span class="text-xs text-white"><a href="" class="underline">Click here</a> for more home workout videos and tips</span>
+           <span class="text-xs text-white"><a [routerLink]="['/dietplans']" class="underline">Click here</a> for more diet plans and tipe</span>
         </button>
     </div>
 

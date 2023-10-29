@@ -39,7 +39,8 @@ export class EditDietPlanComponent {
     this.editPlanForm = this.fb.group({
       title: fb.control(this.dietPlans[0].title, [Validators.required, Validators.minLength(3)]),
       foodType: fb.control(this.dietPlans[0].foodType, [Validators.required]),
-      description: fb.control(this.dietPlans[0].description, [Validators.required, Validators.minLength(15)])
+      description: fb.control(this.dietPlans[0].description, [Validators.required, Validators.minLength(15)]),
+
     });
   }
 
@@ -85,18 +86,27 @@ export class EditDietPlanComponent {
     }
   }
 
-  onFilesSelected(event: any) {
+  onFilesSelected(event: any):any {
     const files: FileList = event.target.files;
     this.files = files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith('image/')) {
+        console.log('File type is:', file.type);
+        return this.toastr.warning('Image type is invalid');
+      }
+    }
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
 
-    var reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log(e.target.result);
+        this.imageSrc.push(e.target.result);
+      };
 
-    reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-    reader.onload = (event) => { // called once readAsDataURL is completed
-      this.imageSrc = event.target?.result;
-    
-  }
+      reader.readAsDataURL(this.files[i]);
+    }
+    console.log(this.files);
 }
 
   submitForm() {

@@ -37,6 +37,8 @@ adminroute.put('/setPassword',admincontroller.setPassword)
 
 adminroute.put('/changeTrainerStatus',admincontroller.changeTrainerStatus)
 
+adminroute.get('/getTrainersList',admincontroller.getTrainersList)
+
 adminroute.post('/addTrainer',upload.single('image'),admincontroller.addTrainer)
 
 adminroute.get('/getUsersList',admincontroller.getUsersList)

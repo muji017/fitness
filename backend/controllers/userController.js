@@ -71,7 +71,7 @@ const login = async (req, res) => {
             }
         }
         else {
-            res.status(404).json({ message: "Email not found" })
+            res.status(402).json({ message: "Email not found" })
         }
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error" });
@@ -126,7 +126,7 @@ const sendOtp = async (req, res) => {
             }, 60000);
         }
         else {
-            res.status(404).json({ message: 'Email Not Found' })
+            res.status(402).json({ message: 'Email Not Found' })
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -226,7 +226,7 @@ const getTrainers = async (req, res) => {
 const getProfile = async (req, res) => {
     try {
         const userId = req.userId; // Convert the object to a JSON string
-        console.log("UserId as a JSON string:", typeof userId);
+        console.log("UserId as a JSON string:1", typeof userId);
         let userData = await userModel.findOne({ _id: userId })
         let user = userData
         const subscriber = await paymentDetailModel.findOne({ userId: userId }).populate('planId')
