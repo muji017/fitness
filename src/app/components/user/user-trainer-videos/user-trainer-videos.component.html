@@ -1,7 +1,6 @@
 
-
  <!-- Image Section -->
- <div class="bg-black" style="  background-image: url(../assets/images/food.jpeg);
+ <div class="bg-black" style="  background-image: url(../assets/images/background1.jpg);
  background-size: cover; background-position: center ; height: 100vh;">
     <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
      <div class="mt-16 p-3 bg-black" style="text-align: center !important; opacity: 0.5;">
@@ -9,7 +8,7 @@
                         style="text-align: center; color: rgb(240, 240, 240); font-size: 24px; font-weight: bold;
              text-transform: uppercase; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
 
-        Best Diet Plans 
+          Famous Personal Trainers
 
      </span>>
      </div>
@@ -24,14 +23,14 @@
     <div  class="container mt-2  mx-auto">
         <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
-            <div *ngFor="let plan of dietplans" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <img [src]="'http://localhost:3000/public/images/' + plan?.image" alt="Background Image" class="w-full md:h-auto lg:h-60">
+            <div *ngFor="let plan of videos" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
+                <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image" class="w-full md:h-auto lg:h-60"></video>
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}</h2>
-                <p class="text-gray-300">{{plan.foodType}}</p>
+                <p class="text-gray-300">{{plan.bodyPart}}</p>
                 <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}
                     Time : {{ plan.uploadDate | date:'HH:mm:ss' }}
                 </p>
-                <button mat-raised-button  (click)="viewPlan(plan._id)"  >View plan detais</button>
+                <button mat-raised-button  (click)="getVideos(plan._id)"  >Watch video</button>
             </div>
         </div>
     </div>

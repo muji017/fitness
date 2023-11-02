@@ -38,6 +38,10 @@ const trainer = mongoose.Schema({
     },
     description:{
         type:String
+    },
+    is_Online:{
+        type:Boolean,
+        default:false
     }
     
 })

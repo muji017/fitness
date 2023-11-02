@@ -33,6 +33,10 @@ const user=mongoose.Schema({
     subscriptionId:{
         
     },
+    is_Online:{
+        type:Boolean,
+        default:false
+    },
     paymentMethode:{
         type:String
     },

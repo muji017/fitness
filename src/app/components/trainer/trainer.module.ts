@@ -24,6 +24,7 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { EditVideoComponent } from './edit-video/edit-video.component';
+import { ChatWithUserComponent } from './chat-with-user/chat-with-user.component';
 
 const routes:Routes=[
   {
@@ -68,7 +69,8 @@ const routes:Routes=[
     TrainerVideosListComponent,
     AddVideoComponent,
     VideoPlayerComponent,
-    EditVideoComponent
+    EditVideoComponent,
+    ChatWithUserComponent
   ],
   imports: [
     VgCoreModule,

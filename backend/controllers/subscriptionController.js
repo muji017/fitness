@@ -64,7 +64,7 @@ const getPlans = async (req, res) => {
             duration: t.duration,
             amount: t.amount,
             description: t.description,
-            isVerified:t.isVerified
+            isVerified: t.isVerified
         }))
         res.status(200).json({ plans: planList })
 
@@ -154,7 +154,7 @@ const changePlanStatus = async (req, res) => {
         const { planId } = req.body
         console.log(planId);
         const plan = await planModel.findOne({ _id: planId })
-        console.log("hc",plan);
+        console.log("hc", plan);
         if (plan) {
             plan.isVerified = !plan.isVerified
             await plan.save()
@@ -165,12 +165,75 @@ const changePlanStatus = async (req, res) => {
     }
 }
 
+// get all subscribers
+const getSubscribers = async (req, res) => {
 
+    try {
+        const adminId = req.adminId; // Convert the object to a JSON string
+        console.log("UserId as a JSON string:1", typeof adminId);
+        const subscribers = await paymentDetailModel.find({}).populate('planId').populate('userId');
+
+        console.log(subscribers);
+        const userList = subscribers.map(subscriber => {
+            const subscriptionDate = subscriber.subscriptionDate;
+            const sday = subscriptionDate.getDate();
+            const smonth = subscriptionDate.getMonth() + 1;
+            const syear = subscriptionDate.getFullYear();
+            const formattedSubscriptionDate = `${sday}/${smonth}/${syear}`;
+
+            const durationInMonths = subscriber.planId.duration;
+            const expiryDate = new Date(subscriptionDate);
+            expiryDate.setMonth(expiryDate.getMonth() + durationInMonths);
+
+            const day = expiryDate.getDate();
+            const month = expiryDate.getMonth() + 1;
+            const year = expiryDate.getFullYear();
+            const formattedExpiryDate = `${day}/${month}/${year}`;
+
+            return {
+                _id: subscriber.userId._id,
+                name: subscriber.userId.name,
+                email: subscriber.userId.email,
+                isVerified: subscriber.userId.isVerified,
+                isBlocked: subscriber.userId.isBlocked,
+                planName: subscriber.planId.title,
+                amount: subscriber.planId.amount,
+                image: subscriber.userId.image,
+                subscriptionDate: formattedSubscriptionDate,
+                expiryDate: formattedExpiryDate,
+            };
+        });
+
+        return res.status(200).json({ users: userList });
+
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+const changeSubscribersStatus = async (req, res) => {
+    try {
+
+        const { userId } = req.body
+        const user = await userModel.findOne({ _id: userId })
+        console.log(user)
+        if (user) {
+            user.isBlocked = !user.isBlocked
+            await user.save()
+            await getSubscribers(req, res);
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Internal server Error" })
+    }
+
+}
 module.exports = {
     getPlans,
     createSubscription,
     processPayment,
     addPlan,
     updatePlan,
-    changePlanStatus
+    changePlanStatus,
+    getSubscribers,
+    changeSubscribersStatus
 }

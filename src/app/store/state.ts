@@ -21,7 +21,8 @@ export const trainerState:trainer={
     location:"",
     jobPosition:"",
     description:"",
-    isVerified:true
+    isVerified:true,
+    is_Online:false
 }
 
 export const authState: userToken = {

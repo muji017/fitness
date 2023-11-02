@@ -26,8 +26,8 @@ export class ViewDietPlanComponent {
     this.store.dispatch(getAllDietPlansListApi())
     this.store.select(getAllDietPlans).subscribe((res)=>{
       const data=res
-      this.dietPlans=data
-      this.searchPlans=data
+      this.dietPlans=data.filter((data)=>data.isApproved==true)
+      this.searchPlans=data.filter((data)=>data.isApproved==true)
     })
   }
 

@@ -29,7 +29,7 @@ const addDietPlan = async (req, res) => {
 const getDietPlans = async (req, res) => {
     try {
         const trainerId = req.trainerId
-     console.log(trainerId);
+        console.log(trainerId);
         const DietPlans = await dietPlanModel.find({ trainerId: trainerId })
         return res.status(200).json({ DietPlans: DietPlans })
     } catch (error) {
@@ -39,7 +39,7 @@ const getDietPlans = async (req, res) => {
 
 const getAllDietPlans = async (req, res) => {
     try {
-        const DietPlans = await dietPlanModel.find({ })
+        const DietPlans = await dietPlanModel.find({})
         return res.status(200).json({ DietPlans: DietPlans })
     } catch (error) {
         res.status(500).json({ error: error })
@@ -50,12 +50,12 @@ const updateDietPlan = async (req, res) => {
     try {
         const planId = req.body.planId
         let image
-        if(req.file){
-            image=req.file.filename
+        if (req.file) {
+            image = req.file.filename
         }
-        else{
-            const existplan=await dietPlanModel.findOne({_id:planId})
-            image=existplan.image
+        else {
+            const existplan = await dietPlanModel.findOne({ _id: planId })
+            image = existplan.image
         }
         const updates = {
             title: req.body.title,
@@ -78,19 +78,19 @@ const updateDietPlan = async (req, res) => {
 }
 
 const deleteDietPlan = async (req, res) => {
-      try {
-        
-        const planId=req.query.planId
-        await dietPlanModel.deleteOne({_id:planId})
+    try {
+
+        const planId = req.query.planId
+        await dietPlanModel.deleteOne({ _id: planId })
         return res.status(200).json({ message: "Success" })
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ error: error })
-      }
+    }
 }
 
-const changeDietPremium=async(req,res)=>{
+const changeDietPremium = async (req, res) => {
     try {
-        
+
         const { planId } = req.body
         const planData = await dietPlanModel.findOne({ _id: planId })
         if (planData) {
@@ -99,12 +99,26 @@ const changeDietPremium=async(req,res)=>{
             await getAllDietPlans(req, res);
         }
     } catch (error) {
-        res.status(500).json({ error: error })  
+        res.status(500).json({ error: error })
+    }
+}
+
+const changeDietPlanStatus = async (req, res) => {
+    try {
+        const { planId } = req.body
+        const planData = await dietPlanModel.findOne({ _id: planId })
+        if (planData) {
+            planData.isApproved = !planData.isApproved
+            await planData.save()
+            await getAllDietPlans(req, res);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error }) 
     }
 }
 module.exports = {
     addDietPlan,
     getDietPlans,
-    updateDietPlan,deleteDietPlan,
-    changeDietPremium,getAllDietPlans
+    updateDietPlan, deleteDietPlan,
+    changeDietPremium, getAllDietPlans, changeDietPlanStatus
 }

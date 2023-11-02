@@ -30,22 +30,27 @@ export class UserTrainerProfileComponent {
       const id = params['trainerId'];
         this.trainerId = id;
     })
+    this.store.dispatch(getTrainersListApi())
     this.store.select(getAllTrainers).subscribe((res) => {
       this.trainers=res
+      this.trainer=this.trainers.find((tr)=>tr.id===this.trainerId)
+      this.dietStore.dispatch(getAllDietPlansListApi())
+      this.store.dispatch(getAllVideoListApi())
+      this.dietStore.select(getAllDietPlans).subscribe((res)=>{
+       const data=res
+       this.dietplans=data.filter((plan)=>plan.trainerId===this.trainerId).length
+     })
+     this.store.select(getAllVideos).subscribe((res)=>{
+       const data=res
+       this.videos=data.filter((plan)=>plan.trainerId===this.trainerId).length
+     })
     })
-     this.trainer=this.trainers.find((tr)=>tr.id===this.trainerId)
-     this.dietStore.dispatch(getAllDietPlansListApi())
-     this.store.dispatch(getAllVideoListApi())
-     this.dietStore.select(getAllDietPlans).subscribe((res)=>{
-      const data=res
-      this.dietplans=data.filter((plan)=>plan.trainerId===this.trainerId).length
-    })
-    this.store.select(getAllVideos).subscribe((res)=>{
-      const data=res
-      this.videos=data.filter((plan)=>plan.trainerId===this.trainerId).length
-    })
+   
   }
 
+  viewVideoPlans(){
+    this.router.navigate([`/usertrainervideos/${this.trainerId}`])
+  }
   viewDietPlans(){
     this.router.navigate([`/usertrainerdiet/${this.trainerId}`])
   }

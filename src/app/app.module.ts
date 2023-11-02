@@ -38,6 +38,8 @@ import { VideosComponent } from './components/user/videos/videos.component';
 import { VideoPlayerComponent } from './components/user/video-player/video-player.component';
 import { ErrorInterceptor } from './services/errorInterceptor.service';
 import { UserTrainerDietComponent } from './components/user/user-trainer-diet/user-trainer-diet.component';
+import { UserTrainerVideosComponent } from './components/user/user-trainer-videos/user-trainer-videos.component';
+import { ChatWithTrainerComponent } from './components/user/chat-with-trainer/chat-with-trainer.component';
 
 
 @NgModule({
@@ -61,6 +63,8 @@ import { UserTrainerDietComponent } from './components/user/user-trainer-diet/us
     ViewDietPlanDetailsComponent,
     VideosComponent,
     VideoPlayerComponent,
+    UserTrainerVideosComponent,
+    ChatWithTrainerComponent
   ],
   imports: [
     VgCoreModule,
@@ -78,13 +82,13 @@ import { UserTrainerDietComponent } from './components/user/user-trainer-diet/us
     StoreModule.forRoot({}),
     ToastrModule.forRoot(),
     EffectsModule.forFeature([UserEffects]),
-    StoreModule.forFeature(trainerStateName,trainerReducer),
-    StoreModule.forFeature(authStateName,AuthReducer),
-    StoreModule.forFeature(alltrainersStateName,allTrainersReducer),
-    StoreModule.forFeature(allUsersStateName,allUsersReducer),
-    StoreModule.forFeature(allPlansStateName,allPlansReducer),
-    StoreModule.forFeature(allDietPlansStateName,allDietPlansReducer),
-    StoreModule.forFeature(videosStateName,allVideosReducer),
+    StoreModule.forFeature(trainerStateName, trainerReducer),
+    StoreModule.forFeature(authStateName, AuthReducer),
+    StoreModule.forFeature(alltrainersStateName, allTrainersReducer),
+    StoreModule.forFeature(allUsersStateName, allUsersReducer),
+    StoreModule.forFeature(allPlansStateName, allPlansReducer),
+    StoreModule.forFeature(allDietPlansStateName, allDietPlansReducer),
+    StoreModule.forFeature(videosStateName, allVideosReducer),
   ],
   providers: [
 
@@ -101,7 +105,7 @@ import { UserTrainerDietComponent } from './components/user/user-trainer-diet/us
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor, 
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

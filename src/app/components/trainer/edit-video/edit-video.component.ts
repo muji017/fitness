@@ -1,9 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { VideoModel } from 'src/app/model/userModel';
+import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
 import { getAllVideosApiSuccess } from 'src/app/store/action';
 import { getAllVideos } from 'src/app/store/selector';
 
@@ -25,7 +26,9 @@ export class EditVideoComponent {
     private toastr:ToastrService,
     private store:Store<VideoModel[]>,
     @Inject (MAT_DIALOG_DATA) public data:any,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private trainerService:TrainerService,
+    private dialoge:MatDialog
   )
   {
     this.videoId = this.data.videoId
@@ -45,6 +48,62 @@ export class EditVideoComponent {
       description: fb.control(this.videos[0].description, [Validators.required, Validators.minLength(15)])
     });
   }
+
+    // error fuctions
+    showTitleError(): any {
+
+      const title: any = this.uploadVideoForm.get('title');
+      if (!title.valid) {
+        if (title.errors.required) {
+          return "Title is required"
+        }
+        if (title.errors.minlength) {
+          return 'Title should be of minimum 3 characters';
+        }
+        if (title.errors.pattern) {
+          return 'Name should only contain alphabetic characters';
+        }
+  
+      }
+    }
+  
+    showWorkoutTypeError(): any {
+  
+      const workouType: any = this.uploadVideoForm.get('workoutType');
+      if (!workouType.valid) {
+        if (workouType.errors.required) {
+          return "WorkoutType is required"
+        }
+      }
+    }
+
+    showBodyPartError(): any {
+  
+      const bodyPart: any = this.uploadVideoForm.get('bodyPart');
+      if (!bodyPart.valid) {
+        if (bodyPart.errors.required) {
+          return "Bodypart is required"
+        }
+      }
+    }
+  
+    showDescriptionError(): any {
+  
+      const description: any = this.uploadVideoForm.get('description');
+      if (!description.valid) {
+        if (description.errors.required) {
+          return "Description is required"
+        }
+        if (description.errors.minlength) {
+          return 'Description Should be minimum 15 characters';
+        }
+  
+      }
+    }
+    
+
+
+
   onFilesSelected(event: any): any {
     const files: FileList = event.target.files;
     this.files = files;
@@ -69,6 +128,53 @@ export class EditVideoComponent {
   }
 
   submitForm(){
+    if (!this.uploadVideoForm.valid) {
+      if (this.showTitleError()) {
+        this.toastr.warning(this.showTitleError())
+        return
+      }
+      if (this.showWorkoutTypeError()) {
+        this.toastr.warning(this.showWorkoutTypeError())
+        return
+      }
+      if (this.showBodyPartError()) {
+        this.toastr.warning(this.showBodyPartError())
+        return
+      }
+      if (this.showDescriptionError()) {
+        this.toastr.warning(this.showDescriptionError())
+        return
+      }
+      return
+    }
+    const plan = new FormData();
 
+    for (const controlName of Object.keys(this.uploadVideoForm.controls)) {
+      const control = this.uploadVideoForm.get(controlName);
+      console.log("in loop", controlName, control?.value);
+       plan.append(controlName, control?.value);
+    }
+    if(this.files){
+    const file = this.files[0];
+    plan.append('video', file, file.name);
+    }
+    plan.append('videoId',this.videoId)
+    this.trainerService.updateVideo(plan).subscribe(
+      (res) => {
+        this.toastr.success("Video added successfully")
+        this.dialoge.closeAll()
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000)
+      },
+      (error) => {
+        if (error.status == 409) {
+          this.toastr.error(error.error.message)
+        }
+        else {
+          this.toastr.error(error.error.message)
+        }
+      }
+    )
   }
 }

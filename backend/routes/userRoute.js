@@ -58,4 +58,4 @@ userroute.get('/getDietPlans',checkAuth,dietPlanController.getAllDietPlans)
 
 userroute.get('/getVideos',checkAuth,videoController.getAllVideos)
 
-module.exports=userroute;
+module.exports=userroute; 

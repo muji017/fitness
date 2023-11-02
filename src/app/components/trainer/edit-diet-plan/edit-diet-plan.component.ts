@@ -139,8 +139,8 @@ export class EditDietPlanComponent {
     plan.append('image', file, file.name);
     }
   }
-    plan.append('videoId',this.planId)
-    this.trainerService.updateVideo(plan).subscribe(
+    plan.append('planId',this.planId)
+    this.trainerService.updateDietPlan(plan).subscribe(
       (res) => {
         this.toastr.success("Dietplan Updated successfully")
         this.dialoge.closeAll()

@@ -13,6 +13,7 @@ adminroute.use(bodyparser.urlencoded({extended:true}));
 
 const multer= require('multer');
 const path=require('path');
+const { checkAuth } = require('../middlewares/auth');
 
 const storage=multer.diskStorage({
     destination:function(req,_file,callb){
@@ -56,5 +57,11 @@ adminroute.put('/changePlanStatus',subscriptionController.changePlanStatus)
 adminroute.put('/changeDietPremium',upload.none(),dietPlanController.changeDietPremium)
 
 adminroute.get('/getDietPlan',dietPlanController.getAllDietPlans)
+
+adminroute.get('/subscribers',checkAuth,subscriptionController.getSubscribers)
+
+adminroute.put('/changeSubscribersStatus',checkAuth,subscriptionController.changeSubscribersStatus)
+
+adminroute.put('/changeDietPlanStatus',checkAuth,dietPlanController.changeDietPlanStatus)
 
 module.exports=adminroute

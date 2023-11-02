@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
 import { changeUserStatusApi, getUsersListApi } from 'src/app/store/action';
@@ -21,7 +22,8 @@ export class UserListComponent {
   displayedColumns: string[] = ['image', 'name', 'email', 'options'];
   constructor(
     private adminService: AdminService,
-    private store: Store<UserModel[]>
+    private store: Store<UserModel[]>,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class UserListComponent {
   changeStatus(userId:any) {
     this.store.dispatch(changeUserStatusApi({ userId }))
     this.getUsers()
+    this.toastr.success("successfully Updated")
   }
 }
 

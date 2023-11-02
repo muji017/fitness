@@ -49,6 +49,9 @@ const routes:Routes=[
       {
         path:'dietplans',component:AdminDietPlanViewComponent,canActivate:[AdminhomeAuthGuard]
       },
+      {
+        path:'subscribers',component:SubscribersComponent,canActivate:[AdminhomeAuthGuard]
+      },
     ]
   }
 ]

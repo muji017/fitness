@@ -58,4 +58,6 @@ trainerroute.post('/addVideo',checkAuth,upload.single('video'),videoController.a
 
 trainerroute.delete('/deleteVideo',checkAuth,videoController.deleteVideo)
 
+trainerroute.put('/updateVideo',checkAuth,upload.single('video'),videoController.updateVideo)
+
 module.exports=trainerroute

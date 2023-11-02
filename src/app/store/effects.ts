@@ -2,10 +2,15 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { Injectable } from "@angular/core";
 import {
+  changeDietPlanStatusApi,
   changeDietPremiumApi,
   changePlanStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getAllVideoListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi, getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getTrainerProfileApi, getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
-  getTrainersListApiSuccess, getUsersListApi, getUsersListApiSuccess,
+  changeSubscribersStatusApi,
+  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi,
+  getAllDietPlansListApi, getAllVideoListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi,
+  getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getSubscriberListApi, getTrainerProfileApi,
+  getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
+  getTrainersListApiSuccess, getUserDetailsApi, getUsersListApi, getUsersListApiSuccess,
   loginFail, loginStart, loginSuccess
 } from "./action";
 
@@ -67,8 +72,22 @@ export class UserEffects {
     )
   })
 
+//  user get user details
+  getUserDetails$ =createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(getUserDetailsApi),
+      mergeMap(()=>{
+        return this.service.getProfile().pipe(
+          map((data)=>{
+            console.log(data);
+            return  getUsersListApiSuccess({users:Object.values(data)})
+          })
+        )
+      })
+    )
+  })
 
-
+  // user list
 
   getUsersList$ = createEffect(() => {
     return this.actions$.pipe(
@@ -83,7 +102,36 @@ export class UserEffects {
     )
   })
 
+  // subscribers list 
 
+  getSubscribersList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getSubscriberListApi),
+      mergeMap(() => {
+        return this.adminService.getSubscribersList().pipe(
+          map((res) => {
+            console.log(res);
+
+            return getUsersListApiSuccess({ users: Object.values(res.users) })
+          })
+        )
+      })
+    )
+  })
+
+  // change subscriber status
+  changeSubscriberStaus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(changeSubscribersStatusApi),
+      mergeMap((action) => {
+        return this.adminService.changeSubscribersStatus(action.userId).pipe(
+          map((data) => {
+            return getUsersListApiSuccess({ users: Object.values(data.users) })
+          })
+        )
+      })
+    )
+  })
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loginStart),
@@ -202,8 +250,25 @@ export class UserEffects {
       })
     )
   })
+  // chnage status of diet plan
+  changeDietPlanStaus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(changeDietPlanStatusApi),
+      mergeMap((action) => {
+        console.log("ewd",action.planId);
+        
+        return this.adminService.changeDietPlanStatus(action.planId).pipe(
+          map((data) => {
+            console.log(data);
+            
+            return getDietPlansListApiSuccess({ Dietplans: Object.values(data.DietPlans) })
+          })
+        )
+      })
+    )
+  })
 
-
+  // change to premium
   changeDietPremium$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(changeDietPremiumApi),

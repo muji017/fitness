@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DietPlansModel } from 'src/app/model/userModel';
+import { getAllDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans } from 'src/app/store/selector';
 
 @Component({
@@ -24,10 +25,14 @@ ngOnInit() {
     const id = params['planId'];
       this.planId = id;
   })
+  this.store.dispatch(getAllDietPlansListApi())
   this.store.select(getAllDietPlans).subscribe((res) => {
     this.plans=res
+    console.log(res);
+    console.log(this.planId);
+    this.plan=this.plans.find((tr)=>tr._id===this.planId)
   })
-   this.plan=this.plans.find((tr)=>tr._id===this.planId)
+  
 }
 
 splitIntoParagraphs(description: any | undefined): string[] {
