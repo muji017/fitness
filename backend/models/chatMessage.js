@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+const mongoose=require('mongoose')
 
 const chatMessageSchema = new mongoose.Schema({
   room: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'chatRoom',
+    ref: 'ChatRoom',
   },
   sender: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    // required: true,
     refPath: 'senderType',
   },
   senderType: {
     type: String,
     enum: ['User', 'Trainer'],
-    required: true,
+    // required: true,
   },
   content: {
     type: String,
@@ -23,7 +23,4 @@ const chatMessageSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
-const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
-
-export default ChatMessage;
+module.exports=mongoose.model('Chatmessage',chatMessageSchema);

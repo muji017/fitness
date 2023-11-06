@@ -48,6 +48,9 @@ const routes:Routes=[
       {
         path:'videos',component:TrainerVideosListComponent,canActivate:[TrainerhomeAuthGuard]
       },
+      {
+        path:'chat',component:ChatWithUserComponent,canActivate:[TrainerhomeAuthGuard]
+      }
     ]
   }
 ]

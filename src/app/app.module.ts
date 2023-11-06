@@ -40,6 +40,7 @@ import { ErrorInterceptor } from './services/errorInterceptor.service';
 import { UserTrainerDietComponent } from './components/user/user-trainer-diet/user-trainer-diet.component';
 import { UserTrainerVideosComponent } from './components/user/user-trainer-videos/user-trainer-videos.component';
 import { ChatWithTrainerComponent } from './components/user/chat-with-trainer/chat-with-trainer.component';
+import { UserChatTrainerListDialogeComponent } from './components/user/user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { ChatWithTrainerComponent } from './components/user/chat-with-trainer/ch
     VideosComponent,
     VideoPlayerComponent,
     UserTrainerVideosComponent,
-    ChatWithTrainerComponent
+    ChatWithTrainerComponent,
+    UserChatTrainerListDialogeComponent
   ],
   imports: [
     VgCoreModule,
@@ -93,7 +95,7 @@ import { ChatWithTrainerComponent } from './components/user/chat-with-trainer/ch
   providers: [
 
     provideToastr({
-      timeOut: 5000,
+      timeOut: 2000,
       positionClass: 'toast-center-center',
       preventDuplicates: true,
       progressBar: true

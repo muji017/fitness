@@ -1,0 +1,22 @@
+
+<div class="border-5 bg-white" >
+<div>
+    <h1 class="font-bold">
+     Connect with trainer
+    </h1>
+</div>
+<div class="container mt-3 " *ngIf="trainer$ | async as trainers">
+    <div *ngFor="let trainer of trainers" class="ListTrainer bg-gray-100 mb-1" >
+      <div matTooltip="click To connect" (click)="addRoom(trainer.id)" class="container p-1   inside">
+        <div class=" border-1 grid grid-cols-2 flex justify-between rounded-lg bg-white p-2">
+            <div class="">
+          <img [src]="'http://localhost:3000/public/images/' + trainer.image" alt="Trainer Image" class="rounded-full w-14 h-14">
+          </div>
+          <div class="flex justify-start align-center ">
+            <h3>{{ trainer.name }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

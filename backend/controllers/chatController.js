@@ -1,105 +1,86 @@
-import asyncHandler from "express-async-handler";
-import ChatRoom from "../models/chatRoom.js";
-import ChatMessage from "../models/chatMessage.js";
+const ChatRoom = require("../models/chatRoom");
+const chatMessage = require("../models/chatMessage");
 
-const chatController = {
-    createRoom : asyncHandler(async(req,res)=>{
-        try {
-            const { user, trainer } = req.params
+const getRoomUser = async (req, res) => {
+    try {
+        const authUserId = req.userId
+        const authTrainerId = req.trainerId
+        if (authUserId) {
+            const trainerId = req.query.trainerId;
+            let chatRoom = await ChatRoom.findOne({ userId: authUserId, trainerId: trainerId })
 
-            let chatRoom = await ChatRoom.findOne({
-                user:user,
-                trainer:trainer
-            })
-    
-            if(!chatRoom){
-                chatRoom = new ChatRoom({
-                    user:user,
-                    trainer:trainer,
-                    messages:[]
-                })
-                await chatRoom.save();
+            if (!chatRoom) {
+                chatRoom = new ChatRoom()
+                chatRoom.userId = authUserId
+                chatRoom.trainerId = trainerId
+                await chatRoom.save()
             }
 
-            const roomDetails = await ChatRoom.findOne({_id:chatRoom._id}).populate({path:'doctor',select:'_id name specialization'})
-            
-            res.status(200).json(roomDetails);
-        } catch (error) {
-            res.status(500).json({ message: 'Error creating or getting chat room' });
+            const roomDetails = await ChatRoom.findOne({ _id: chatRoom._id })
+            res.status(200).json({ roomDetails })
         }
-    }),
-
-    chatSend: asyncHandler(async (req, res) => {
-        const { content } = req.body;
-        const { chatid, sender, type } = req.params;
-      
-        // Create a new chat message
-        const newMessage = new ChatMessage({
-          room: chatid,
-          sender: sender,
-          senderType: type,
-          content: content,
-        });
-      
-        // Save the chat message
-        await newMessage.save();
-
-        let chatRoom = await ChatRoom.findOne({_id:chatid})
-        if(chatRoom){
-            chatRoom.messages.push(newMessage._id)
-        }
-        await chatRoom.save()
-      
-        // Populate the sender field with specific fields (_id, name, email)
-        // and also populate the nested fields room.user and room.doctor
-        await newMessage.populate([
-          { path: 'sender', select: '_id name email' },
-          { path: 'room', populate: [{ path: 'user', select: '_id name email' }, { path: 'doctor', select: '_id name email' }] },
-        ]);
-      
-        // Return the chat message with all populated fields
-        res.json(newMessage);
-    }),
-
-    //User side
-    getRooms : asyncHandler(async(req,res)=>{
-        const { user } = req.params
-        const rooms = await ChatRoom.find({user:user}).populate({path:'doctor',select:'_id name email specialization'})
-        if(rooms){
-            res.status(200).json(rooms)
-        }else{
-            res.status(400).json({message:"Failed to fetch rooms"})
-        }
-    }),
-
-    //Doctors side
-    getDoctorsRooms : asyncHandler(async(req,res)=>{
-        const { doctor } = req.params
-        const rooms = await ChatRoom.find({doctor:doctor}).populate({path:'user',select:'_id name email'})
-        if(rooms){
-            res.status(200).json(rooms)
-        }else{
-            res.status(400).json({message:"Failed to fetch rooms"})
-        }
-    }),
-
-    getMessages: asyncHandler(async (req, res) => {
-        const { roomid } = req.params;
-      
-        try {
-          // Sort messages in ascending order of createdAt
-          const messages = await ChatMessage.find({ room: roomid }).sort({ createdAt: 1 });
-      
-          if (messages) {
-            res.status(200).json(messages);
-          } else {
-            res.status(404).json({ message: 'No messages found for the given room.' });
-          }
-        } catch (error) {
-          res.status(500).json({ message: 'Internal Server Error' });
-        }
-    })
-      
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
 }
 
-export default chatController;
+const getChatRooms = async (req, res) => {
+    try {
+        const authUserId = req.userId
+        const authTrainerId = req.trainerId
+        if (authUserId) {
+            let chatRooms = await ChatRoom.find({ userId: authUserId })
+            res.status(200).json({ chatRooms: chatRooms })
+        }
+        else if (authTrainerId) {
+            let chatRooms = await ChatRoom.find({ trainerId: authTrainerId }).populate('userId')
+            res.status(200).json({ chatRooms: chatRooms })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+const sendMessage = async (req, res) => {
+    try {
+        const { roomId, message } = req.body
+        const authUserId = req.userId
+        const authTrainerId = req.trainerId
+        if (authUserId) {
+           chat=new chatMessage()
+           chat.room=roomId
+           chat.sender=authUserId
+           chat.senderType='User'
+           chat.content=message
+           await chat.save()
+           res.status(200).json({message:'Message sended'})
+       } else if(authTrainerId) {
+        chat=new chatMessage()
+        chat.room=roomId
+        chat.sender=authTrainerId
+        chat.senderType='Trainer'
+        chat.content=message
+        await chat.save()
+        res.status(200).json({message:'Message sended'})
+    }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+const getAllChats= async( req,res)=>{
+    try {
+        const roomId=req.query.roomId
+        const chats= await chatMessage.find({room:roomId}).sort({createdAt:-1})
+        res.status(200).json({chats})
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+module.exports = {
+    getRoomUser,
+    getChatRooms,
+    sendMessage,
+    getAllChats
+}

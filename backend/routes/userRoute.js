@@ -4,6 +4,7 @@ const usercontroller=require('../controllers/userController');
 const subscriptionContoller=require('../controllers/subscriptionController')
 const dietPlanController=require('../controllers/dietPlanController')
 const videoController=require('../controllers/videoContoller')
+const chatController=require('../controllers/chatController')
 
 const bodyparser=require('body-parser');
 userroute.use(bodyparser.json());
@@ -57,5 +58,11 @@ userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePas
 userroute.get('/getDietPlans',checkAuth,dietPlanController.getAllDietPlans)
 
 userroute.get('/getVideos',checkAuth,videoController.getAllVideos)
+
+// chat side
+userroute.get('/getRoomUser',checkAuth,chatController.getRoomUser)
+userroute.get('/getChatRooms',checkAuth,chatController.getChatRooms)
+userroute.post('/sendMessage',checkAuth,chatController.sendMessage)
+userroute.get('/getAllChats',checkAuth,chatController.getAllChats)
 
 module.exports=userroute; 

@@ -1,17 +1,12 @@
-import mongoose from 'mongoose'
+const mongoose=require('mongoose')
 
 const chatRoom = mongoose.Schema({
-    user: {
+    userId: {
          type: mongoose.Schema.Types.ObjectId, ref: 'User' 
     }, 
-    trainer: {
+    trainerId: {
          type: mongoose.Schema.Types.ObjectId, ref: 'Trainer'
-    },
-    messages:{
-     type:String
     },
 })
 
-const ChatRoom = mongoose.model('chatRoom',chatRoom);
-
-export default ChatRoom ;
+module.exports=mongoose.model('Chatroom',chatRoom);

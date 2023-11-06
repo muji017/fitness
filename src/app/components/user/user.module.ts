@@ -22,6 +22,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 import { UserTrainerDietComponent } from './user-trainer-diet/user-trainer-diet.component';
 import { UserTrainerVideosComponent } from './user-trainer-videos/user-trainer-videos.component';
 import { ChatWithTrainerComponent } from './chat-with-trainer/chat-with-trainer.component';
+import { UserChatTrainerListDialogeComponent } from './user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
 
 const routes: Routes = [{
   path: '',
