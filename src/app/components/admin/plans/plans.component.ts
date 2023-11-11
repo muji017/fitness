@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { changePlanStatusApi, getPlansListApi } from 'src/app/store/action';
 import { getAllPlans } from 'src/app/store/selector';
+import { ToastrService } from 'ngx-toastr';
 // import { getAllPlans } from 'src/app/store/selector';
 
 @Component({
@@ -17,19 +18,15 @@ import { getAllPlans } from 'src/app/store/selector';
   encapsulation: ViewEncapsulation.None
 })
 export class PlansComponent {
-
-
   searchQuery!: string
-
-
   dataSource: MatTableDataSource<PlansModel> = new MatTableDataSource<PlansModel>();
-
   displayedColumns: string[] = ['title', 'duration', 'amount', 'description', 'options'];
 
   constructor(
     private adminService: AdminService,
     private dialoge: MatDialog,
-    private store: Store<PlansModel[]>
+    private store: Store<PlansModel[]>,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit() {
@@ -39,6 +36,7 @@ export class PlansComponent {
   blockPlan(planId: any) {
     this.store.dispatch(changePlanStatusApi({ planId }))
     this.getPlans()
+    this.toastr.success("successfully Updated")
   }
   getPlans() {
     this.store.select(getAllPlans).subscribe((res) => {

@@ -16,18 +16,30 @@ background-size: cover; background-position: center ; height: 100vh;">
     <div class="container mt-2  mx-auto">
         <div  class="grid-cols-1  gap-8">
             <!-- Card -->
-            <div style="max-width: 800px;" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <div class="w-full h-120">
+            <div style="max-width: 1200px;" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
+                <div class="w-full h-80">
                     <vg-player>
                         <video controls>
                             <source
-                                src="../assets/videos/Kong vs Skull Crawler - Fight Scene - Kong- Skull Island (2017) Movie CLIP 4K.mp4"
+                            [src]="'http://localhost:3000/public/images/' + video?.video"
                                 type="video/mp4">
 
                         </video>
 
                     </vg-player>
                 </div>
+                <div>
+                        <h2 class="text-xl text-white font-semibold mb-2 hover:text-red-500 hover:underline">
+                            {{video?.title}}</h2>
+                        <p class="text-gray-300">{{video?.workoutType}}</p>
+                        <p class="text-gray-300">{{video?.bodyPart}}</p>
+                        <p class="text-gray-300">Date : {{ video?.uploadDate | date:'dd/MM/yyyy' }}
+                    </div>
+                    <div class="p-4 w-full" style="overflow-x: auto; flex: 2; max-height: 400px;">
+                        <!-- Adjust the max-height as needed -->
+                        <p class="text-gray-300 text-2xl">Description</p>
+                        <p *ngFor="let paragraph of splitIntoParagraphs(video?.description)" class="text-gray-400">{{paragraph}}</p>
+                    </div>
             </div>
         </div>
     </div>

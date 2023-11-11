@@ -1,4 +1,5 @@
 export interface UserModel {
+    _id?:any
     userToken?: string,
     userId?: any,
     name: string,
@@ -10,7 +11,8 @@ export interface UserModel {
     amount?: number
     password?: string,
     image?: string,
-    isBlocked?: boolean
+    isBlocked?: boolean,
+    is_Online?:boolean
 }
 
 export interface userToken {
@@ -30,7 +32,8 @@ export interface trainer {
     location: String,
     jobPosition: String,
     description: string,
-    isVerified: boolean
+    isVerified: boolean,
+    is_Online?:boolean
 }
 
 export interface userlist extends UserModel {
@@ -67,7 +70,7 @@ export interface DietPlansModel {
     uploadDate:string,
     foodType: string,
     description: String,
-    isAprooved: boolean,
+    isApproved: boolean,
     isPremium:boolean
     image:string
 }

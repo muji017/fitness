@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { getAllVideos } from 'src/app/store/selector';
 import { deleteVideoApi, getAllVideosTrainerApi } from 'src/app/store/action';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
+import { ToastrService } from 'ngx-toastr';
+import { EditVideoComponent } from '../edit-video/edit-video.component';
 
 @Component({
   selector: 'app-trainer-videos-list',
@@ -22,7 +24,8 @@ export class TrainerVideosListComponent {
 
   constructor(
     private dialoge:MatDialog,
-    private store:Store<VideoModel[]>
+    private store:Store<VideoModel[]>,
+    private toastr:ToastrService
   ){}
 
   ngOnInit(){
@@ -59,9 +62,22 @@ export class TrainerVideosListComponent {
 
   deleteVideo(videoId:any){
     this.store.dispatch(deleteVideoApi({videoId}))
+    this.toastr.success("Video Deleted successfully")
     this.ngOnInit()
   }
+  updatePlan(planId:any){
+    const data={
+     videoId:planId
+    }
+    this.dialoge.open(EditVideoComponent,{
+     enterAnimationDuration:1100,
+     exitAnimationDuration:1100,
+     maxHeight: '500px',
+     maxWidth:'400px',
+     data:data
+    })
 
+ }
 
    applyFilter() {
     const filterValue = this.searchQuery.trim().toLowerCase();

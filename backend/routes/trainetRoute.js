@@ -3,6 +3,7 @@ const trainerroute=express();
 const trainercontroller=require('../controllers/trainetrController');
 const dierPlanController=require('../controllers/dietPlanController')
 const videoController=require('../controllers/videoContoller')
+const chatController=require('../controllers/chatController')
 
 const bodyparser=require('body-parser');
 trainerroute.use(bodyparser.json());
@@ -56,4 +57,13 @@ trainerroute.get('/getAllVideos',checkAuth,videoController.getAllVideos)
 
 trainerroute.post('/addVideo',checkAuth,upload.single('video'),videoController.addVideo)
 
+trainerroute.delete('/deleteVideo',checkAuth,videoController.deleteVideo)
+
+trainerroute.put('/updateVideo',checkAuth,upload.single('video'),videoController.updateVideo)
+
+// chat side
+// userroute.get('/getRoomUser',checkAuth,chatController.getRoomUser)
+trainerroute.get('/getChatRooms',checkAuth,chatController.getChatRooms)
+trainerroute.post('/sendMessage',checkAuth,chatController.sendMessage)
+trainerroute.get('/getAllChats',checkAuth,chatController.getAllChats)
 module.exports=trainerroute

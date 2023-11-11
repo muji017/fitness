@@ -82,10 +82,26 @@ export class AddVideoComponent {
     }
     
 
-  onFilesSelected(event:any)
-  {
+  onFilesSelected(event: any): any {
     const files: FileList = event.target.files;
     this.files = files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith('video/')) {
+        console.log('File type is:', file.type);
+        return this.toastr.warning('Video type is invalid');
+      }
+    }
+    // for (let i = 0; i < files.length; i++) {
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e: any) => {
+    //     console.log(e.target.result);
+    //     this.imageSrc.push(e.target.result);
+    //   };
+
+    //   reader.readAsDataURL(this.files[i]);
+    // }
     console.log(this.files);
   }
   submitForm(){
@@ -119,7 +135,7 @@ export class AddVideoComponent {
     plan.append('video', file, file.name);
     this.trainerService.addVideo(plan).subscribe(
       (res) => {
-        this.toastr.success("Dietplan added successfully")
+        this.toastr.success("Video added successfully")
         this.dialoge.closeAll()
         setTimeout(() => {
           window.location.reload();

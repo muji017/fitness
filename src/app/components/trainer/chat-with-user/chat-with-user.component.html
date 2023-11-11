@@ -1,0 +1,108 @@
+<div *ngIf="showProfilePopup" [ngClass]="{ 'tooltip-content': true, 'show': showProfilePopup }"
+    class="mat-tooltip-panel m-2" style="max-height: 500px; min-height: 500px;">
+    <!--  profile content -->
+    <div class="mat-tool-tip-pannel" style=" max-height: 500px; min-height: 500px;"
+        class="w-full pt-2 ProfileTrainer border-5 bg-white ">
+        <div class="text-center">
+            <img alt="Profile Image" class="w-32 h-32 mx-auto rounded-full"
+                [src]="currentUser?.image ? 'http://localhost:3000/public/images/' + currentUser?.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
+                alt="">
+            <h1 class="text-2xl font-semibold mt-2">{{currentUser?.name}}</h1>
+            <div class="text-center mt-12">
+                <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                    {{currentUser?.name}}
+                </h3>
+                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                    <i class="fas fa-mail-alt mr-2 text-lg text-blueGray-400"></i>
+                    {{currentUser?.email}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-header></app-header>
+<div class="container-fluid flex justify-start ">
+    <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
+    min-width: 250px; ">
+        <app-sidenav class="fixed-left" style="width: 100%; min-width: 350px;"></app-sidenav>
+    </div>
+
+    <div class="container flex-col " style="overflow-x: auto;">
+        <div class="container-fluid flex-none mt-5 sm:flex">
+
+            <div class="border-5 bg-white  sm:w-1/2" style="overflow-y: auto; max-height: 500px; min-height: 500px;">
+                <div class="flex justify-between m-2">
+                    <h2 class="font-bold">Messages</h2>
+                </div>
+                <div class="container mt-2 mb-4 rounded-full border-2 "
+                    style="max-width: 300px; justify-content: end !important;">
+                    <div class="flex rounded-lg bg-white ">
+                        <mat-icon class="m-2 p-1" matTooltip="Search DietPans">search</mat-icon>
+                        <input matTooltip="Search Trainers" (input)="applyFilter()" class="no-focus-ring rounded-lg "
+                            [(ngModel)]="searchQuery" placeholder="Search">
+                    </div>
+                </div>
+                <div matTooltip="Click to chat" *ngFor="let user of users"  class="rounded-lg bg-gray-100 ListTrainer">
+                    <div (click)="viewMessage(user._id)" class="container border-2 mt-1 p-1"
+                    [ngClass]="{'ActiveTrainer': user?._id===currentUser?._id}">
+                        <div class=" grid grid-cols-2 flex justify-between rounded-lg bg-white p-2">
+                            <div class="w-full flex justify-start align-center">
+                                <img [src]="'http://localhost:3000/public/images/' + user?.image" alt="Trainer Image"
+                                    class="rounded-full w-12 h-12">
+                                <p class="text-sm">{{ user?.name }}</p>
+                            </div>
+                            <div class=" justify-end align-center ">
+                                <h6 class="text-red-500">Offline</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex" [ngClass]=" 'grid-cols-1 w-full'">
+    
+                <div class="ChatSpace w-full border-5 bg-color-msg-side" style=" max-height: 500px; min-height: 500px;
+                     display: flex; flex-direction: column; ">
+                    <div class="bg-white" style="height: 60px;" mat-raised-button matTooltip="click view profile"
+                        (mouseover)="showProfilePopup = true" (mouseout)="showProfilePopup = false">
+                        <div class="flex justify-start">
+                            <img *ngIf="currentUser?.image"
+                                [src]="'http://localhost:3000/public/images/' + currentUser?.image" alt="Trainer Image"
+                                class="rounded-full w-12 h-12">
+                            <p class="text-sm">{{ currentUser?.name }}</p>
+                        </div>
+                    </div>
+                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;" >
+                        <div *ngIf="chats" style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
+                            class='bg-color-msg-side w-full overflow-y-auto p-5'>
+                            <div  *ngFor="let chat of chats">
+                                <div *ngIf="chat.senderType==='Trainer'" class='w-full flex my-2 justify-end'>
+                                    <div
+                                        class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
+                                        {{chat.content}}
+                                    </div>
+                                </div>
+                                <div *ngIf="chat.senderType==='User'" class='w-full my-2'>
+                                    <div class='bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
+                                        {{chat.content}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="chats.length<=0" class='w-full h-full flex items-center justify-center'>
+                                No Chats
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container justify-center mb-2" style="display: flex; align-items: center;">
+                        <input [(ngModel)]="message" matTooltip="click here to write" type="text"
+                            placeholder="Write your message" class="w-full rounded-l-lg border border-gray-300 p-2">
+                        <button (click)="sendMessage()" matTooltip="Send Message"
+                            class="bg-blue-500 text-white rounded-r-lg p-2">
+                            <mat-icon>send</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

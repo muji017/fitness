@@ -7,8 +7,9 @@ import { OtpDialogComponent } from '../otp-dialog/otp-dialog.component';
 import { Router } from '@angular/router';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { Store } from '@ngrx/store';
-import { loginStart } from 'src/app/store/action';
+import { getUserDetailsApi, loginStart } from 'src/app/store/action';
 import { getLoginSuccess } from 'src/app/store/selector';
+import { UserModel } from 'src/app/model/userModel';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   errorMsg: string = ""
 
   constructor(private service: UserService, private dialoge: MatDialog,
-    private store: Store<any>,
+    private store: Store<UserModel>,
     private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router
   ) { }
 
@@ -78,7 +79,6 @@ export class LoginComponent {
         const userJSON = JSON.stringify(response);
         localStorage.setItem('usertoken', userJSON);
         this.router.navigate(['/home'])
-
       },
       (error) => {
         const data = {

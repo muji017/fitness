@@ -57,6 +57,10 @@ export class AdminService {
     return this.http.put<any>(`${this.apiUrl}/admin/changeUserStatus`,payload)
    }
 
+  //  
+  getSubscribersList():Observable<userlist>{
+    return this.http.get<userlist>(`${this.apiUrl}/admin/subscribers`)
+  }
   //  plans api calls
 
   getPlans():Observable<PlanList>{
@@ -81,9 +85,17 @@ export class AdminService {
 
    changeDietPremium(planId:string):Observable<any>{
     const payload={planId}
-    console.log("srvic",planId);
-    
     return this.http.put<any>(`${this.apiUrl}/admin/changeDietPremium`,payload)
+   }
+
+   changeSubscribersStatus(userId:string):Observable<any>{
+    const payload={userId}
+    return this.http.put<any>(`${this.apiUrl}/admin/changeSubscribersStatus`,payload)
+   }
+
+   changeDietPlanStatus(planId:string):Observable<any>{
+    const payload={planId}
+    return this.http.put<any>(`${this.apiUrl}/admin/changeDietPlanStatus`,payload)
    }
 
 }

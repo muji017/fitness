@@ -7,6 +7,7 @@ import { changeTrainerStatusApi, getTrainersListAdminApi, getTrainersListApi } f
 import { getAllTrainers } from 'src/app/store/selector';
 import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-trainerslist',
@@ -28,7 +29,8 @@ export class TrainerslistComponent {
   constructor(
     private adminService: AdminService,
     private dialoge:MatDialog,
-    private store: Store<trainer[]>
+    private store: Store<trainer[]>,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class TrainerslistComponent {
   changeStatus(trainerId: any) {
     this.store.dispatch(changeTrainerStatusApi({ trainerId }))
     this.getTrainers()
+    this.toastr.success("successfully Updated")
   }
   getTrainers() {
     this.store.select(getAllTrainers).subscribe((res) => {

@@ -16,8 +16,6 @@ const planModel = require('../models/planModel')
 // user signup 
 const signup = async (req, res) => {
     try {
-        console.log("inside");
-        console.log(req.body);
         const userData = new usermodel()
         const { name, email, password } = req.body
         const userExist = await usermodel.findOne({ email: email })
@@ -28,7 +26,6 @@ const signup = async (req, res) => {
         userData.email = email
         userData.password = await (utilities.securePassword(password))
         await userData.save()
-        console.log("inserted");
         res.status(200).json({ userId: userData._id });
 
     } catch (error) {
@@ -41,13 +38,11 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log(email, password)
         const userData = await userModel.findOne({ email: email })
         if (userData) {
             const passmatch = await bcrypt.compare(password, userData.password);
             if (passmatch) {
                 if (userData.isVerified) {
-
                     const token = utilities.tokenGenerator(userData._id)
                     console.log(userData.email);
                     res.status(200).json({ userId: userData._id, userToken: token });
@@ -84,8 +79,6 @@ const otpVerify = async (req, res) => {
     try {
         const { email, otp } = req.body
         const userData = await userModel.findOne({ email: email })
-        console.log("in database", userData.otp)
-        console.log("in req.body", otp)
         if (userData.otp === otp) {
             userData.isVerified = true
             await userData.save()
@@ -108,12 +101,10 @@ const otpVerify = async (req, res) => {
 
 const sendOtp = async (req, res) => {
     try {
-        console.log("inside send otp")
         const { email } = req.body
         const userData = await userModel.findOne({ email: email })
         if (userData) {
             const OTP = utilities.otpGenerator()
-            console.log(OTP);
             userData.otp = OTP
             await userData.save()
             await utilities.sendOtpMail(userData.name, userData.email, OTP)
@@ -138,11 +129,8 @@ const sendOtp = async (req, res) => {
 const resendOtp = async (req, res) => {
     try {
         const { email } = req.body
-        console.log(email);
         const userData = await userModel.findOne({ email: email })
-        console.log(userData)
         const OTP = utilities.otpGenerator()
-        console.log(OTP);
         userData.otp = OTP
         await userData.save()
         await utilities.sendOtpMail(userData.name, userData.email, OTP)
@@ -181,7 +169,6 @@ const otpVerifyResetPassword = async (req, res) => {
 const setPassword = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log("mail in setPasword", email, password)
         const userData = await userModel.findOne({ email: email })
         userData.password = await utilities.securePassword(password)
         await userData.save()
@@ -225,14 +212,13 @@ const getTrainers = async (req, res) => {
 
 const getProfile = async (req, res) => {
     try {
-        const userId = req.userId; // Convert the object to a JSON string
-        console.log("UserId as a JSON string:1", typeof userId);
+        const userId = req.userId; 
         let userData = await userModel.findOne({ _id: userId })
         let user = userData
         const subscriber = await paymentDetailModel.findOne({ userId: userId }).populate('planId')
 
         if (subscriber) {
-             
+
             const subscriptionDate = subscriber.subscriptionDate;
             const sday = subscriptionDate.getDate();
             const smonth = subscriptionDate.getMonth() + 1;
@@ -255,12 +241,12 @@ const getProfile = async (req, res) => {
                 password: user.password,
                 isVerified: user.isVerified,
                 isBlocked: user.isBlocked,
-                planName:subscriber.planId.title,
+                planName: subscriber.planId.title,
+                amount: subscriber.planId.amount,
                 image: user.image,
                 subscriptionDate: formattedSubscriptionDate,
                 expiryDate: formattedExpiryDate
             }
-            console.log(userData);
         }
 
         return res.status(200).json({ user: userData })
@@ -274,16 +260,8 @@ const uploadPic = async (req, res) => {
     try {
         const userId = req.userId;
         const userData = await userModel.findOne({ _id: userId })
-        console.log(userData)
         userData.image = req.file.filename
         await userData.save()
-        //    const user=userData.map((u)=>({
-        //       id :u._id,
-        //       name:u.name,
-        //       email:u.email,
-        //       subscriptionDate:u?.subscriptionDate,
-        //       expiryDate:u?.expiryDate
-        //    }))
         res.status(200).json({ user: userData })
     }
     catch (error) {
@@ -311,13 +289,10 @@ const changePassword = async (req, res) => {
     try {
         const userId = req.userId
         const password = req.body.password
-
         const userData = await userModel.findOne({ _id: userId })
         userData.password = await utilities.securePassword(password)
         await userData.save()
         res.status(200).json({ message: "success" })
-
-
     } catch (error) {
         res.status(500).json({ message: error })
     }

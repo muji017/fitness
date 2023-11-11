@@ -1,0 +1,35 @@
+.no-focus-ring:focus {
+    outline: none;
+    box-shadow: none;
+  }
+.ActiveTrainer{
+    border-top: solid 1px greenyellow !important;
+    border-left: solid 5px greenyellow !important;
+    border-bottom: solid 1px greenyellow !important;
+    border-right: solid 1px greenyellow !important;
+}
+body{
+  background-color: rgba(0, 0, 0, 0.034) !important;
+  height: 100%;
+}
+
+.mat-tooltip-panel {
+  display:block;
+  max-width: 400px;
+}
+.tooltip-content {
+  position: fixed;
+  top:10%;
+  right: 0;
+   width: 100%;
+  display: none;
+  z-index: 2;
+}
+
+.tooltip-content.show {
+  display: block;
+}
+
+.bg-color-msg-side{
+  background-color: rgb(253, 248, 227);
+}

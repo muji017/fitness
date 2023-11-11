@@ -20,6 +20,9 @@ import { ViewDietPlanDetailsComponent } from './view-diet-plan-details/view-diet
 import { VideosComponent } from './videos/videos.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { UserTrainerDietComponent } from './user-trainer-diet/user-trainer-diet.component';
+import { UserTrainerVideosComponent } from './user-trainer-videos/user-trainer-videos.component';
+import { ChatWithTrainerComponent } from './chat-with-trainer/chat-with-trainer.component';
+import { UserChatTrainerListDialogeComponent } from './user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,23 +32,25 @@ const routes: Routes = [{
     { path: 'signup', component: SignupComponent, canActivate: [UserLoginAuthGuard] },
     { path: "home", component: HomeComponent, },
     { path: "bmicalculator", component: BmicalculatorComponent },
-    { path: "Usertrainerlist", component: UsertrainerslistComponent,canActivate: [UserhomeAuthGuard] },
-    { path: "Usertrainerprofile/:trainerId", component: UserTrainerProfileComponent,canActivate: [UserhomeAuthGuard] },
+    { path: "Usertrainerlist", component: UsertrainerslistComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "Usertrainerprofile/:trainerId", component: UserTrainerProfileComponent, canActivate: [UserhomeAuthGuard] },
     { path: "subscription", component: SubscriptionComponent, canActivate: [UserhomeAuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [UserhomeAuthGuard] },
-    { path: 'dietplans', component: ViewDietPlanComponent,canActivate: [UserhomeAuthGuard] },
+    { path: 'dietplans', component: ViewDietPlanComponent, canActivate: [UserhomeAuthGuard] },
     { path: "viewdietplans/:planId", component: ViewDietPlanDetailsComponent, canActivate: [UserhomeAuthGuard] },
-    { path: "usertrainerdiet/:trainerId", component: UserTrainerDietComponent,canActivate: [UserhomeAuthGuard] },
-    { path: "videos", component: VideosComponent,canActivate: [UserhomeAuthGuard] },
-    { path:"videoplayer",component:VideoPlayerComponent,canActivate: [UserhomeAuthGuard]},
-
-   { path: '*', redirectTo: 'login', pathMatch: 'full', }
+    { path: "usertrainerdiet/:trainerId", component: UserTrainerDietComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "videos", component: VideosComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "usertrainervideos/:trainerId", component: UserTrainerVideosComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "videoplayer/:videoId", component: VideoPlayerComponent, canActivate: [UserhomeAuthGuard] },
+    { path: "chat", component: ChatWithTrainerComponent, canActivate: [UserhomeAuthGuard] },
+    { path: '*', redirectTo: 'login', pathMatch: 'full', }
   ]
 }]
 
 @NgModule({
   declarations: [
     SetUserPasswordComponent,
+
   ],
   imports: [
     CommonModule,

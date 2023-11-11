@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { trainer } from 'src/app/model/userModel';
+import { Observable } from 'rxjs';
+import { trainer, userlist } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
 
 @Component({

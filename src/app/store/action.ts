@@ -1,6 +1,10 @@
 import { createAction, props } from "@ngrx/store";
 import { DietPlansModel, PlansModel, UserModel, VideoModel, trainer, userToken } from "../model/userModel";
 
+
+// Users side 
+export const getUserDetailsApi=createAction("getUserDetailsApi")
+
 export const loginStart=createAction("loginStart",props<{ email:string,password:string }>())
 
 export const loginSuccess=createAction("loginSuccess",props<{userToken:userToken}>())
@@ -23,9 +27,13 @@ export const getTrainerProfileApi=createAction("getTrainerProfileApi")
 export const getTrainerProfileApiSuccess=createAction("getTrainerProfileApiSuccess",props<{ trainer:any}>())
 
 // get users list and operations
+export const getSubscriberListApi=createAction("getSubscriberListApi")
+
 export const getUsersListApi=createAction("getUsersListApi")
 
 export const getUsersListApiSuccess=createAction("getUsersListApiSuccess",props<{ users:UserModel[]}>())
+
+export const changeSubscribersStatusApi=createAction("changeSubscribersStatusApi",props<{userId:any}>())
 
 export const changeUserStatusApi=createAction("changeUserStatusApi",props<{userId:any}>())
 
@@ -50,9 +58,12 @@ export const getDietPlansListApiSuccess=createAction("getDietPlansListApiSuccess
 
 export const deleteDietPlanApi=createAction("deleteDietPlanApi",props<{planId:any}>())
 
+export const changeDietPlanStatusApi=createAction("changeDietPlanStatusApi",props<{planId:any}>())
+
 export const changeDietPremiumApi=createAction("changeDietPremiumApi",props<{planId:any}>())
 
 // videos
+export const getAllVideoListApi=createAction("getAllVideoListApi")
 
 export const getAllVideosTrainerApi=createAction("getAllVideosApi")
 
