@@ -24,7 +24,7 @@ const login = async (req, res) => {
 
             }
             else {
-                res.status(401).json({ message: "Email and password don't match" });
+                res.status(401).json({ error: "Email and password don't match" });
             }
         }
         else {

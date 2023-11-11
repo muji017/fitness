@@ -62,28 +62,28 @@
    [class]="smallview" class="fixed "  id="mobile-menu">
     <div class="bg-gray-200 space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a [routerLink]="['/admin/home']"
+      <a [routerLink]="['/admin/home']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Dashboard</a>
-      <a [routerLink]="['/admin/trainers']"
+      <a [routerLink]="['/admin/admintrainerlist']" routerLinkActive="active-link"   
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
         Trainer Management</a>
         
-      <a [routerLink]="['/admin/user']"
+      <a [routerLink]="['/admin/users']" [routerLinkActive]="'active-link'"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       User Managment</a>
 
-      <a [routerLink]="['/admin/subscribers']"
+      <a [routerLink]="['/admin/subscribers']" [routerLinkActive]="'active-link'"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
        Subscribers</a>
 
-       <a [routerLink]="['/admin/plans']"
+       <a [routerLink]="['/admin/plans']" [routerLinkActive]="'active-link'"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Plan Management</a>
 
-      <a [routerLink]="['/admin/dietplans']" 
+      <a [routerLink]="['/admin/dietplans']" [routerLinkActive]="'active-link'" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Dietplans</a>
-      <a [routerLink]="['/admin/videos']" 
+      <a  [routerLink]="['/admin/videos']" [routerLinkActive]="'active-link'" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Videos</a>
       <a [routerLink]="['/admin/salesreport']" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Sales Report</a>

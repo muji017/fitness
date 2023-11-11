@@ -24,41 +24,29 @@ const storage=multer.diskStorage({
     }
 });
 const upload =multer({storage:storage});
-
+// auth and login ,otp password reset
 trainerroute.post('/login',trainercontroller.login)
-
-
 trainerroute.post('/verifyOtp',trainercontroller.otpVerify);
-
 trainerroute.put('/resendOtp',trainercontroller.resendOtp)
-
 trainerroute.post('/sendOtp',trainercontroller.sendOtp)
-
 trainerroute.put('/setPassword',trainercontroller.setPassword)
 
+// diet plan manament
 trainerroute.post('/addDietPlan',checkAuth,upload.single('image'),dierPlanController.addDietPlan)
-
 trainerroute.get('/getDietPlans',checkAuth,dierPlanController.getDietPlans)
-
 trainerroute.put('/updateDietPlan',checkAuth,upload.single('image'),dierPlanController.updateDietPlan)
-
 trainerroute.delete('/deleteDietPlan',checkAuth,dierPlanController.deleteDietPlan)
 
+// profile managment
 trainerroute.get('/getTrainerProfile',checkAuth,trainercontroller.getTrainerProfile)
-
 trainerroute.put('/uploadPic',checkAuth,upload.single('image'),trainercontroller.uploadPic)
-
-
 trainerroute.put('/changePassword',checkAuth,upload.none(),trainercontroller.changePassword)
-
 trainerroute.put('/updateProfile',checkAuth,upload.none(),trainercontroller.updateProfile)
 
+// video managment
 trainerroute.get('/getAllVideos',checkAuth,videoController.getAllVideos)
-
 trainerroute.post('/addVideo',checkAuth,upload.single('video'),videoController.addVideo)
-
 trainerroute.delete('/deleteVideo',checkAuth,videoController.deleteVideo)
-
 trainerroute.put('/updateVideo',checkAuth,upload.single('video'),videoController.updateVideo)
 
 // chat side

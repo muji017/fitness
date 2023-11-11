@@ -87,7 +87,7 @@ export interface VideoModel{
     workoutType: string,
     bodyPart:string,
     description: String,
-    isAprooved: boolean,
+    isApproved: boolean,
     isPremium:boolean,
     video:string,
     isLive:string

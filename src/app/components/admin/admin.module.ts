@@ -22,7 +22,11 @@ import { EditPlanComponent } from './edit-plan/edit-plan.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
 import { AdminDietPlanViewComponent } from './admin-diet-plan-view/admin-diet-plan-view.component';
 import { VideosViewComponent } from './videos-view/videos-view.component';
-
+import { WatchVideoPlayerComponent } from './watch-video-player/watch-video-player.component';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 const routes:Routes=[
   {
@@ -52,6 +56,9 @@ const routes:Routes=[
       {
         path:'subscribers',component:SubscribersComponent,canActivate:[AdminhomeAuthGuard]
       },
+      {
+        path:'videos',component:VideosViewComponent,canActivate:[AdminhomeAuthGuard]
+      }
     ]
   }
 ]
@@ -76,9 +83,14 @@ const routes:Routes=[
     SubscribersComponent,
     AdminDietPlanViewComponent,
     VideosViewComponent,
+    WatchVideoPlayerComponent,
     
   ],
   imports: [
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,

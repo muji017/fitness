@@ -3,7 +3,14 @@
   margin-right: 8px;
 }
 
-
+.active-link {
+  background-color: darkgray !important;
+ 
+  border-radius: 10px !important;
+}
+.active-link {
+  color: white !important;
+}
 
 .spacer {
   flex: 1 1 auto;

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DietPlanList, PlanList, UserModel, trainer, trainerlist, userlist } from 'src/app/model/userModel';
+import { DietPlanList, PlanList, UserModel, VideoList, trainer, trainerlist, userlist } from 'src/app/model/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +74,7 @@ export class AdminService {
   updatePlan(plan:FormData):Observable<any>{
     return this.http.put<any>(`${this.apiUrl}/admin/updatePlan`,plan)
   }
-
+// diet plans
   getDietPlans():Observable<DietPlanList>{
     return this.http.get<DietPlanList>(`${this.apiUrl}/admin/getDietPlan`)
   }
@@ -97,5 +97,18 @@ export class AdminService {
     const payload={planId}
     return this.http.put<any>(`${this.apiUrl}/admin/changeDietPlanStatus`,payload)
    }
+  // videos 
+  getVideos():Observable<VideoList>{
+    return this.http.get<VideoList>(`${this.apiUrl}/admin/getVideos`)
+  }
 
+  changeVideoStatus(videoId:any):Observable<VideoList>{
+    const payload={videoId}
+    return this.http.put<VideoList>(`${this.apiUrl}/admin/changeVideoStatus`,payload)
+  }
+
+  changeVideoPremium(videoId:any):Observable<VideoList>{
+    const payload={videoId}
+    return this.http.put<VideoList>(`${this.apiUrl}/admin/changeVideoPremium`,payload)
+  }
 }

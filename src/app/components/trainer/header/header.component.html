@@ -1,4 +1,4 @@
-<mat-toolbar class="bg-white">
+<div><mat-toolbar class="bg-white">
   <!-- Company Icon -->
   <div class="md:hidden">
     <button (click)="tog()" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white-900 hover:bg-gray-700
@@ -11,7 +11,7 @@
 
        Menu open: "hidden", Menu closed: "block"
      -->
-      <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+      <svg  class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
@@ -56,25 +56,25 @@
   <!-- Mobile menu, show/hide based on menu state. -->
 
 </mat-toolbar>
-<div class="" [class]="smallview" class="fixed " id="mobile-menu">
+<div class="w-full z-index-1" [class]="smallview"  id="mobile-menu">
   <div class="bg-gray-200 space-y-1 px-2 pb-3 pt-2">
     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-    <a [routerLink]="['/trainer/home']"
+    <a [routerLink]="['/trainer/home']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Dashboard</a>
-    <a [routerLink]="['/trainer/live']"
+    <a [routerLink]="['/trainer/profile']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
-      Live Classes </a>
+      Profile </a>
 
-    <a [routerLink]="['/trainer/chat']"
+    <a mat-list-item [routerLink]="['/trainer/chat']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Notifications</a>
 
-    <a [routerLink]="['/trainer/videos']"
+    <a [routerLink]="['/trainer/videos']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Videos</a>
 
-    <a [routerLink]="['/trainer/dietplans']"
+    <a  [routerLink]="['/trainer/dietplans']" routerLinkActive="active-link"
       class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">
       Diet Plans</a>
 

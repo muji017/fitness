@@ -43,24 +43,25 @@
                             [(ngModel)]="searchQuery" placeholder="Search">
                     </div>
                 </div>
-                <div matTooltip="Click to chat" *ngFor="let user of users"  class="rounded-lg bg-gray-100 ListTrainer">
+                <div matTooltip="Click to chat" *ngFor="let user of users" class="rounded-lg bg-gray-100 ListTrainer">
                     <div (click)="viewMessage(user._id)" class="container border-2 mt-1 p-1"
-                    [ngClass]="{'ActiveTrainer': user?._id===currentUser?._id}">
+                        [ngClass]="{'ActiveTrainer': user?._id===currentUser?._id}">
                         <div class=" grid grid-cols-2 flex justify-between rounded-lg bg-white p-2">
                             <div class="w-full flex justify-start align-center">
                                 <img [src]="'http://localhost:3000/public/images/' + user?.image" alt="Trainer Image"
                                     class="rounded-full w-12 h-12">
-                                <p class="text-sm">{{ user?.name }}</p>
+                                <p class="p-2 text-sm">{{ user?.name }}</p>
+                                
                             </div>
-                            <div class=" justify-end align-center ">
-                                <h6 class="text-red-500">Offline</h6>
+                            <div class="flex justify-end">
+                                <h6 class="text-green-500">Online</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="flex" [ngClass]=" 'grid-cols-1 w-full'">
-    
+
                 <div class="ChatSpace w-full border-5 bg-color-msg-side" style=" max-height: 500px; min-height: 500px;
                      display: flex; flex-direction: column; ">
                     <div class="bg-white" style="height: 60px;" mat-raised-button matTooltip="click view profile"
@@ -69,13 +70,28 @@
                             <img *ngIf="currentUser?.image"
                                 [src]="'http://localhost:3000/public/images/' + currentUser?.image" alt="Trainer Image"
                                 class="rounded-full w-12 h-12">
-                            <p class="text-sm">{{ currentUser?.name }}</p>
+                               
+                            <p class="p-2 text-sm">{{ currentUser?.name }}</p>
+                            <div *ngIf="userTyping" class="text-blueGray-700 flex h-auto mb-0 p-2 ">
+                                <p>Typing</p>
+                                <div *ngFor="let version of versions" class="mt-2 pulse-loader"
+                                    [style.width]="version.width" [style.height]="version.height"
+                                    [style.color]="version.color">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
-                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;" >
-                        <div *ngIf="chats" style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
+                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;">
+                        
+                        <div *ngIf="chats"
+                            style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
                             class='bg-color-msg-side w-full overflow-y-auto p-5'>
-                            <div  *ngFor="let chat of chats">
+                          
+                            <div *ngFor="let chat of chats">
                                 <div *ngIf="chat.senderType==='Trainer'" class='w-full flex my-2 justify-end'>
                                     <div
                                         class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
@@ -83,18 +99,20 @@
                                     </div>
                                 </div>
                                 <div *ngIf="chat.senderType==='User'" class='w-full my-2'>
-                                    <div class='bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
+                                    <div
+                                        class='bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
                                         {{chat.content}}
                                     </div>
                                 </div>
                             </div>
+
                             <div *ngIf="chats.length<=0" class='w-full h-full flex items-center justify-center'>
                                 No Chats
                             </div>
                         </div>
                     </div>
                     <div class="container justify-center mb-2" style="display: flex; align-items: center;">
-                        <input [(ngModel)]="message" matTooltip="click here to write" type="text"
+                        <input (input)="typing()" [(ngModel)]="message" matTooltip="click here to write" type="text"
                             placeholder="Write your message" class="w-full rounded-l-lg border border-gray-300 p-2">
                         <button (click)="sendMessage()" matTooltip="Send Message"
                             class="bg-blue-500 text-white rounded-r-lg p-2">

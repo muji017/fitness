@@ -6,7 +6,8 @@ import {
   changeDietPremiumApi,
   changePlanStatusApi,
   changeSubscribersStatusApi,
-  changeTrainerStatusApi, changeUserStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi,
+  changeTrainerStatusApi, changeUserStatusApi, changeVideoPremiumApi, changeVideoStatusApi, deleteDietPlanApi, deleteVideoApi, getAllAdminDietPlansListApi,
+  getAllAdminVideosListApi,
   getAllDietPlansListApi, getAllVideoListApi, getAllVideosApiSuccess, getAllVideosTrainerApi, getDietPlansListApi,
   getDietPlansListApiSuccess, getPlansListApi, getPlansListApiSuccess, getSubscriberListApi, getTrainerProfileApi,
   getTrainerProfileApiSuccess, getTrainersListAdminApi, getTrainersListApi,
@@ -296,7 +297,7 @@ export class UserEffects {
     )
   })
 
-  // admin
+  // admin diet and video
 
   getAllAdminDietPlansList$ = createEffect(() => {
     return this.actions$.pipe(
@@ -305,6 +306,45 @@ export class UserEffects {
         return this.adminService.getDietPlans().pipe(
           map((res) => {
             return getDietPlansListApiSuccess({ Dietplans: Object.values(res.DietPlans) })
+          })
+        )
+      })
+    )
+  })
+
+  getAllAdminVideosList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getAllAdminVideosListApi),
+      mergeMap(() => {
+        return this.adminService.getVideos().pipe(
+          map((res) => {
+            return getAllVideosApiSuccess({ videos: Object.values(res.VideoModel) })
+          })
+        )
+      })
+    )
+  })
+
+  changeVideoStaus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(changeVideoStatusApi),
+      mergeMap((action) => {
+        return this.adminService.changeVideoStatus(action.videoId).pipe(
+          map((data) => {
+            return getAllVideosApiSuccess({ videos: Object.values(data.VideoModel) })
+          })
+        )
+      })
+    )
+  })
+
+  changeVideoPremium$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(changeVideoPremiumApi),
+      mergeMap((action) => {
+        return this.adminService.changeVideoPremium(action.videoId).pipe(
+          map((data) => {
+            return getAllVideosApiSuccess({ videos: Object.values(data.VideoModel) })
           })
         )
       })

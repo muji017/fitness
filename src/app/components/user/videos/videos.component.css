@@ -2,3 +2,9 @@
     outline: none;
     box-shadow: none;
   }
+  .icon-gold{
+    color: gold !important;
+  }
+  .color-red{
+    background-color: rgba(255, 0, 0, 0.616) !important;
+  }

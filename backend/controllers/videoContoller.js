@@ -77,9 +77,37 @@ const updateVideo = async (req, res) => {
         res.status(500).json({ error: error })
     }
 }
+const changeVideoStatus =async(req,res)=>{
+    try {
+        const { videoId } = req.body
+        const videoData = await videoModel.findOne({ _id: videoId })
+        if (videoData) {
+            videoData.isApproved = !videoData.isApproved
+            await videoData.save()
+            await getAllVideos(req, res);
+        } 
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+const changeVideoPremium =async(req,res)=>{
+    try {
+        const { videoId } = req.body
+        const videoData = await videoModel.findOne({ _id: videoId })
+        if (videoData) {
+            videoData.isPremium = !videoData.isPremium
+            await videoData.save()
+            await getAllVideos(req, res);
+        } 
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
 module.exports = {
     getAllVideos,
     addVideo,
     deleteVideo,
-    updateVideo
+    updateVideo,
+    changeVideoStatus,
+    changeVideoPremium
 }
