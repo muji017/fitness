@@ -47,40 +47,42 @@ const sendMessage = async (req, res) => {
         const authUserId = req.userId
         const authTrainerId = req.trainerId
         if (authUserId) {
-           chat=new chatMessage()
-           chat.room=roomId
-           chat.sender=authUserId
-           chat.senderType='User'
-           chat.content=message
-           await chat.save()
-           res.status(200).json({message:'Message sended'})
-       } else if(authTrainerId) {
-        chat=new chatMessage()
-        chat.room=roomId
-        chat.sender=authTrainerId
-        chat.senderType='Trainer'
-        chat.content=message
-        await chat.save()
-        res.status(200).json({message:'Message sended'})
-    }
+            chat = new chatMessage()
+            chat.room = roomId
+            chat.sender = authUserId
+            chat.senderType = 'User'
+            chat.content = message
+            await chat.save()
+            res.status(200).json({ chat })
+        } else if (authTrainerId) {
+            chat = new chatMessage()
+            chat.room = roomId
+            chat.sender = authTrainerId
+            chat.senderType = 'Trainer'
+            chat.content = message
+            await chat.save()
+            res.status(200).json({ chat })
+        }
     } catch (error) {
         res.status(500).json({ error: error })
     }
 }
 
-const getAllChats= async( req,res)=>{
+const getAllChats = async (req, res) => {
     try {
-        const roomId=req.query.roomId
-        const chats= await chatMessage.find({room:roomId}).sort({createdAt:-1})
-        res.status(200).json({chats})
+        const roomId = req.query.roomId
+        const chats = await chatMessage.find({ room: roomId }).sort({ createdAt: -1 })
+        res.status(200).json({ chats })
     } catch (error) {
         res.status(500).json({ error: error })
     }
 }
 
-module.exports = {
-    getRoomUser,
-    getChatRooms,
-    sendMessage,
-    getAllChats
-}
+
+
+    module.exports = {
+        getRoomUser,
+        getChatRooms,
+        sendMessage,
+        getAllChats,
+    }

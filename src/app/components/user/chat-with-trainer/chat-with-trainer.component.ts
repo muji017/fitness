@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
@@ -31,13 +31,15 @@ export class ChatWithTrainerComponent {
   currentRoom!: chatRoom | undefined
   chats:any| undefined
   chatData:any
+  trainerTyping:boolean=false
   constructor(
     private service: UserService,
     private store: Store<trainer[]>,
     private router: Router,
     private chatService: ChatService,
     private dialoge: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -52,13 +54,33 @@ export class ChatWithTrainerComponent {
         (res) => {
           this.chatData = res.chatRooms
           this.chatRooms = res.chatRooms
-          console.log("rooms", this.chatRooms);
           const trainerChatIds = this.chatRooms.map((chat) => chat.trainerId)
           this.trainers = data.filter((data) => trainerChatIds.includes(data.id))
           this.searchTrainer = data.filter((data) => trainerChatIds.includes(data.id))
           this.currentTrainer = this.trainers[0]
           this.currentRoom = this.chatData.find((room:any) => room.trainerId === this.currentTrainer?.id)
           this.getRoomMessages(this.currentRoom?._id)
+          this.chatService.socket.off('message received');
+          this.chatService.socket.on('message received', (chat:any) => {
+            if(chat.room!==this.currentRoom?._id){
+
+            }
+            else{
+            this.chats.unshift(chat); 
+            this.cdr.detectChanges();
+            }
+          });
+
+          this.chatService.socket.on('trainer typing progress',(roomId:any)=>{
+           console.log("roomId ",roomId,"current roomId",this.currentRoom?._id);
+           
+            if(roomId===this.currentRoom?._id){
+              this.trainerTyping=true
+            }
+          })
+          this.chatService.socket.on('trainer stop typing',()=>{
+            this.trainerTyping=false
+          })
         }
       )
     }) 
@@ -68,10 +90,8 @@ export class ChatWithTrainerComponent {
       this.chatService.getAllChats(roomId).subscribe(
         (res)=>{
           this.chats=res.chats
-          console.log("chat",this.chats);  
         }
-      )
-     
+      )  
     }
   }
   openAddTrainer() {
@@ -87,8 +107,8 @@ export class ChatWithTrainerComponent {
   viewMessage(trainerId: any) {
     this.activeTrainer = trainerId
     this.store.select(getAllTrainers).subscribe((res) => {
-      this.trainers = res
-      this.currentTrainer = this.trainers.find((tr) => tr.id === trainerId)
+      const trainers = res
+      this.currentTrainer = trainers.find((tr) => tr.id === trainerId)
       this.currentRoom = this.chatData.find((room:any) => room.trainerId === this.currentTrainer?.id)
       this.getRoomMessages(this.currentRoom?._id)
     })
@@ -103,9 +123,12 @@ export class ChatWithTrainerComponent {
     this.chatService.sendMessage(room,this.currentRoom?._id, this.message).subscribe(
       (res) => {
         this.message = ''
-        this.toastr.success(res.message)
       }
     )
+  }
+  typing(){
+    this.chatService.userTyping(this.currentRoom?._id)
+    
   }
   applyFilter() {
     const filterValue = this.searchQuery.trim().toLowerCase();
@@ -113,4 +136,9 @@ export class ChatWithTrainerComponent {
       return tr.name.toLowerCase().includes(filterValue);
     });
   }
+  versions = [ {
+    width: '20px',
+    height: '5px',
+    color: '#74b9ff'
+  }];
 }

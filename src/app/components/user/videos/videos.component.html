@@ -1,42 +1,47 @@
-
- <!-- Image Section -->
- <div class="bg-black" style="  background-image: url(../assets/images/background1.jpg);
+<!-- Image Section -->
+<div class="bg-black" style="  background-image: url(../assets/images/background1.jpg);
  background-size: cover; background-position: center ; height: 100vh;">
     <app-header style="position: fixed; width: 100%;top:0;left: 0; z-index: 1;"></app-header><br>
-     <div class="mt-16 p-3 bg-black" style="text-align: center !important; opacity: 0.5;">
-        <span  
-                        style="text-align: center; color: rgb(240, 240, 240); font-size: 24px; font-weight: bold;
+    <div class="mt-16 p-3 bg-black" style="text-align: center !important; opacity: 0.5;">
+        <span
+            style="text-align: center; color: rgb(240, 240, 240); font-size: 24px; font-weight: bold;
              text-transform: uppercase; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
 
-          Famous Personal Trainers
+            Famous Personal Trainers
 
-     </span>>
-     </div>
-     <div class="container flex mt-2 mb-4" style="justify-content: end !important;">
-        <div   class="flex rounded-lg bg-white ">
-           <mat-icon class="m-2 p-1" matTooltip="Search DietPans">search</mat-icon>
-           <input matTooltip="Search DietPans" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
-               [(ngModel)]="searchQuery" placeholder="Search">
-       </div>
-       </div>
+        </span>>
+    </div>
+    <div class="container flex mt-2 mb-4" style="justify-content: end !important;">
+        <div class="flex rounded-lg bg-white ">
+            <mat-icon class="m-2 p-1" matTooltip="Search DietPans">search</mat-icon>
+            <input matTooltip="Search DietPans" (input)="applyFilter()" class="no-focus-ring rounded-lg w-56 h-12"
+                [(ngModel)]="searchQuery" placeholder="Search">
+        </div>
+    </div>
     <!-- Cards Section -->
-    <div  class="container mt-2  mx-auto">
-        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="container mt-2  mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
             <div *ngFor="let plan of videos" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image" class="w-full md:h-auto lg:h-60"></video>
-                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}</h2>
+                <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image"
+                    class="w-full md:h-auto lg:h-60"></video>
+                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}
+                </h2>
                 <p class="text-gray-300">{{plan.bodyPart}}</p>
                 <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}
                     Time : {{ plan.uploadDate | date:'HH:mm:ss' }}
                 </p>
-                <button mat-raised-button  (click)="getVideos(plan._id)"  >Watch video</button>
+                <button matTooltip="Only premium users can access" [matTooltipDisabled]="!plan.isPremium"
+                    [ngClass]="plan.isPremium?'color-red text-white':'bg-white'" mat-raised-button
+                    (click)="getVideos(plan._id,plan.isPremium)">
+                    <i *ngIf="plan.isPremium" class="fas fa-crown mr-2 icon-gold"></i>Watch video</button>
             </div>
         </div>
     </div>
     <div class="container m-5 flex items-center justify-center mx-auto">
         <button class=" btn  border-gray-300 border-1 p-6 rounded-full shadow-lg">
-           <span class="text-xs text-white"><a href="" class="underline">Click here</a> for more home workout videos and tips</span>
+            <span class="text-xs text-white"><a href="" class="underline">Click here</a> for more home workout videos
+                and tips</span>
         </button>
     </div>
     <app-footer></app-footer>

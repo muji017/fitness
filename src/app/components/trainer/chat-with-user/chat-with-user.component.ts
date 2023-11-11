@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -24,12 +24,14 @@ export class ChatWithUserComponent {
   message!: string
   chatRooms!: chatRoom[]
   currentRoom!:chatRoom|undefined
+  userTyping:boolean=false
   constructor(
     private service: TrainerService,
     private store: Store<UserModel[]>,
     private router: Router,
     private chatService:ChatService,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,27 @@ export class ChatWithUserComponent {
          this.currentUser=this.users[0]
          this.currentRoom=this.chatRooms.find((room)=>room.userId._id===this.currentUser?._id)
          this.getRoomMessages(this.currentRoom?._id)
+         this.chatService.socket.on('message received', (chat:any) => {
+          if(chat.room!==this.currentRoom?._id){
+
+          }
+          else{
+          console.log("single message via Socket.IO: ",chat);
+          this.chats.unshift(chat);
+          console.log("Received message via Socket.IO: ",this.chats);
+          this.cdr.detectChanges();
+          }
+        });
+        this.chatService.socket.on('typing progress',(roomId:any)=>{
+          console.log("roomId ",roomId,"current roomId",this.currentRoom?._id);
+          
+           if(roomId===this.currentRoom?._id){
+             this.userTyping=true
+           }
+         })
+        this.chatService.socket.on('stop typing',()=>{
+          this.userTyping=false
+        })
     }
   )
   }
@@ -64,7 +87,7 @@ export class ChatWithUserComponent {
   viewMessage(userId: any) {
     this.activeUser = userId
     this.currentUser=this.users.find((user)=>user._id===userId)
-    this.currentRoom=this.chatRooms.find((room)=>room.userId._id===this.currentUser?._id)
+    this.currentRoom=this.chatRooms.find((room)=>room.userId._id===this.currentUser?._id)    
     this.getRoomMessages(this.currentRoom?._id)
   }
 
@@ -77,9 +100,11 @@ export class ChatWithUserComponent {
     this.chatService.sendMessageTrainer(room,this.currentRoom?._id, this.message).subscribe(
       (res) => {
         this.message = ''
-        this.toastr.success(res.message)
       }
     )
+  }
+  typing(){
+    this.chatService.trainerTyping(this.currentRoom?._id) 
   }
   applyFilter() {
     const filterValue = this.searchQuery.trim().toLowerCase();
@@ -87,4 +112,11 @@ export class ChatWithUserComponent {
       return user.name.toLowerCase().includes(filterValue);
     });
   }
+
+
+  versions = [ {
+    width: '20px',
+    height: '5px',
+    color: '#74b9ff'
+  }];
 }
