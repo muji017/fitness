@@ -54,4 +54,7 @@ trainerroute.put('/updateVideo',checkAuth,upload.single('video'),videoController
 trainerroute.get('/getChatRooms',checkAuth,chatController.getChatRooms)
 trainerroute.post('/sendMessage',checkAuth,chatController.sendMessage)
 trainerroute.get('/getAllChats',checkAuth,chatController.getAllChats)
+trainerroute.patch('/makeOnlineTrainer',checkAuth,chatController.onlineStatus)
+trainerroute.patch('/messageRead',checkAuth,chatController.messageRead)
+
 module.exports=trainerroute

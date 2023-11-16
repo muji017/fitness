@@ -29,19 +29,21 @@ export class ChatService {
     this.socket.on('connected', () => this.userSocketConnected = true)
     this.socket.on('typing', () => this.isUserTyping = true)
     this.socket.on('stop typing', () => this.isUserTyping = false)
-  
+
+  }
+  makeOnline(userId: string, status: boolean): Observable<chatRooms> {
+    let payload = { status, userId }
+    return this.http.patch<chatRooms>(`${this.apiUrl}/makeOnlineUser`, payload)
   }
 
   public userTyping(roomId: any) {
     if (!this.userSocketConnected) return
     if (!this.isUserTyping) {
-      console.log("typing roomId", roomId);
       this.isUserTyping = true
       this.socket.emit('typing', roomId)
-      this.socket.on('typing progress',(roomId:string)=>{
-        console.log("insode open chat",roomId);
-        
-           })
+      this.socket.on('typing progress', (roomId: string) => {
+
+      })
     }
     let lastTypingtime = new Date().getTime();
     let timer = 3000
@@ -50,17 +52,15 @@ export class ChatService {
       let timeDiff = timeNow - lastTypingtime
       if (timeDiff >= timer && this.isUserTyping) {
         this.socket.emit("stop typing", roomId)
-        console.log("stop typing roomid", roomId);
         this.isUserTyping = false
       }
     }, timer)
   }
-public getTrainerStatus(){
+  public getTrainerStatus() {
 
-}
+  }
   public getChatRooms(): Observable<chatRooms> {
     this.socket.on('message received', (chat: any) => {
-      console.log("message user res", chat);
 
     })
     return this.http.get<chatRooms>(`${this.apiUrl}/getChatRooms`)
@@ -77,15 +77,17 @@ public getTrainerStatus(){
   }
 
   public sendMessage(room: chatRoom, roomId: any, message: String,): Observable<any> {
-    console.log('sendMessage: ', message)
     const payload = { roomId, message }
     return this.http.post<any>(`${this.apiUrl}/sendMessage`, payload).pipe(
       switchMap((apiResponse) => {
-        console.log("send message", apiResponse.chat);
-
         this.socket.emit('new message', room, 'User', apiResponse.chat);
         return of(apiResponse);
       }))
+  }
+
+  public messageRead(roomId:string|undefined):Observable<string>{
+    const payload = {roomId}
+    return this.http.patch<string>(`${this.apiUrl}/messageRead`,payload)
   }
 
   // trainer side chat 
@@ -93,21 +95,27 @@ public getTrainerStatus(){
   public openChatTrainer() {
     this.socket = socketIo.connect(this.apiUrl)
     this.socket.emit('setup', this.trainerId)
-    this.socket.on('connected', () => this.userSocketConnected = true)
+    this.socket.on('connected', () => {
+      this.userSocketConnected = true
+    });
     this.socket.on('trainer typing', () => this.isUserTyping = true)
     this.socket.on('trainer stop typing', () => this.isUserTyping = false)
   }
 
+  public makeOnlineTrainer(trainerId: string, status:boolean): Observable<string> {
+    let payload = { status, trainerId }
+    return this.http.patch<string>(`${this.apiUrl}/trainer/makeOnlineTrainer`, payload)
+  }
+
+  public messageReadTrainer(roomId:string|undefined):Observable<string>{
+    const payload = {roomId}
+    return this.http.patch<string>(`${this.apiUrl}/trainer/messageRead`,payload)
+  }
   public trainerTyping(roomId: any) {
     if (!this.userSocketConnected) return
     if (!this.isUserTyping) {
-      console.log("trainer typing roomId", roomId);
       this.isUserTyping = true
       this.socket.emit("trainer typing", roomId)
-      this.socket.on('trainer typing progress',(roomId:string)=>{
-        console.log("insode open chat",roomId);
-        
-           })
     }
     let lastTypingtime = new Date().getTime();
     let timer = 3000
@@ -116,7 +124,6 @@ public getTrainerStatus(){
       let timeDiff = timeNow - lastTypingtime
       if (timeDiff >= timer && this.isUserTyping) {
         this.socket.emit("trainer stop typing", roomId)
-        console.log("trainer stop typing roomid", roomId);
         this.isUserTyping = false
       }
     }, timer)
@@ -129,8 +136,6 @@ public getTrainerStatus(){
   }
   public getChatRoomsTrainer(): Observable<chatRooms> {
     this.socket.on('message received', (chat: any) => {
-      console.log("inside reciverd trai", chat);
-
     })
     return this.http.get<chatRooms>(`${this.apiUrl}/trainer/getChatRooms`)
   }
@@ -142,12 +147,10 @@ public getTrainerStatus(){
   }
 
   public sendMessageTrainer(room: chatRoom, roomId: any, message: String,): Observable<any> {
-    console.log('inside send message in trainer ')
-    console.log('sendMessage: ', message)
+
     const payload = { roomId, message }
     return this.http.post<any>(`${this.apiUrl}/sendMessage`, payload).pipe(
       switchMap((apiResponse) => {
-        console.log("send message", apiResponse.chat);
 
         this.socket.emit('new message', room, 'Trainer', apiResponse.chat);
         return of(apiResponse);

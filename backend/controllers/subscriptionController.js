@@ -21,11 +21,8 @@ const razorpayInstance = new Razorpay({
 
 const createSubscription = async (req, res) => {
     try {
-        console.log("inside creaateSubscription");
         const userDate = await userModel.findOne({ _id: req.userId })
-        console.log("user", userDate);
         const plan = await planModel.findOne({ _id: req.body.planId })
-        console.log("plan", plan);
         const amount = Math.round(parseFloat(plan.amount) * 100); // Convert the total amount to paise
         const options = {
             amount: amount,
@@ -77,7 +74,6 @@ const getPlans = async (req, res) => {
 
 const processPayment = async (req, res) => {
     try {
-        console.log("payment");
         const userId = req.userId
         const { planId, paymentMethod } = req.body
 
@@ -101,7 +97,6 @@ const processPayment = async (req, res) => {
 const addPlan = async (req, res) => {
     try {
         const title = req.body.title
-        console.log("inside", req.body)
         const planExists = await planModel.findOne({ title: title })
 
         if (planExists) {
@@ -152,9 +147,7 @@ const updatePlan = async (req, res) => {
 const changePlanStatus = async (req, res) => {
     try {
         const { planId } = req.body
-        console.log(planId);
         const plan = await planModel.findOne({ _id: planId })
-        console.log("hc", plan);
         if (plan) {
             plan.isVerified = !plan.isVerified
             await plan.save()
@@ -169,11 +162,8 @@ const changePlanStatus = async (req, res) => {
 const getSubscribers = async (req, res) => {
 
     try {
-        const adminId = req.adminId; // Convert the object to a JSON string
-        console.log("UserId as a JSON string:1", typeof adminId);
+        const adminId = req.adminId;
         const subscribers = await paymentDetailModel.find({}).populate('planId').populate('userId');
-
-        console.log(subscribers);
         const userList = subscribers.map(subscriber => {
             const subscriptionDate = subscriber.subscriptionDate;
             const sday = subscriptionDate.getDate();
@@ -216,7 +206,6 @@ const changeSubscribersStatus = async (req, res) => {
 
         const { userId } = req.body
         const user = await userModel.findOne({ _id: userId })
-        console.log(user)
         if (user) {
             user.isBlocked = !user.isBlocked
             await user.save()

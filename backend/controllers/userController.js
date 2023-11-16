@@ -199,7 +199,8 @@ const getTrainers = async (req, res) => {
             location: t.location,
             jobPosition: t.jobPosition,
             description: t.description,
-            isVerified: t.isVerified
+            isVerified: t.isVerified,
+            is_Online:t.is_Online
         }))
         res.status(200).json({ trainers: trainerlist })
     }
@@ -241,6 +242,7 @@ const getProfile = async (req, res) => {
                 password: user.password,
                 isVerified: user.isVerified,
                 isBlocked: user.isBlocked,
+                is_Online:user.is_Online,
                 planName: subscriber.planId.title,
                 amount: subscriber.planId.amount,
                 image: user.image,

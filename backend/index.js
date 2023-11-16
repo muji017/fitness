@@ -45,34 +45,37 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
         console.log("user id in setup", userId);
         socket.join(userId);
         socket.emit("connected");
+        socket.broadcast.emit("online", userId)
+        socket.on('disconnect', () => {
+          console.log("disconnected", userId);
+          socket.broadcast.emit('offline', userId)
+        })
       });
       socket.on('join chat', (room) => {
         socket.join(room);
         console.log("User Joined room:" + room);
       })
 
-      socket.on('typing', (roomId) => socket.to(roomId).emit('typing progress',roomId))
+      socket.on('typing', (roomId) => socket.to(roomId).emit('typing progress', roomId))
       socket.on('stop typing', (roomId) => socket.in(roomId).emit('stop typing'))
-      socket.on('trainer typing', (roomId) =>socket.to(roomId).emit('trainer typing progress',roomId))
+      socket.on('trainer typing', (roomId) => socket.to(roomId).emit('trainer typing progress', roomId))
       socket.on('trainer stop typing', (roomId) => socket.in(roomId).emit('trainer stop typing'))
 
       socket.on('new message', (room, senderType, chat) => {
-        // console.log(room, senderType);
         if (!room.userId || !room.trainerId) {
-          return console.log('chat.users not defined')
+          return
         }
-        console.log("uuuuuuu",room.userId,"kkkkkkkkk",chat.sender);
-        if (room.userId===chat.sender) {
-           console.log("user input chat index.js",chat.content , chat);
-          socket.to(room._id).emit("message received",chat)
+        if (room.userId === chat.sender) {
+          socket.to(room._id).emit("message received", chat)
         }
 
-        if (room.trainerId===chat.sender) {
-          console.log("trainer input chat index.js",chat.content , chat);
+        if (room.trainerId === chat.sender) {
           socket.to(room._id).emit("message received", chat)
         }
         socket.emit("message received", chat);
       })
+
+
     });
   })
   .catch(err => {

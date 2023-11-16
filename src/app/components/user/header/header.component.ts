@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component ,Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, map } from 'rxjs';
@@ -9,10 +9,10 @@ import { UserService } from 'src/app/services/userServices/user.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class HeaderComponent {
-
+  @Input() notification:any[]=[]
   smallview: string = "hidden"
   mobileMenuActive: boolean = false;
   usertoken!: userToken
@@ -23,7 +23,8 @@ export class HeaderComponent {
 
   constructor(private router: Router,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
     this.apiUrl = userService.getapiUrl()
   }

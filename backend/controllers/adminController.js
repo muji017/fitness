@@ -13,15 +13,11 @@ const paymentDetailModel = require('../models/paymentDetailModel');
 const login = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log(email, password)
         const adminData = await adminModel.findOne({ email: email })
-        console.log(adminData)
         if (adminData) {
             const passmatch = await bcrypt.compare(password, adminData.password);
             if (passmatch) {
                 const token = utilities.tokenGenerator(adminData._id)
-
-                console.log(adminData.email);
                 res.status(200).json({ adminId: adminData._id, adminToken: token });
 
             }
@@ -41,12 +37,10 @@ const login = async (req, res) => {
 
 const sendOtp = async (req, res) => {
     try {
-        console.log("inside send otp")
         const { email } = req.body
         const adminData = await adminModel.findOne({ email: email })
         if (adminData) {
             const OTP = utilities.otpGenerator()
-            console.log(OTP);
             adminData.otp = OTP
             await adminData.save()
             await utilities.sendOtpMail("Admin", adminData.email, OTP)
@@ -71,11 +65,8 @@ const sendOtp = async (req, res) => {
 const resendOtp = async (req, res) => {
     try {
         const { email } = req.body
-        console.log(email);
         const adminData = await adminModel.findOne({ email: email })
-        console.log(adminData)
         const OTP = utilities.otpGenerator()
-        console.log(OTP);
         adminData.otp = OTP
         await adminData.save()
         await utilities.sendOtpMail("Admin", adminData.email, OTP)
@@ -99,10 +90,7 @@ const resendOtp = async (req, res) => {
 const otpVerify = async (req, res) => {
     try {
         const { email, otp } = req.body
-        console.log("mail in verify otp admin", email)
         const adminData = await adminModel.findOne({ email: email })
-        console.log("in database", adminData.otp)
-        console.log("in req.body", otp)
         if (adminData.otp === otp) {
 
             res.status(200).json({ email: adminData.email });
@@ -122,15 +110,12 @@ const otpVerify = async (req, res) => {
 const setPassword = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log(email, password);
         const adminData = await adminModel.findOne({ email: email })
         const securePassword = await utilities.securePassword(password)
-        console.log(securePassword);
         adminData.password = securePassword
         await adminData.save()
 
         const token = utilities.tokenGenerator(adminData._id)
-        console.log(adminData.email);
         res.status(200).json({ adminId: adminData._id, adminToken: token });
 
     } catch (error) {
@@ -155,7 +140,7 @@ const getTrainersList = async (req, res) => {
         }))
         res.status(200).json({ trainers: trainerlist })
     } catch (error) {
-        res.status(500).json({message:"Internal Server Error"})
+        res.status(500).json({ message: "Internal Server Error" })
     }
 }
 
@@ -192,9 +177,6 @@ const changeTrainerStatus = async (req, res) => {
 
 const addTrainer = async (req, res) => {
     try {
-
-        console.log(req.body)
-        console.log("image", req.file.filename);
         const trainerExist = await trainerModel.findOne({ email: req.body.email })
         if (trainerExist) {
             return res.status(409).json({ error: 'Email already exist' })
@@ -244,7 +226,6 @@ const changeUserStatus = async (req, res) => {
 
         const { userId } = req.body
         const user = await userModel.findOne({ _id: userId })
-        console.log(user)
         if (user) {
             user.isBlocked = !user.isBlocked
             await user.save()

@@ -53,5 +53,7 @@ userroute.get('/getRoomUser',checkAuth,chatController.getRoomUser)
 userroute.get('/getChatRooms',checkAuth,chatController.getChatRooms)
 userroute.post('/sendMessage',checkAuth,chatController.sendMessage)
 userroute.get('/getAllChats',checkAuth,chatController.getAllChats)
+userroute.patch('/makeOnlineUser',checkAuth,chatController.makeOnlineUser)
+userroute.patch('/messageRead',checkAuth,chatController.messageRead)
 
 module.exports=userroute; 
