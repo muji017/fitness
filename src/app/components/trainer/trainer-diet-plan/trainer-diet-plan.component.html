@@ -1,11 +1,13 @@
-<app-header></app-header>
+<div class="border mb-5"><app-header ></app-header></div>
+
 <div class="container-fluid flex justify-start ">
     <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
     min-width: 250px; ">
         <app-sidenav class="fixed-left" style="width: 100%; min-width: 350px;"></app-sidenav>
     </div>
 
-    <div class="container flex-col m-3" style="overflow-x: auto;">
+    <div class="container flex-col p-2" style="overflow-x: auto;">
+        <div class="w-full md:w-2/3 lg:w-4/5 fixed  search " [ngClass]="{'bg-white':isScrolled}">
         <div class="m-3 flex flex-wrap justify-between">
             <h2 class="font-extrabold">Diet Plans</h2>
             <div class="flex rounded-lg bg-white justify-center">
@@ -19,7 +21,8 @@
                 <mat-icon>plus_one</mat-icon>
             </button>
         </div>
-        <div class="container bg-white" style=" overflow-x: auto;">
+        </div>
+        <div class="container mt-20 bg-white" style=" overflow-x: auto;">
             <h2 *ngIf="dietPlans.length<1">No results found</h2>
             <!-- Cards Section -->
             <div *ngFor="let plan of dietPlans" class="container mt-2 mx-auto">

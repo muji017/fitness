@@ -1,5 +1,5 @@
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDietPlanComponent } from '../add-diet-plan/add-diet-plan.component';
 import { DietPlansModel } from 'src/app/model/userModel';
@@ -21,6 +21,7 @@ export class TrainerDietPlanComponent {
   dietPlans!:DietPlansModel[]
   searchPlans!:DietPlansModel[]
   apiUrl!:string
+  isScrolled:boolean=false
   constructor(
     private dialoge:MatDialog,
     private userServce:UserService,
@@ -37,7 +38,10 @@ export class TrainerDietPlanComponent {
       this.searchPlans=data
     })
   }
-  
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.isScrolled = window.scrollY > 0;
+  }
   addDietPlan(){
     this.dialoge.open(AddDietPlanComponent,{
       enterAnimationDuration:1100,

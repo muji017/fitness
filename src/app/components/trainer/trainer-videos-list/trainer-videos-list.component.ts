@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddVideoComponent } from '../add-video/add-video.component';
 import { VideoModel } from 'src/app/model/userModel';
@@ -20,14 +20,17 @@ export class TrainerVideosListComponent {
   videos!:VideoModel[]
   searchVideos!:VideoModel[]
   searchQuery!:string
-
+  isScrolled:boolean=false
 
   constructor(
     private dialoge:MatDialog,
     private store:Store<VideoModel[]>,
     private toastr:ToastrService
   ){}
-
+   @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.isScrolled = window.scrollY > 0;
+  }
   ngOnInit(){
     this.store.dispatch(getAllVideosTrainerApi())
     this.store.select(getAllVideos).subscribe(

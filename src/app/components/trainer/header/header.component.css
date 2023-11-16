@@ -24,3 +24,10 @@
 .profile-button{
 width: 2px !important;
 }
+
+.header {
+  z-index: 1000;
+  position: fixed;
+  margin-bottom: 30px !important;
+}
+
