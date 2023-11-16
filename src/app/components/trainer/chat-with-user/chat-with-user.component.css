@@ -73,3 +73,14 @@ body{
     transform: scale(.01);
   }
 }
+
+.notifications-bt{
+  width: 20px !important; 
+  height: 20px !important;
+  font-size: 10px !important;
+  background-color: green !important;
+}
+
+.bg-green-500 {
+ background-color:  green; 
+}

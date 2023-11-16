@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation,Input } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,5 +7,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   // encapsulation: ViewEncapsulation.None
 })
 export class SidenavComponent {
-
+  @Input() notifications:any[]=[]
+  constructor(){
+    console.log("sadsadsd",this.notifications);
+    
+  }
 }

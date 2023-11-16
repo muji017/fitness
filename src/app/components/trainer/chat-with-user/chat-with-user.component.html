@@ -21,17 +21,17 @@
     </div>
 </div>
 
-<app-header></app-header>
+<app-header  [notification]="notifications"></app-header>
 <div class="container-fluid flex justify-start ">
     <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
     min-width: 250px; ">
-        <app-sidenav class="fixed-left" style="width: 100%; min-width: 350px;"></app-sidenav>
+        <app-sidenav  [notifications]="notifications" class="fixed-left" style="width: 100%; min-width: 350px;"></app-sidenav>
     </div>
 
     <div class="container flex-col " style="overflow-x: auto;">
-        <div class="container-fluid flex-none mt-5 sm:flex">
+        <div class="container-fluid flex-none mt-5 lg:flex">
 
-            <div class="border-5 bg-white  sm:w-1/2" style="overflow-y: auto; max-height: 500px; min-height: 500px;">
+            <div class="border bg-white  lg:w-1/2" style="overflow-y: auto; max-height: 500px; min-height: 500px;">
                 <div class="flex justify-between m-2">
                     <h2 class="font-bold">Messages</h2>
                 </div>
@@ -50,11 +50,19 @@
                             <div class="w-full flex justify-start align-center">
                                 <img [src]="'http://localhost:3000/public/images/' + user?.image" alt="Trainer Image"
                                     class="rounded-full w-12 h-12">
-                                <p class="p-2 text-sm">{{ user?.name }}</p>
-                                
+                                <span class="p-2 text-sm">{{ user?.name }}
+                                <br>
+                                <h6 *ngIf="user.is_Online" [ngClass]="user.is_Online ? 'text-green-500 ':''">Online</h6>
+                                </span>
                             </div>
-                            <div class="flex justify-end">
-                                <h6 class="text-green-500">Online</h6>
+                            <div class=" flex flex-row justify-end align-center">
+                                <div>
+                                    <!-- count of is_read -->
+                                    <button *ngIf="getUnreadNotificationCount(user._id)>0"   class="m-0 notifications-bt" mat-mini-fab>
+                                        {{ getUnreadNotificationCount(user._id) }}
+                                    </button>
+    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,7 +70,7 @@
             </div>
             <div class="flex" [ngClass]=" 'grid-cols-1 w-full'">
 
-                <div class="ChatSpace w-full border-5 bg-color-msg-side" style=" max-height: 500px; min-height: 500px;
+                <div class="ChatSpace w-full border bg-color-msg-side" style=" max-height: 500px; min-height: 500px;
                      display: flex; flex-direction: column; ">
                     <div class="bg-white" style="height: 60px;" mat-raised-button matTooltip="click view profile"
                         (mouseover)="showProfilePopup = true" (mouseout)="showProfilePopup = false">

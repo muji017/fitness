@@ -63,11 +63,11 @@ const updateVideo = async (req, res) => {
             title: req.body.title,
             video: video,
             workoutType: req.body.workoutType,
-            bodyPart:req.body.bodyPart,
+            bodyPart: req.body.bodyPart,
             description: req.body.description,
             isVerified: true
         }
-        const updatedVideo= await videoModel.findOneAndUpdate(
+        const updatedVideo = await videoModel.findOneAndUpdate(
             { _id: videoId },
             updates,
             { new: true })
@@ -77,7 +77,7 @@ const updateVideo = async (req, res) => {
         res.status(500).json({ error: error })
     }
 }
-const changeVideoStatus =async(req,res)=>{
+const changeVideoStatus = async (req, res) => {
     try {
         const { videoId } = req.body
         const videoData = await videoModel.findOne({ _id: videoId })
@@ -85,12 +85,12 @@ const changeVideoStatus =async(req,res)=>{
             videoData.isApproved = !videoData.isApproved
             await videoData.save()
             await getAllVideos(req, res);
-        } 
+        }
     } catch (error) {
         res.status(500).json({ error: error })
     }
 }
-const changeVideoPremium =async(req,res)=>{
+const changeVideoPremium = async (req, res) => {
     try {
         const { videoId } = req.body
         const videoData = await videoModel.findOne({ _id: videoId })
@@ -98,7 +98,7 @@ const changeVideoPremium =async(req,res)=>{
             videoData.isPremium = !videoData.isPremium
             await videoData.save()
             await getAllVideos(req, res);
-        } 
+        }
     } catch (error) {
         res.status(500).json({ error: error })
     }

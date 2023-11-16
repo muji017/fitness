@@ -29,7 +29,6 @@ const addDietPlan = async (req, res) => {
 const getDietPlans = async (req, res) => {
     try {
         const trainerId = req.trainerId
-        console.log(trainerId);
         const DietPlans = await dietPlanModel.find({ trainerId: trainerId })
         return res.status(200).json({ DietPlans: DietPlans })
     } catch (error) {
@@ -113,7 +112,7 @@ const changeDietPlanStatus = async (req, res) => {
             await getAllDietPlans(req, res);
         }
     } catch (error) {
-        res.status(500).json({ error: error }) 
+        res.status(500).json({ error: error })
     }
 }
 module.exports = {

@@ -1,5 +1,7 @@
 const ChatRoom = require("../models/chatRoom");
 const chatMessage = require("../models/chatMessage");
+const trainerModel = require("../models/trainerModel");
+const userModel = require("../models/userModel");
 
 const getRoomUser = async (req, res) => {
     try {
@@ -78,11 +80,64 @@ const getAllChats = async (req, res) => {
     }
 }
 
-
-
-    module.exports = {
-        getRoomUser,
-        getChatRooms,
-        sendMessage,
-        getAllChats,
+const onlineStatus = async (req, res) => {
+    try {
+        const trainerId = req.body.trainerId
+        const status = req.body.status
+        if (trainerId) {
+            await trainerModel.findByIdAndUpdate(trainerId, { $set: { is_Online: status } });
+            res.status(200).json({ message: "succsess" })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
     }
+}
+
+const makeOnlineUser = async (req, res) => {
+    try {
+        const userId = req.body.userId
+        const status = req.body.status
+        await userModel.findByIdAndUpdate(userId, { $set: { is_Online: status } })
+        res.status(200).json({ message: "succsess" })
+
+    } catch (error) {
+        res.status(500).json({ error: error })
+
+    }
+}
+
+const messageRead = async (req, res) => {
+    try {
+        const userId = req.userId
+        const trainerId = req.trainerId
+        if (userId) {
+            const roomId = req.body.roomId
+            const findMsg = await chatMessage.find({ room: roomId })
+            const msgs = await chatMessage.updateMany({ room: roomId, senderType: 'Trainer' }, { $set: { is_read: true } })
+            console.log("hdhd", findMsg);
+            console.log("hddhdhdhhdhdhdhdhd", msgs);
+            res.status(200).json({ message: 'success' })
+        }
+        if (trainerId) {
+            const roomId = req.body.roomId
+            const findMsg = await chatMessage.find({ room: roomId })
+            const msgs = await chatMessage.updateMany({ room: roomId, senderType: 'User' }, { $set: { is_read: true } })
+            console.log("hdhd", findMsg);
+            console.log("hddhdhdhhdhdhdhdhd", msgs);
+            res.status(200).json({ message: 'success' })
+
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+}
+
+module.exports = {
+    getRoomUser,
+    getChatRooms,
+    sendMessage,
+    getAllChats,
+    onlineStatus,
+    makeOnlineUser,
+    messageRead
+}
