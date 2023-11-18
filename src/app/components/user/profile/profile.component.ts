@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel, userToken } from 'src/app/model/userModel';
 import { UserService } from 'src/app/services/userServices/user.service';
+import { WatchhistoryComponent } from '../watchhistory/watchhistory.component';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +20,7 @@ export class ProfileComponent {
   passForm!:FormGroup
 
   constructor(
-    private userService:UserService,
+    private userService:UserService,private  dialog:MatDialog,
     private router:Router, private fb:FormBuilder, private toastr:ToastrService
   ){
      this.passForm=this.fb.group({
@@ -60,7 +62,18 @@ export class ProfileComponent {
       }
     )
   }
-
+  
+  openWatchHistory(){
+    const data={
+      userId:this.user._id
+    }
+    this.dialog.open(WatchhistoryComponent,{
+      enterAnimationDuration:1000,
+      exitAnimationDuration:1000,
+      maxHeight: '500px',
+      data:data
+    })
+  }
   changeName(){
    const name=this.name
    this.userService.changeName(name).subscribe(

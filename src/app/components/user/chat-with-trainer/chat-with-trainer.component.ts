@@ -9,7 +9,7 @@ import { getAllTrainers } from 'src/app/store/selector';
 import { UserChatTrainerListDialogeComponent } from '../user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
 import { MatDialog } from '@angular/material/dialog';
 import { chatRoom } from 'src/app/model/chatModel';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -34,6 +34,8 @@ export class ChatWithTrainerComponent {
   chatData: any
   trainerTyping: boolean = false
   notifications: any[]= []
+  private subscriptions: Subscription[] = []
+
   constructor(
     private service: UserService,
     private store: Store<trainer[]>,
@@ -50,9 +52,9 @@ export class ChatWithTrainerComponent {
   }
   getTrainers() {
     this.store.dispatch(getTrainersListApi())
-    this.store.select(getAllTrainers).subscribe((res) => {
+    const storeSubscription =this.store.select(getAllTrainers).subscribe((res) => {
       const data = res.filter((data) => data.isVerified == true)
-      this.chatService.getChatRooms().subscribe(
+      const chatRoomSubscirption= this.chatService.getChatRooms().subscribe(
         (res) => {
           this.chatData = res.chatRooms
           this.chatRooms = res.chatRooms
@@ -60,7 +62,7 @@ export class ChatWithTrainerComponent {
           this.trainers = data.filter((data) => trainerChatIds.includes(data.id))
           this.searchTrainer = data.filter((data) => trainerChatIds.includes(data.id))
           this.chatRooms.forEach((chat) =>
-            this.chatService.getAllChats(chat._id).subscribe(
+           this.chatService.getAllChats(chat._id).subscribe(
               (res) => {
                 const chats: any[] = res.chats;
                 console.log("without filter", chats);
@@ -125,8 +127,11 @@ export class ChatWithTrainerComponent {
             )
           })
         }
+        
       )
+      this.subscriptions.push(chatRoomSubscirption)
     })
+    this.subscriptions.push(storeSubscription)
   }
   getUnreadNotificationCount(trainerId: number): number {
     return this.notifications.filter(notification => 
@@ -135,11 +140,12 @@ export class ChatWithTrainerComponent {
   }
   getRoomMessages(roomId: any) {
     if (roomId) {
-      this.chatService.getAllChats(roomId).subscribe(
+      const getAllChatsSubscription= this.chatService.getAllChats(roomId).subscribe(
         (res) => {
           this.chats = res.chats
         }
       )
+      this.subscriptions.push(getAllChatsSubscription)
     }
   }
   openAddTrainer() {
@@ -154,7 +160,7 @@ export class ChatWithTrainerComponent {
 
   viewMessage(trainerId: any) {
     this.activeTrainer = trainerId
-    this.store.select(getAllTrainers).subscribe((res) => {
+    const getAllTrainersSubscription= this.store.select(getAllTrainers).subscribe((res) => {
       const trainers = res
       this.currentTrainer = trainers.find((tr) => tr.id === trainerId)
       this.currentRoom = this.chatData.find((room: any) => room.trainerId === this.currentTrainer?.id)
@@ -168,7 +174,7 @@ export class ChatWithTrainerComponent {
       console.log("nononononononononononon", this.notifications);
       this.getRoomMessages(this.currentRoom?._id)
     })
-
+    this.subscriptions.push(getAllTrainersSubscription)
   }
   sendMessage(trainerId: any) {
     if (!this.message) {
@@ -176,11 +182,12 @@ export class ChatWithTrainerComponent {
       return
     }
     const room: any = this.currentRoom
-    this.chatService.sendMessage(room, this.currentRoom?._id, this.message).subscribe(
+    const sendMessageSubscription= this.chatService.sendMessage(room, this.currentRoom?._id, this.message).subscribe(
       (res) => {
         this.message = ''
       }
     )
+    this.subscriptions.push(sendMessageSubscription)
   }
   typing() {
     this.chatService.userTyping(this.currentRoom?._id)
@@ -197,4 +204,13 @@ export class ChatWithTrainerComponent {
     height: '5px',
     color: '#74b9ff'
   }];
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    });
+  }
+
 }

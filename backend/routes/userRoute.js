@@ -47,6 +47,8 @@ userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePas
 // videos and diet plans
 userroute.get('/getDietPlans',checkAuth,dietPlanController.getAllDietPlans)
 userroute.get('/getVideos',checkAuth,videoController.getAllVideos)
+userroute.get('/getWatchHistory',checkAuth,videoController.getWatchHistory)
+userroute.post('/addWatchHistory',checkAuth,videoController.addWatchHistory)
 
 // chat side
 userroute.get('/getRoomUser',checkAuth,chatController.getRoomUser)

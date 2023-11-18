@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +20,7 @@ export class AdminDietPlanViewComponent {
   searchQuery!: string
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   displayedColumns: string[] = ['image', 'title', 'date', 'foodtype', 'description', 'options', 'premium'];
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private store: Store<DietPlansModel[]>,
     private toastr:ToastrService
@@ -27,6 +29,7 @@ export class AdminDietPlanViewComponent {
   ngOnInit() {
     this.store.dispatch(getAllAdminDietPlansListApi())
     this.getplans()
+    this.dataSource.paginator = this.paginator;
   }
   changeStatus(planId: any) {
     this.store.dispatch(changeDietPlanStatusApi({ planId }))

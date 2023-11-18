@@ -4,9 +4,9 @@ const watchedVideo = mongoose.Schema({
     userId: {
          type: mongoose.Schema.Types.ObjectId, ref: 'User' 
     }, 
-    watchedVideo:[ {
+    videoId:[ {
          type: mongoose.Schema.Types.ObjectId, ref: 'Video'
     }],
 })
 
-module.exports=mongoose.model('Watchedvideo',watchedVideo); 
+module.exports=mongoose.model('Watchedvideo',watchedVideo);

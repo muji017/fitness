@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { trainer } from 'src/app/model/userModel';
@@ -8,6 +8,7 @@ import { getAllTrainers } from 'src/app/store/selector';
 import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-trainerslist',
@@ -25,7 +26,7 @@ export class TrainerslistComponent {
 
   displayedColumns: string[] = ['image', 'name', 'email', 'qualification', 'jobPosition', 'specification', 'discription',
     'location', 'options'];
-
+    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private adminService: AdminService,
     private dialoge:MatDialog,
@@ -36,6 +37,7 @@ export class TrainerslistComponent {
   ngOnInit() {
     this.store.dispatch(getTrainersListAdminApi())
     this.getTrainers()
+    this.dataSource.paginator = this.paginator;
   }
   changeStatus(trainerId: any) {
     this.store.dispatch(changeTrainerStatusApi({ trainerId }))

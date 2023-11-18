@@ -14,37 +14,37 @@ export class AdminService {
 
 
 
-  login(email: string, password: string):Observable<any> {
+  login(email: string, password: string):Observable<{ adminId: string, adminToken: string }> {
     const payload = {email, password };
-    return this.http.post<any>(`${this.apiUrl}/admin/login`,payload); 
+    return this.http.post<{ adminId: string, adminToken: string }>(`${this.apiUrl}/admin/login`,payload); 
   } 
-  sendOtp(email: string):Observable<any>{
+  sendOtp(email: string):Observable<string>{
     const payload  = {email}
-    return this.http.post<any>(`${this.apiUrl}/admin/sendOtp`,payload)
+    return this.http.post<string>(`${this.apiUrl}/admin/sendOtp`,payload)
   }
-  verifyOtp(email: string,otp:string):Observable<any>{
+  verifyOtp(email: string,otp:string):Observable<{ email: string }>{
     const payload = {email,otp}
-    return this.http.post<any>(`${this.apiUrl}/admin/verifyOtp`,payload)
+    return this.http.post<{ email: string }>(`${this.apiUrl}/admin/verifyOtp`,payload)
   }
-  resendOtp(email: string):Observable<any>{
+  resendOtp(email: string):Observable<string>{
     const payload  = {email}
-    return this.http.put<any>(`${this.apiUrl}/admin/resendOtp`,payload)
+    return this.http.put<string>(`${this.apiUrl}/admin/resendOtp`,payload)
   }
-  setPassword(email: string,password:string):Observable<any>{
+  setPassword(email: string,password:string):Observable<{ adminId:string, adminToken:string }>{
      const payload  = {email,password}
-     return this.http.put<any>(`${this.apiUrl}/admin/setPassword`,payload)
+     return this.http.put<{ adminId: string, adminToken:string }>(`${this.apiUrl}/admin/setPassword`,payload)
    }
 
   //  trainers api calls
   getTrainersList():Observable<trainerlist>{
     return this.http.get<trainerlist>(`${this.apiUrl}/admin/getTrainersList`)
   }
-   changeTrainerStatus(trainerId:string):Observable<any>{
+   changeTrainerStatus(trainerId:string):Observable<{ trainers: trainerlist }>{
     const payload={trainerId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)
+    return this.http.put<{ trainers: trainerlist }>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)
    }
-   addTrainer(trainer:FormData):Observable<any>{
-    return this.http.post<any>(`${this.apiUrl}/admin/addTrainer`,trainer)
+   addTrainer(trainer:FormData):Observable<{message:string}>{
+    return this.http.post<{message:string}>(`${this.apiUrl}/admin/addTrainer`,trainer)
    }
 
   //  users api calls
@@ -52,9 +52,9 @@ export class AdminService {
    getUsersList():Observable<userlist>{
     return this.http.get<userlist>(`${this.apiUrl}/admin/getUsersList`)
    }
-   changeUserStatus(userId:string):Observable<any>{
+   changeUserStatus(userId:string):Observable<userlist>{
     const payload={userId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changeUserStatus`,payload)
+    return this.http.put<userlist>(`${this.apiUrl}/admin/changeUserStatus`,payload)
    }
 
   //  
@@ -67,12 +67,12 @@ export class AdminService {
     return this.http.get<PlanList>(`${this.apiUrl}/admin/getPlans`)
   }
 
-  addPlan(plan:FormData):Observable<any>{
-    return this.http.post<any>(`${this.apiUrl}/admin/addPlan`,plan)
+  addPlan(plan:FormData):Observable<{message:string}>{
+    return this.http.post<{message:string}>(`${this.apiUrl}/admin/addPlan`,plan)
   }
 
-  updatePlan(plan:FormData):Observable<any>{
-    return this.http.put<any>(`${this.apiUrl}/admin/updatePlan`,plan)
+  updatePlan(plan:FormData):Observable<{message:string}>{
+    return this.http.put<{message:string}>(`${this.apiUrl}/admin/updatePlan`,plan)
   }
 // diet plans
   getDietPlans():Observable<DietPlanList>{

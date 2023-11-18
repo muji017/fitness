@@ -14,6 +14,7 @@
     <div class="container mx-auto px-4">
 
       <div class="max-w-800 container-fluid break-words bg-white  mb-6 shadow-xl rounded-lg -mt-64">
+        <button (click)="openWatchHistory()" mat-raised-button matTooltip="View watch history">Watch history</button>
         <div *ngIf="user"
           class="justify-between max-w-3xl md:mt-0 mx-auto p-6 bg-white shadow-md rounded-lg grid gap-6 grid-cols-1 lg:grid-cols-2">
           <!-- Profile Section -->

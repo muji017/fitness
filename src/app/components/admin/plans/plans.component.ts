@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PlansModel } from 'src/app/model/userModel';
 import { AddPlanComponent } from '../add-plan/add-plan.component';
@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { changePlanStatusApi, getPlansListApi } from 'src/app/store/action';
 import { getAllPlans } from 'src/app/store/selector';
 import { ToastrService } from 'ngx-toastr';
+import { MatPaginator } from '@angular/material/paginator';
 // import { getAllPlans } from 'src/app/store/selector';
 
 @Component({
@@ -21,7 +22,7 @@ export class PlansComponent {
   searchQuery!: string
   dataSource: MatTableDataSource<PlansModel> = new MatTableDataSource<PlansModel>();
   displayedColumns: string[] = ['title', 'duration', 'amount', 'description', 'options'];
-
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private adminService: AdminService,
     private dialoge: MatDialog,
@@ -32,6 +33,7 @@ export class PlansComponent {
   ngOnInit() {
     this.store.dispatch(getPlansListApi())
     this.getPlans()
+    this.dataSource.paginator = this.paginator;
   }
   blockPlan(planId: any) {
     this.store.dispatch(changePlanStatusApi({ planId }))

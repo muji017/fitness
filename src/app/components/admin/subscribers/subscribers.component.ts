@@ -1,4 +1,5 @@
-import { Component,ViewEncapsulation } from '@angular/core';
+import { Component,ViewChild,ViewEncapsulation } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +20,9 @@ export class SubscribersComponent {
   dataSource: MatTableDataSource<UserModel> = new MatTableDataSource<UserModel>();
 
   displayedColumns: string[] = ['image', 'name', 'email','subscriptionPlan','amount','subscriptionDate','expiryDate', 'options'];
+ 
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  
   constructor(
     private adminService: AdminService,
     private store: Store<UserModel[]>,
@@ -28,6 +32,7 @@ export class SubscribersComponent {
   ngOnInit() {
     this.store.dispatch(getSubscriberListApi())
     this.getUsers()
+    this.dataSource.paginator = this.paginator;
   }
 
   getUsers() {
