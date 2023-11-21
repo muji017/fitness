@@ -57,16 +57,16 @@ export class TrainerService {
   }
 
   uploadPic(form:FormData):Observable<{ message:string}>{
-    return this.http.put<{message:string}>(`${this.apiUrl}/trainer/uploadPic`,form)
+    return this.http.patch<{message:string}>(`${this.apiUrl}/trainer/uploadPic`,form)
    }
 
    updateProfile(profile:FormData):Observable<DietPlanList>{
-    return this.http.put<DietPlanList>(`${this.apiUrl}/trainer/updateProfile`,profile)
+    return this.http.patch<DietPlanList>(`${this.apiUrl}/trainer/updateProfile`,profile)
   }
 
    changePassword(password:string):Observable<{message:string}>{
     const payload={password}
-    return this.http.put<{message:string}>(`${this.apiUrl}/changePassword`,payload)
+    return this.http.patch<{message:string}>(`${this.apiUrl}/changePassword`,payload)
    }
 
 

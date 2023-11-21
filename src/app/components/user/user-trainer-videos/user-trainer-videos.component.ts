@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { VideoModel } from 'src/app/model/userModel';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllVideoListApi } from 'src/app/store/action';
 import { getAllVideos } from 'src/app/store/selector';
 
@@ -15,11 +16,14 @@ export class UserTrainerVideosComponent {
   searchQuery!:string
   searchVideo!:VideoModel[]
   trainerId:any
+  apiUrl!:string
   constructor(
     private router:Router,
     private store:Store<VideoModel[]>,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private userService:UserService
   ){
+    this.apiUrl=userService.getapiUrl()
     this.route.params.subscribe(
       (params)=>{
         const id=params['trainerId']

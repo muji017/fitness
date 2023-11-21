@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { trainer } from 'src/app/model/userModel';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getTrainerProfileApi } from 'src/app/store/action';
 import { getTrainer } from 'src/app/store/selector';
 
@@ -15,16 +16,21 @@ import { getTrainer } from 'src/app/store/selector';
   encapsulation: ViewEncapsulation.None
 })
 export class TrainerProfileComponent {
-
+  
+  apiUrl!:string
   trainer!: trainer | undefined
   trainerId: any
   files!:FileList
   passForm!:FormGroup
   editForm!:FormGroup
-  constructor(private trainerService:TrainerService,
-    private toastr:ToastrService, private fb:FormBuilder
+  constructor(
+    private trainerService:TrainerService,
+    private toastr:ToastrService,
+    private fb:FormBuilder,
+    private userService:UserService
   ) {
-    
+    this.apiUrl=userService.getapiUrl()
+
     this.editForm = this.fb.group({
       name: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
       description: this.fb.control('', [Validators.required]),

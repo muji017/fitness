@@ -6,6 +6,7 @@ import { chatRoom } from 'src/app/model/chatModel';
 import { UserModel } from 'src/app/model/userModel';
 import { ChatService } from 'src/app/services/chat.service';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-chat-with-user',
@@ -26,14 +27,18 @@ export class ChatWithUserComponent {
   currentRoom!: chatRoom | undefined
   userTyping: boolean = false
   notifications:any[]=[]
+  apiUrl!:string
   constructor(
+    private userService:UserService,
     private service: TrainerService,
     private store: Store<UserModel[]>,
     private router: Router,
     private chatService: ChatService,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.apiUrl=userService.getapiUrl()
+   }
 
   ngOnInit() {
     this.chatService.openChatTrainer()

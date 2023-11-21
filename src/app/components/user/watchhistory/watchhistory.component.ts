@@ -19,6 +19,8 @@ export class WatchhistoryComponent {
   videos!: VideoModel[]
   userId!:string
   subscriptions:Subscription[]=[]
+  apiUrl!:string
+
   constructor(
     private store: Store<VideoModel[]>,
     private userService:UserService,
@@ -26,6 +28,7 @@ export class WatchhistoryComponent {
     private toastr:ToastrService,
     private dialog:MatDialog
   ) {
+    this.apiUrl=userService.getapiUrl()
    }
 
   ngOnInit() {

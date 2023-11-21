@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { VideoModel } from 'src/app/model/userModel';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllVideosApiSuccess } from 'src/app/store/action';
 import { getAllVideos } from 'src/app/store/selector';
 
@@ -21,6 +22,7 @@ export class EditVideoComponent {
   videos!:VideoModel[]
   video!:VideoModel
   videoId!:any
+  apiUrl!:string
 
   constructor(
     private toastr:ToastrService,
@@ -28,9 +30,11 @@ export class EditVideoComponent {
     @Inject (MAT_DIALOG_DATA) public data:any,
     private fb:FormBuilder,
     private trainerService:TrainerService,
-    private dialoge:MatDialog
+    private dialoge:MatDialog,
+    private userService:UserService
   )
   {
+    this.apiUrl=this.userService.getapiUrl()
     this.videoId = this.data.videoId
     this.store.select(getAllVideos).subscribe(
       (res)=>{
@@ -40,7 +44,7 @@ export class EditVideoComponent {
         
       }
     )
-    this.imageSrc='http://localhost:3000/public/images/'+this.videos[0].video
+    this.imageSrc=this.apiUrl+this.videos[0].video
     this.uploadVideoForm = this.fb.group({
       title: fb.control(this.videos[0].title, [Validators.required, Validators.minLength(3)]),
       workoutType: fb.control(this.videos[0].workoutType, [Validators.required]),

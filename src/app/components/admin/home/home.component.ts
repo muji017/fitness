@@ -5,6 +5,7 @@ import { ChartConfiguration, Chart } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { DietPlansModel, UserModel, VideoModel, trainer, userlist } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllAdminDietPlansListApi, getAllAdminVideosListApi, getSubscriberListApi, getTrainersListAdminApi, getUsersListApi } from 'src/app/store/action';
 import { getAllDietPlans, getAllTrainers, getAllUsers, getAllVideos } from 'src/app/store/selector';
 
@@ -20,7 +21,7 @@ export class HomeComponent {
   subscribersCount!: number
   trainersCount!: number
   subscriptions: Subscription[] = []
-
+  apiUrl!:string
 
   displayedColumns: string[] = ['image', 'name', 'email', 'subscriptionPlan', 'amount', 'subscriptionDate', 'expiryDate'];
 
@@ -54,8 +55,11 @@ export class HomeComponent {
     private videostore: Store<VideoModel[]>,
     private store: Store<DietPlansModel[]>,
     private adminService: AdminService,
-    private cdRef: ChangeDetectorRef
-  ) { }
+    private cdRef: ChangeDetectorRef,
+    private userService:UserService
+  ) { 
+    this.apiUrl=userService.getapiUrl()
+  }
   ngOnInit() {
     this.userStore.dispatch(getUsersListApi())
     this.trainerStore.dispatch(getTrainersListAdminApi())

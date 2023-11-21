@@ -21,7 +21,7 @@ background-size: cover; background-position: center ; height: 100vh;">
                     <vg-player>
                         <video controls>
                             <source
-                            [src]="'http://localhost:3000/public/images/' + video?.video"
+                            [src]="apiUrl + video?.video"
                                 type="video/mp4">
 
                         </video>

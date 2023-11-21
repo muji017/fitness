@@ -42,28 +42,15 @@ export class HeaderComponent {
     this.userService.getProfile().pipe(
       map((res: any) => {
         const user = res.user
+        console.log("userrrrrrrrr",user);
+        
         if (!user.subscriptionDate) {
           this.toastr.info("Need to subscribe a plan to chat")
           this.router.navigate(['/subscription'])
         }
         else {
-          const currentDate = new Date();
-          const sday = currentDate.getDate();
-          const smonth = currentDate.getMonth() + 1;
-          const syear = currentDate.getFullYear();
-          const formattedCurrentDate = new Date( sday, smonth - 1,syear);
-
-          const userExpiryDate = new Date(user.expiryDate);
-
-          console.log('formattedCurrentDate:', formattedCurrentDate);
-          console.log('userExpiryDate:', userExpiryDate);
-
-          if (formattedCurrentDate < userExpiryDate) {
+          
             this.router.navigate(['/chat']);
-          } else {
-            this.toastr.info("Your Subscription Plan is expired");
-            this.router.navigate(['/subscription']);
-          }
 
         }
       })

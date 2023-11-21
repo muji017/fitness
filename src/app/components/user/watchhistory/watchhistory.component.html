@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Card -->
         <div *ngFor="let plan of videos" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-            <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image"
+            <video [src]="apiUrl + plan?.video" alt="Background Image"
                 class="w-full md:h-auto lg:h-60"></video>
             <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}
             </h2>

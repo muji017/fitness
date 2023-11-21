@@ -21,7 +21,7 @@
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>Image</th>
       <td style="max-width: 50px;" mat-cell *matCellDef="let element">
-        <img [src]="'http://localhost:3000/public/images/' + element.image" alt="Image">
+        <img [src]="apiUrl + element.image" alt="Image">
       </td>
     </ng-container>
   

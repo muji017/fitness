@@ -92,17 +92,6 @@ export class AddVideoComponent {
         return this.toastr.warning('Video type is invalid');
       }
     }
-    // for (let i = 0; i < files.length; i++) {
-    //   const reader = new FileReader();
-
-    //   reader.onload = (e: any) => {
-    //     console.log(e.target.result);
-    //     this.imageSrc.push(e.target.result);
-    //   };
-
-    //   reader.readAsDataURL(this.files[i]);
-    // }
-    console.log(this.files);
   }
   submitForm(){
     if (!this.uploadVideoForm.valid) {

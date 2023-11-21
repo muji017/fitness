@@ -39,9 +39,9 @@ trainerroute.delete('/deleteDietPlan',checkAuth,dierPlanController.deleteDietPla
 
 // profile managment
 trainerroute.get('/getTrainerProfile',checkAuth,trainercontroller.getTrainerProfile)
-trainerroute.put('/uploadPic',checkAuth,upload.single('image'),trainercontroller.uploadPic)
-trainerroute.put('/changePassword',checkAuth,upload.none(),trainercontroller.changePassword)
-trainerroute.put('/updateProfile',checkAuth,upload.none(),trainercontroller.updateProfile)
+trainerroute.patch('/uploadPic',checkAuth,upload.single('image'),trainercontroller.uploadPic)
+trainerroute.patch('/changePassword',checkAuth,upload.none(),trainercontroller.changePassword)
+trainerroute.patch('/updateProfile',checkAuth,upload.none(),trainercontroller.updateProfile)
 
 // video managment
 trainerroute.get('/getAllVideos',checkAuth,videoController.getAllVideos)

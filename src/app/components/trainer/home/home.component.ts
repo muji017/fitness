@@ -8,6 +8,7 @@ import { DietPlansModel, VideoModel, userlist } from 'src/app/model/userModel';
 import { getAllVideosTrainerApi, getDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans, getAllVideos } from 'src/app/store/selector';
 import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ import { Subscription } from 'rxjs';
 export class HomeComponent {
 
   subscriptions: Subscription[] = []
-
+  apiUrl!:string
   dataSource: MatTableDataSource<VideoModel[]> = new MatTableDataSource<VideoModel[]>();
   displayedColumns: string[] = ['image', 'title', 'date', 'foodtype', 'description'];
 
@@ -35,9 +36,10 @@ export class HomeComponent {
     private dialoge: MatDialog,
     private videostore: Store<VideoModel[]>,
     private dietstore: Store<DietPlansModel[]>,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private userService:UserService
   ) {
-
+  this.apiUrl=userService.getapiUrl()
   }
   ngOnInit() {
     this.videostore.dispatch(getAllVideosTrainerApi())

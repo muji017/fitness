@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DietPlansModel } from 'src/app/model/userModel';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans } from 'src/app/store/selector';
 
@@ -15,10 +16,15 @@ export class ViewDietPlanDetailsComponent {
   planId!:any
   plan!:DietPlansModel|undefined
   plans!:DietPlansModel[]
+  apiUrl!:string
+
   constructor(
   private store:Store<DietPlansModel[]>,
-  private route: ActivatedRoute
-) { }
+  private route: ActivatedRoute,
+  private userService:UserService
+) {
+  this.apiUrl=userService.getapiUrl()
+ }
 
 ngOnInit() {
   this.route.params.subscribe((params) => {

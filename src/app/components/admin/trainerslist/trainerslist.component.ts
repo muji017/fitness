@@ -9,6 +9,7 @@ import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-trainerslist',
@@ -20,7 +21,7 @@ export class TrainerslistComponent {
 
   trainers!: trainer[]
   searchQuery!: string
-  
+  apiUrl!:string
 
   dataSource: MatTableDataSource<trainer> = new MatTableDataSource<trainer>();
 
@@ -31,8 +32,11 @@ export class TrainerslistComponent {
     private adminService: AdminService,
     private dialoge:MatDialog,
     private store: Store<trainer[]>,
-    private toastr:ToastrService
-  ) { }
+    private toastr:ToastrService,
+    private userService:UserService
+  ) { 
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit() {
     this.store.dispatch(getTrainersListAdminApi())

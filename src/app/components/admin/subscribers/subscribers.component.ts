@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { changeSubscribersStatusApi, changeUserStatusApi, getSubscriberListApi } from 'src/app/store/action';
 import { getAllUsers } from 'src/app/store/selector';
 
@@ -15,6 +16,8 @@ import { getAllUsers } from 'src/app/store/selector';
   encapsulation:ViewEncapsulation.None
 })
 export class SubscribersComponent {
+
+  apiUrl!:string
   searchQuery!: string
   userList!: UserModel
   dataSource: MatTableDataSource<UserModel> = new MatTableDataSource<UserModel>();
@@ -26,8 +29,11 @@ export class SubscribersComponent {
   constructor(
     private adminService: AdminService,
     private store: Store<UserModel[]>,
-    private toastr:ToastrService
-  ) { }
+    private toastr:ToastrService,
+    private userService:UserService
+  ) {
+    this.apiUrl=userService.getapiUrl()
+   }
 
   ngOnInit() {
     this.store.dispatch(getSubscriberListApi())

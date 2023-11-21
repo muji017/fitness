@@ -18,11 +18,14 @@ export class VideoPlayerComponent {
   video!: VideoModel | undefined
   videos!: VideoModel[]
   subscriptions:Subscription[]=[]
+  apiUrl!:string
   constructor(
     private store: Store<VideoModel[]>,
     private route: ActivatedRoute,
     private userService:UserService
-  ) { }
+  ) { 
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit() {
     const paramsSubscription= this.route.params.subscribe((params) => {

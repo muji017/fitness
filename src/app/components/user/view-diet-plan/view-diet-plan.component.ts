@@ -19,13 +19,16 @@ export class ViewDietPlanComponent {
   dietPlans!: DietPlansModel[]
   searchQuery!: string
   searchPlans!: DietPlansModel[]
+  apiUrl!:string
 
   constructor(
     private router: Router,
     private store: Store<DietPlansModel[]>,
     private userService: UserService,
     private toastr: ToastrService
-  ) { }
+  ) { 
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit() {
     this.store.dispatch(getAllDietPlansListApi())
@@ -53,21 +56,7 @@ export class ViewDietPlanComponent {
             return
           }
           else {
-            const currentDate = new Date();
-            const sday = currentDate.getDate();
-            const smonth = currentDate.getMonth() + 1;
-            const syear = currentDate.getFullYear();
-            const formattedCurrentDate = new Date( sday, smonth - 1,syear);
-            const userExpiryDate = new Date(user.expiryDate);
-
-            console.log(formattedCurrentDate, userExpiryDate);
-
-            if (formattedCurrentDate < userExpiryDate) {
               this.router.navigate([`/viewdietplans/${planId}`])
-            } else {
-              this.toastr.info("Your Subscription Plan is expired");
-              this.router.navigate(['/subscription']);
-            }
           }
         })
       ).subscribe();

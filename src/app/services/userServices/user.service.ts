@@ -67,17 +67,17 @@ export class UserService {
    }
 
    uploadPic(form:FormData):Observable<{ user: UserModel }>{
-    return this.http.put<{user:UserModel}>(`${this.apiUrl}/uploadPic`,form)
+    return this.http.patch<{user:UserModel}>(`${this.apiUrl}/uploadPic`,form)
    }
 
    changeName(name:string):Observable<{ message:string }>{
     const payload={name}
-    return this.http.put<{ message:string }>(`${this.apiUrl}/changeName`,payload)
+    return this.http.patch<{ message:string }>(`${this.apiUrl}/changeName`,payload)
    }
 
    changePassword(password:string):Observable<{ message:string }>{
     const payload={password}
-    return this.http.put<{ message:string }>(`${this.apiUrl}/changePassword`,payload)
+    return this.http.patch<{ message:string }>(`${this.apiUrl}/changePassword`,payload)
    }
 
    getDietPlans(): Observable<DietPlanList> {

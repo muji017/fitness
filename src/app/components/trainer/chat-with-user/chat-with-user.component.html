@@ -5,7 +5,7 @@
         class="w-full pt-2 ProfileTrainer border-5 bg-white ">
         <div class="text-center">
             <img alt="Profile Image" class="w-32 h-32 mx-auto rounded-full"
-                [src]="currentUser?.image ? 'http://localhost:3000/public/images/' + currentUser?.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
+                [src]="currentUser?.image ? apiUrl + currentUser?.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
                 alt="">
             <h1 class="text-2xl font-semibold mt-2">{{currentUser?.name}}</h1>
             <div class="text-center mt-12">
@@ -49,7 +49,7 @@
                         [ngClass]="{'ActiveTrainer': user?._id===currentUser?._id}">
                         <div class=" grid grid-cols-2 flex justify-between rounded-lg bg-white p-2">
                             <div class="w-full flex justify-start align-center">
-                                <img [src]="'http://localhost:3000/public/images/' + user?.image" alt="Trainer Image"
+                                <img [src]="apiUrl + user?.image" alt="Trainer Image"
                                     class="rounded-full w-12 h-12">
                                 <span class="p-2 text-sm">{{ user?.name }}
                                 <br>
@@ -77,7 +77,7 @@
                         (mouseover)="showProfilePopup = true" (mouseout)="showProfilePopup = false">
                         <div class="flex justify-start">
                             <img *ngIf="currentUser?.image"
-                                [src]="'http://localhost:3000/public/images/' + currentUser?.image" alt="Trainer Image"
+                                [src]="apiUrl + currentUser?.image" alt="Trainer Image"
                                 class="rounded-full w-12 h-12">
                                
                             <p class="p-2 text-sm">{{ currentUser?.name }}</p>

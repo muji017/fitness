@@ -41,7 +41,7 @@ export class AdminService {
   }
    changeTrainerStatus(trainerId:string):Observable<{ trainers: trainerlist }>{
     const payload={trainerId}
-    return this.http.put<{ trainers: trainerlist }>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)
+    return this.http.patch<{ trainers: trainerlist }>(`${this.apiUrl}/admin/changeTrainerStatus`,payload)
    }
    addTrainer(trainer:FormData):Observable<{message:string}>{
     return this.http.post<{message:string}>(`${this.apiUrl}/admin/addTrainer`,trainer)
@@ -54,7 +54,7 @@ export class AdminService {
    }
    changeUserStatus(userId:string):Observable<userlist>{
     const payload={userId}
-    return this.http.put<userlist>(`${this.apiUrl}/admin/changeUserStatus`,payload)
+    return this.http.patch<userlist>(`${this.apiUrl}/admin/changeUserStatus`,payload)
    }
 
   //  
@@ -80,22 +80,22 @@ export class AdminService {
   }
   changePlanStatus(planId:string):Observable<any>{
     const payload={planId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changePlanStatus`,payload)
+    return this.http.patch<any>(`${this.apiUrl}/admin/changePlanStatus`,payload)
    }
 
    changeDietPremium(planId:string):Observable<any>{
     const payload={planId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changeDietPremium`,payload)
+    return this.http.patch<any>(`${this.apiUrl}/admin/changeDietPremium`,payload)
    }
 
    changeSubscribersStatus(userId:string):Observable<any>{
     const payload={userId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changeSubscribersStatus`,payload)
+    return this.http.patch<any>(`${this.apiUrl}/admin/changeSubscribersStatus`,payload)
    }
 
    changeDietPlanStatus(planId:string):Observable<any>{
     const payload={planId}
-    return this.http.put<any>(`${this.apiUrl}/admin/changeDietPlanStatus`,payload)
+    return this.http.patch<any>(`${this.apiUrl}/admin/changeDietPlanStatus`,payload)
    }
   // videos 
   getVideos():Observable<VideoList>{
@@ -104,11 +104,11 @@ export class AdminService {
 
   changeVideoStatus(videoId:any):Observable<VideoList>{
     const payload={videoId}
-    return this.http.put<VideoList>(`${this.apiUrl}/admin/changeVideoStatus`,payload)
+    return this.http.patch<VideoList>(`${this.apiUrl}/admin/changeVideoStatus`,payload)
   }
 
   changeVideoPremium(videoId:any):Observable<VideoList>{
     const payload={videoId}
-    return this.http.put<VideoList>(`${this.apiUrl}/admin/changeVideoPremium`,payload)
+    return this.http.patch<VideoList>(`${this.apiUrl}/admin/changeVideoPremium`,payload)
   }
 }

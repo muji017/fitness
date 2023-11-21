@@ -18,11 +18,13 @@ export class ProfileComponent {
   files!: FileList
   name!:string
   passForm!:FormGroup
+  apiUrl!:string
 
   constructor(
     private userService:UserService,private  dialog:MatDialog,
     private router:Router, private fb:FormBuilder, private toastr:ToastrService
   ){
+    this.apiUrl = userService.getapiUrl()
      this.passForm=this.fb.group({
       password: this.fb.control('', [Validators.required, Validators.minLength(6),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
@@ -31,6 +33,7 @@ export class ProfileComponent {
   }
 
   ngOnInit(){
+   
     this.userService.getProfile().subscribe(
       (res:any)=>{
         this.user=res.user

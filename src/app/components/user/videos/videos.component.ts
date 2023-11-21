@@ -17,13 +17,16 @@ export class VideosComponent {
  
   videos!:VideoModel[]
   searchQuery!:string
-  searchVideo!:VideoModel[]
+  searchVideo!:VideoModel[]  
+  apiUrl!:string
   constructor(
     private router:Router,
     private store:Store<VideoModel[]>,
     private userService:UserService,
     private toastr:ToastrService
-  ){}
+  ){
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit(){
     this.store.dispatch(getAllVideoListApi())
@@ -50,21 +53,7 @@ export class VideosComponent {
             return
           }
           else {
-            const currentDate = new Date();
-            const sday = currentDate.getDate();
-            const smonth = currentDate.getMonth() + 1;
-            const syear = currentDate.getFullYear();
-            const formattedCurrentDate = new Date( sday, smonth - 1,syear);  
-            const userExpiryDate = new Date(user.expiryDate);
-  
-            console.log(formattedCurrentDate, userExpiryDate);
-  
-            if (formattedCurrentDate < userExpiryDate) {
               this.router.navigate([`videoplayer/${videoId}`])
-            } else {
-              this.toastr.info("Your Subscription Plan is expired");
-              this.router.navigate(['/subscription']);
-            }
           }
         })
       ).subscribe();

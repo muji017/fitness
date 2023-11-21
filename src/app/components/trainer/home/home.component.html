@@ -37,7 +37,7 @@
               <ng-container matColumnDef="image">
                   <th mat-header-cell *matHeaderCellDef>Image</th>
                   <td (click)="watchVideo(element._id)" style="max-width: 100px;" class="max-w-md" mat-cell *matCellDef="let element">
-                      <video  [src]="'http://localhost:3000/public/images/' + element.video" alt="video"></video>
+                      <video  [src]="apiUrl + element.video" alt="video"></video>
                   </td>
               </ng-container>
 
