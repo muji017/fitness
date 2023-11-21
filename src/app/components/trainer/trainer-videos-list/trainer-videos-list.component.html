@@ -24,7 +24,7 @@
         <div *ngIf="videos" class="container mt-20 bg-white" style=" overflow-x: auto;">
             <h2 *ngIf="videos.length<1">No results found</h2>
             <!-- Cards Section -->
-            <div *ngFor="let plan of pagedVideos" class="container mt-2 mx-auto">
+            <div *ngFor="let plan of videos" class="container mt-2 mx-auto">
                 <div class="grid grid-cols-1  gap-8">
                     <!-- Card -->
 
@@ -50,7 +50,6 @@
 
                 </div>
             </div>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
         </div>
     </div>
 </div>

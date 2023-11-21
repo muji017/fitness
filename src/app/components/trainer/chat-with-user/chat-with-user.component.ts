@@ -73,6 +73,12 @@ export class ChatWithUserComponent {
             }
           }
           else {
+            const roomId:string|undefined=this.currentRoom?._id
+              this.chatService.messageRead(roomId).subscribe(
+                (res)=>{
+                  console.log(res);      
+                }
+              )
             this.chats.unshift(chat);
             this.cdr.detectChanges();
           }

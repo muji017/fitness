@@ -103,16 +103,19 @@ background-size: cover; background-position: center ; height: 100vh;">
                         class='bg-color-msg-side w-full overflow-y-auto p-5'>
                         <div *ngFor="let chat of chats">
                             <div *ngIf="chat.senderType==='User'" class='w-full flex my-2 justify-end'>
-                                <div
+                                
+                                <div matTooltip="{{ chat.createdAt | date: 'medium' }}"
                                     class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
                                     {{chat.content}}
-                                </div>
+                                </div><mat-icon [ngClass]="{'text-blue-500': chat.is_read}" Style='font-size:18px'>done_all</mat-icon>                           
                             </div>
                             <div *ngIf="chat.senderType==='Trainer'" class='w-full my-2'>
-                                <div class='bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
+                                <div  matTooltip="{{ chat.createdAt | date: 'medium' }}" class=' bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
                                     {{chat.content}}
+                                   
                                 </div>
                             </div>
+                            
                         </div>
                         <div *ngIf="chats.length<=0" class='w-full h-full flex items-center justify-center'>
                             No Chats

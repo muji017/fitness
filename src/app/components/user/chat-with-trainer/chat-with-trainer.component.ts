@@ -17,7 +17,6 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './chat-with-trainer.component.html',
   styleUrls: ['./chat-with-trainer.component.css'],
   encapsulation: ViewEncapsulation.None
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatWithTrainerComponent {
   trainers!: trainer[]
@@ -85,6 +84,12 @@ export class ChatWithTrainerComponent {
               }
             }
             else {
+              const roomId:string|undefined=this.currentRoom?._id
+              this.chatService.messageRead(roomId).subscribe(
+                (res)=>{
+                  console.log(res);      
+                }
+              )
               this.chats.unshift(chat);
               this.cdr.detectChanges();
             }
