@@ -48,7 +48,7 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
         socket.broadcast.emit("online", userId)
         socket.on('disconnect', () => {
           console.log("disconnected", userId);
-          socket.broadcast.emit('offline', userId)
+        socket.broadcast.emit('offline', userId)
         })
       });
       socket.on('join chat', (room) => {
@@ -60,6 +60,12 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
       socket.on('stop typing', (roomId) => socket.in(roomId).emit('stop typing'))
       socket.on('trainer typing', (roomId) => socket.to(roomId).emit('trainer typing progress', roomId))
       socket.on('trainer stop typing', (roomId) => socket.in(roomId).emit('trainer stop typing'))
+
+      socket.on('trainer message read',(roomId)=>socket.to(roomId).emit('trainer message read success',roomId))
+      socket.on('trainer message unread',(roomId,chat)=>socket.to(roomId).emit('trainer message unread success',roomId,chat))
+
+      socket.on('message read',(roomId)=>socket.to(roomId).emit('message read success',roomId))
+      socket.on('message unread',(roomId,chat)=>socket.to(roomId).emit('message unread success',roomId,chat))
 
       socket.on('new message', (room, senderType, chat) => {
         if (!room.userId || !room.trainerId) {

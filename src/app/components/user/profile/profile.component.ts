@@ -38,23 +38,16 @@ export class ProfileComponent {
       (res:any)=>{
         this.user=res.user
         this.name=this.user.name
-    },
-    (error)=>{
-      console.log(error)
-    }
-     )
+    })
      
   }
 
   onFileSelected(event:any):any{
     const files: FileList = event.target.files;
     this.files = files;
-    console.log(this.files);
     const form=new FormData()
     const file = this.files[0];
-    console.log("file type",file.type);
     if (!file.type.startsWith('image/')) {
-      console.log('File type is:', file.type);
       return this.toastr.warning('Image type is invalid');
   }
     form.append('image', file, file.name);

@@ -42,8 +42,6 @@ export class UsertrainerslistComponent {
     });
   }
   getTrainerProfile(trainerId: any) {
-    console.log(trainerId);
-
     this.router.navigate([`/Usertrainerprofile/${trainerId}`])
   }
 }

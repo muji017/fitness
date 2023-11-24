@@ -95,7 +95,6 @@ export class EditDietPlanComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('image/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Image type is invalid');
       }
     }
@@ -103,17 +102,14 @@ export class EditDietPlanComponent {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.imageSrc.push(e.target.result);
       };
 
       reader.readAsDataURL(this.files[i]);
     }
-    console.log(this.files);
 }
 
   submitForm() {
-    console.log("submit press");
     
     if (!this.editPlanForm.valid) {
       if (this.showTitleError()) {
@@ -133,7 +129,6 @@ export class EditDietPlanComponent {
 
     for (const controlName of Object.keys(this.editPlanForm.controls)) {
       const control = this.editPlanForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
       plan.append(controlName, control?.value);
     }
     if(this.files){

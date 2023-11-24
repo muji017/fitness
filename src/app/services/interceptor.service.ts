@@ -29,7 +29,6 @@ export class InterceptorService implements HttpInterceptor {
   if (window.location.pathname.includes('/trainer') && trainer) {
     const trainerparse = JSON.parse(trainer);
     const token = trainerparse?.trainerToken;
-    console.log("interceptor trainer", token);
 
     const modifiedReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
@@ -39,7 +38,6 @@ export class InterceptorService implements HttpInterceptor {
   else if (window.location.pathname.includes('/admin') && admin) {
     const adminparse = JSON.parse(admin);
     const token = adminparse?.adminToken;
-    console.log("interceptor admin", token);
     const modifiedReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
     });
@@ -48,7 +46,6 @@ export class InterceptorService implements HttpInterceptor {
   else if (window.location.pathname.includes('/') && user) {
     const userparse = JSON.parse(user);
     const token = userparse?.userToken;
-    console.log("interceptor user", token);
     const modifiedReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
     });

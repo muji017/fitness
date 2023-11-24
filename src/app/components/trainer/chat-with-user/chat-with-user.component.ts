@@ -28,6 +28,8 @@ export class ChatWithUserComponent {
   userTyping: boolean = false
   notifications:any[]=[]
   apiUrl!:string
+  messageRead!:boolean
+
   constructor(
     private userService:UserService,
     private service: TrainerService,
@@ -54,31 +56,39 @@ export class ChatWithUserComponent {
         this.chatService.getAllChats(chat._id).subscribe(
           (res) => {
             const chats: any[] = res.chats;
-            console.log("without filter", chats);
             const uniqueMessageIds = new Set(this.notifications.map(msg => msg._id));
             const newMessages = chats.filter(allMsg => !allMsg.is_read &&allMsg.senderType!=='Trainer' && !uniqueMessageIds.has(allMsg._id));
-            this.notifications = this.notifications.concat(newMessages);
-            console.log("with filter", this.notifications);
+            this.notifications = this.notifications.concat(newMessages)
           }
         )
       );
         this.currentUser = this.users[0]
         this.currentRoom = this.chatRooms.find((room) => room.userId._id === this.currentUser?._id)
         this.getRoomMessages(this.currentRoom?._id)
+        this.getOnline()
+        this.chatService.socket.off('message received');
         this.chatService.socket.on('message received', (chat: any) => {
           if (chat.room !== this.currentRoom?._id) {
             if (!this.notifications.includes(chat)) {
-              console.log(chat);
               this.notifications = this.notifications.concat(chat);
+            
             }
+            this.chatService.socket.emit('trainer message unread',chat.room,chat)
           }
           else {
             const roomId:string|undefined=this.currentRoom?._id
               this.chatService.messageRead(roomId).subscribe(
-                (res)=>{
-                  console.log(res);      
-                }
+                (res)=>{}
               )
+              this.chatService.socket.on('message read success',(roomId:any)=>{
+                this.messageRead=true
+                this.getRoomMessages(roomId)
+              })
+              this.chatService.socket.on('message unread success',(roomId:any,msg:any)=>{
+                this.messageRead=false
+                this.getRoomMessages(roomId)
+              })
+            this.chatService.socket.emit('trainer message read',roomId)
             this.chats.unshift(chat);
             this.cdr.detectChanges();
           }
@@ -92,33 +102,39 @@ export class ChatWithUserComponent {
         this.chatService.socket.on('stop typing', () => {
           this.userTyping = false
         })
-        this.chatService.socket.on('online', (userId: string) => {
-          let status: boolean = true
-          this.chatService.makeOnline(userId, status).subscribe(
-            (res) => {
-              const userToUpdate = this.users.find((data) => data._id == userId);
-              if (userToUpdate) {
-                userToUpdate.is_Online = status;
-                this.cdr.detectChanges();
-              }
-            }
-          )
-        })
-        this.chatService.socket.on('offline', (userId: string) => {
-          let status: boolean = false
-          this.chatService.makeOnline(userId, status).subscribe(
-            (res) => {
-              const userToUpdate = this.users.find((data) => data._id == userId);
-              if (userToUpdate) {
-                userToUpdate.is_Online = status;
-                this.cdr.detectChanges();
-              }
-            }
-          )
-
-        })
+        this.getOnline()
+        this.getOffline()
       }
     )
+  }
+  getOnline(){
+    this.chatService.socket.on('online', (userId: string) => {
+      let status: boolean = true
+      this.chatService.makeOnline(userId, status).subscribe(
+        (res) => {
+          const userToUpdate = this.users.find((data) => data._id == userId);
+          if (userToUpdate) {
+            userToUpdate.is_Online = status;
+            this.cdr.detectChanges();
+          }
+        }
+      )
+    })
+  }
+  getOffline(){
+    this.chatService.socket.on('offline', (userId: string) => {
+      let status: boolean = false
+      this.chatService.makeOnline(userId, status).subscribe(
+        (res) => {
+          const userToUpdate = this.users.find((data) => data._id == userId);
+          if (userToUpdate) {
+            userToUpdate.is_Online = status;
+            this.cdr.detectChanges();
+          }
+        }
+      )
+
+    })
   }
   getUnreadNotificationCount(userId: number): number {
     return this.notifications.filter(notification => 
@@ -142,11 +158,9 @@ export class ChatWithUserComponent {
     this.notifications = this.notifications.filter(chat => chat.room !== this.currentRoom?._id)
     const roomId:string|undefined=this.currentRoom?._id
     this.chatService.messageReadTrainer(roomId).subscribe(
-      (res)=>{
-        console.log(res);      
-      }
+      (res)=>{}
     )
-    console.log("nononononononononononon", this.notifications);
+    this.chatService.socket.emit('trainer message read',roomId)
     this.getRoomMessages(this.currentRoom?._id)
   }
 
@@ -180,5 +194,6 @@ export class ChatWithUserComponent {
   }];
 
   ngOnDestroy() {
+    this.chatService.socket.disconnect();
   }
 }

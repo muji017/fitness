@@ -123,7 +123,6 @@ export class SignupComponent {
       this.toastr.warning("Password mismatch")
       return
     }
-    console.log("name is : ", name);
 
     this.service.signup(name, email, password).subscribe(
       (response) => {

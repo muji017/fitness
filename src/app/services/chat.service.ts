@@ -95,11 +95,11 @@ export class ChatService {
   public openChatTrainer() {
     this.socket = socketIo.connect(this.apiUrl)
     this.socket.emit('setup', this.trainerId)
-    this.socket.on('connected', () => {
-      this.userSocketConnected = true
-    });
+    this.socket.on('connected', () =>this.userSocketConnected = true);
     this.socket.on('trainer typing', () => this.isUserTyping = true)
     this.socket.on('trainer stop typing', () => this.isUserTyping = false)
+    
+
   }
 
   public makeOnlineTrainer(trainerId: string, status:boolean): Observable<string> {
@@ -149,6 +149,7 @@ export class ChatService {
   public sendMessageTrainer(room: chatRoom, roomId: any, message: String,): Observable<any> {
 
     const payload = { roomId, message }
+    this.socket.emit('message read by trainer',roomId)
     return this.http.post<any>(`${this.apiUrl}/sendMessage`, payload).pipe(
       switchMap((apiResponse) => {
 

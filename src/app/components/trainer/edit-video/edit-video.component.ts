@@ -40,8 +40,6 @@ export class EditVideoComponent {
       (res)=>{
         const data=res
         this.videos=data.filter((dp)=>dp._id==this.videoId)
-        console.log(this.videos);
-        
       }
     )
     this.imageSrc=this.apiUrl+this.videos[0].video
@@ -114,7 +112,6 @@ export class EditVideoComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('video/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Video type is invalid');
       }
     }
@@ -122,13 +119,11 @@ export class EditVideoComponent {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.imageSrc.push(e.target.result);
       };
 
       reader.readAsDataURL(this.files[i]);
     }
-    console.log(this.files);
   }
 
   submitForm(){
@@ -155,7 +150,6 @@ export class EditVideoComponent {
 
     for (const controlName of Object.keys(this.uploadVideoForm.controls)) {
       const control = this.uploadVideoForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
        plan.append(controlName, control?.value);
     }
     if(this.files){

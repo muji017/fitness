@@ -34,8 +34,6 @@ ngOnInit() {
   this.store.dispatch(getAllDietPlansListApi())
   this.store.select(getAllDietPlans).subscribe((res) => {
     this.plans=res
-    console.log(res);
-    console.log(this.planId);
     this.plan=this.plans.find((tr)=>tr._id===this.planId)
   })
   

@@ -88,7 +88,6 @@ export class AddVideoComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('video/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Video type is invalid');
       }
     }
@@ -117,7 +116,6 @@ export class AddVideoComponent {
 
     for (const controlName of Object.keys(this.uploadVideoForm.controls)) {
       const control = this.uploadVideoForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
        plan.append(controlName, control?.value);
     }
     const file = this.files[0];

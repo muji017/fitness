@@ -87,10 +87,8 @@ export class HomeComponent {
     const getAllvideoSubscription = this.videostore.select(getAllVideos).subscribe((videos) => {
       videoCount = videos.length;
       const currentDate = new Date();
-      console.log('Current Date:', currentDate);
       const videoModel: any = videos.filter((video) => {
         if (video.uploadDate) {
-          console.log('Date:', video.uploadDate);
           const userDate = new Date(video.uploadDate);
           const isSameDate =
             userDate.getDate() === currentDate.getDate() &&

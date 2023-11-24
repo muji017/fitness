@@ -29,7 +29,6 @@ export class UserChatTrainerListDialogeComponent {
    this.trainer$=this.store.select(getAllTrainers)
   }
   addRoom(trainerId:any){
-    console.log(trainerId); 
     this.chatService.getRoomUser(trainerId).subscribe(
       (res)=>{
         this.dialoge.closeAll()

@@ -39,19 +39,14 @@ export class SubscriptionComponent {
   }
   payNow() {
     let planId = this.selectedPlanId;
-    console.log(planId);
-    
     this.userServicer.createSubscription(planId).subscribe((res) => {
-      console.log(res);
       this.razorpayPopup(res)
       
     });
   }
   payss(){
-    console.log("Inside Success");
     const planId=this.selectedPlanId
     const paymetMethod="Razorpay"
-    console.log(planId,paymetMethod)
     this.userServicer.paymentss(planId,paymetMethod).subscribe(
       (res) => {
          this.toastr.success("Sucessfully subscribed redirecting to your profile")

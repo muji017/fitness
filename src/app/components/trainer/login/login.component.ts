@@ -71,7 +71,6 @@ export class LoginComponent {
       }
       this.service.login(email,password).subscribe(
         (response)=>{
-          console.log("api respons", response);
           const trainer={
             trainerToken:response.trainerToken,
             trainerId:response.trainerId
@@ -81,7 +80,6 @@ export class LoginComponent {
           this.router.navigate(['/trainer/home'])
         }
         ,(error)=>{
-          console.log("here intrainer login error")
           this.toastr.error(error.error.error)
         }
       )

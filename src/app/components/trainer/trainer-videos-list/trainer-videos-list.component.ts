@@ -49,7 +49,6 @@ export class TrainerVideosListComponent implements AfterViewInit {
         this.videos = res;
         this.pagedVideos = res;
         this.searchVideos = res;
-        console.log(this.videos);
         this.setupPaginator();
       }
     );

@@ -81,6 +81,15 @@
                                 class="rounded-full w-12 h-12">
                                
                             <p class="p-2 text-sm">{{ currentUser?.name }}</p>
+                            
+                            
+                        </div>
+                    </div>
+                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;">
+                        
+                        <div *ngIf="chats"
+                            style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
+                            class='bg-color-msg-side w-full overflow-y-auto p-5'>
                             <div *ngIf="userTyping" class="text-blueGray-700 flex h-auto mb-0 p-2 ">
                                 <p>Typing</p>
                                 <div *ngFor="let version of versions" class="mt-2 pulse-loader"
@@ -91,20 +100,14 @@
                                     <div></div>
                                 </div>
                             </div>
-                            
-                        </div>
-                    </div>
-                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;">
-                        
-                        <div *ngIf="chats"
-                            style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
-                            class='bg-color-msg-side w-full overflow-y-auto p-5'>
-                          
                             <div *ngFor="let chat of chats">
                                 <div *ngIf="chat.senderType==='Trainer'" class='w-full flex my-2 justify-end'>
                                     <div
                                         class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
                                         {{chat.content}}
+                                        <mat-icon [ngClass]="{
+                                            'text-blue-500': chat.is_read|| messageRead,
+                                          }" Style='font-size:18px'>done_all</mat-icon>
                                     </div>
                                 </div>
                                 <div *ngIf="chat.senderType==='User'" class='w-full my-2'>
