@@ -9,7 +9,6 @@ import { Component, ViewEncapsulation,Input } from '@angular/core';
 export class SidenavComponent {
   @Input() notifications:any[]=[]
   constructor(){
-    console.log("sadsadsd",this.notifications);
     
   }
 }

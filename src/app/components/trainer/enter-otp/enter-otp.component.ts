@@ -45,7 +45,6 @@ export class EnterOtpComponent {
 
   submitOtp() {
        const otp:string=this.otpForm.get('otp')?.value
-       console.log(otp)
        this.service.verifyOtp(this.email,otp).subscribe(
         (response)=>{
           const email=response.email
@@ -82,7 +81,6 @@ export class EnterOtpComponent {
   resendOtp() {
     this.service.resendOtp(this.email).subscribe(
     (response)=>{
-      console.log(response)
           this.countdown=60
           this.clearTimerInterval(); 
           this.startCountdown(); 

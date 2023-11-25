@@ -4,6 +4,7 @@ import * as socketIo from "socket.io-client";
 import { UserService } from './userServices/user.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { chatRoom, chatRooms } from '../model/chatModel';
+import { imgurl, url } from './endPoint';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,15 @@ export class ChatService {
   pars: any = JSON.parse(this.trainer)
   trainerId = this.pars?.trainerId
   socket!: any
-  apiUrl: any = 'http://localhost:3000'
+  apiUrlChat: string = imgurl
+  apiUrl: string = url
   userSocketConnected!: boolean
   isUserTyping!: boolean
   constructor(private http: HttpClient) {
   }
   // user side chat 
   public openChat() {
-    this.socket = socketIo.connect(this.apiUrl)
+    this.socket = socketIo.connect(this.apiUrlChat)
     this.socket.emit('setup', this.userId)
     this.socket.on('connected', () => this.userSocketConnected = true)
     this.socket.on('typing', () => this.isUserTyping = true)
@@ -85,31 +87,31 @@ export class ChatService {
       }))
   }
 
-  public messageRead(roomId:string|undefined):Observable<string>{
-    const payload = {roomId}
-    return this.http.patch<string>(`${this.apiUrl}/messageRead`,payload)
+  public messageRead(roomId: string | undefined): Observable<string> {
+    const payload = { roomId }
+    return this.http.patch<string>(`${this.apiUrl}/messageRead`, payload)
   }
 
   // trainer side chat 
 
   public openChatTrainer() {
-    this.socket = socketIo.connect(this.apiUrl)
+    this.socket = socketIo.connect(this.apiUrlChat)
     this.socket.emit('setup', this.trainerId)
-    this.socket.on('connected', () => {
-      this.userSocketConnected = true
-    });
+    this.socket.on('connected', () => this.userSocketConnected = true);
     this.socket.on('trainer typing', () => this.isUserTyping = true)
     this.socket.on('trainer stop typing', () => this.isUserTyping = false)
+
+
   }
 
-  public makeOnlineTrainer(trainerId: string, status:boolean): Observable<string> {
+  public makeOnlineTrainer(trainerId: string, status: boolean): Observable<string> {
     let payload = { status, trainerId }
     return this.http.patch<string>(`${this.apiUrl}/trainer/makeOnlineTrainer`, payload)
   }
 
-  public messageReadTrainer(roomId:string|undefined):Observable<string>{
-    const payload = {roomId}
-    return this.http.patch<string>(`${this.apiUrl}/trainer/messageRead`,payload)
+  public messageReadTrainer(roomId: string | undefined): Observable<string> {
+    const payload = { roomId }
+    return this.http.patch<string>(`${this.apiUrl}/trainer/messageRead`, payload)
   }
   public trainerTyping(roomId: any) {
     if (!this.userSocketConnected) return
@@ -149,6 +151,7 @@ export class ChatService {
   public sendMessageTrainer(room: chatRoom, roomId: any, message: String,): Observable<any> {
 
     const payload = { roomId, message }
+    this.socket.emit('message read by trainer', roomId)
     return this.http.post<any>(`${this.apiUrl}/sendMessage`, payload).pipe(
       switchMap((apiResponse) => {
 

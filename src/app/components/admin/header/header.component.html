@@ -51,7 +51,6 @@
       <mat-icon [matMenuTriggerFor]="profileMenu" *ngIf="isloginRoute()">keyboard_arrow_down</mat-icon>
 
     <mat-menu #profileMenu="matMenu" >
-      <button mat-menu-item>Profile</button>
       <button mat-menu-item (click)="onLogout()">Logout</button>
     </mat-menu>
     
@@ -85,8 +84,6 @@
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Dietplans</a>
       <a  [routerLink]="['/admin/videos']" [routerLinkActive]="'active-link'" 
         class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Videos</a>
-      <a [routerLink]="['/admin/salesreport']" 
-        class=" hover:bg-gray-700 hover:text-white text-black block rounded-md px-3 py-2 text-base font-medium">Sales Report</a>
 
 
     </div>

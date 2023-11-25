@@ -25,6 +25,7 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { EditVideoComponent } from './edit-video/edit-video.component';
 import { ChatWithUserComponent } from './chat-with-user/chat-with-user.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const routes:Routes=[
   {
@@ -76,6 +77,7 @@ const routes:Routes=[
     ChatWithUserComponent
   ],
   imports: [
+    NgChartsModule,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,

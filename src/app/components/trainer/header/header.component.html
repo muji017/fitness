@@ -1,4 +1,4 @@
-<div class="header"><mat-toolbar class="bg-white">
+<div class=" header w-full  "><mat-toolbar class="bg-white">
   <!-- Company Icon -->
   <div class="md:hidden">
     <button (click)="tog()" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white-900 hover:bg-gray-700
@@ -61,7 +61,7 @@
   <mat-icon [matMenuTriggerFor]="profileMenu" *ngIf="isloginRoute()">keyboard_arrow_down</mat-icon>
 
   <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item>Profile</button>
+    <button mat-menu-item [routerLink]="['/trainer/profile']" routerLinkActive="active-link" >Profile</button>
     <button mat-menu-item (click)="onLogout()">Logout</button>
   </mat-menu>
 

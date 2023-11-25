@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -6,6 +6,8 @@ import { UserModel } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
 import { changeUserStatusApi, getUsersListApi } from 'src/app/store/action';
 import { getAllUsers } from 'src/app/store/selector';
+import { MatPaginator } from '@angular/material/paginator';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -15,20 +17,26 @@ import { getAllUsers } from 'src/app/store/selector';
 })
 export class UserListComponent {
 
+  apiUrl!:string
   searchQuery!: string
   userList!: UserModel
   dataSource: MatTableDataSource<UserModel> = new MatTableDataSource<UserModel>();
 
   displayedColumns: string[] = ['image', 'name', 'email', 'options'];
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private adminService: AdminService,
     private store: Store<UserModel[]>,
-    private toastr:ToastrService
-  ) { }
+    private toastr:ToastrService,
+    private userService:UserService
+  ) {
+    this.apiUrl=userService.getapiUrl()
+   }
 
   ngOnInit() {
     this.store.dispatch(getUsersListApi())
     this.getUsers()
+    this.dataSource.paginator = this.paginator;
   }
 
   getUsers() {

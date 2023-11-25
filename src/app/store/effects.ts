@@ -65,7 +65,6 @@ export class UserEffects {
       mergeMap(() => {
         return this.trainerService.getTrainerProfile().pipe(
           map((res) => {
-            console.log(res)
             return getTrainerProfileApiSuccess({ trainer: Object.values(res) })
           })
         )
@@ -80,7 +79,6 @@ export class UserEffects {
       mergeMap(()=>{
         return this.service.getProfile().pipe(
           map((data)=>{
-            console.log(data);
             return  getUsersListApiSuccess({users:Object.values(data)})
           })
         )
@@ -111,8 +109,6 @@ export class UserEffects {
       mergeMap(() => {
         return this.adminService.getSubscribersList().pipe(
           map((res) => {
-            console.log(res);
-
             return getUsersListApiSuccess({ users: Object.values(res.users) })
           })
         )
@@ -256,12 +252,9 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(changeDietPlanStatusApi),
       mergeMap((action) => {
-        console.log("ewd",action.planId);
         
         return this.adminService.changeDietPlanStatus(action.planId).pipe(
           map((data) => {
-            console.log(data);
-            
             return getDietPlansListApiSuccess({ Dietplans: Object.values(data.DietPlans) })
           })
         )
@@ -274,7 +267,6 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(changeDietPremiumApi),
       mergeMap((action) => {
-        console.log("effect", action.planId)
         return this.adminService.changeDietPremium(action.planId).pipe(
           map((data) => {
             return getAllDietPlansListApi()

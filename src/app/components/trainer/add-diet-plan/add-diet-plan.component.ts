@@ -75,7 +75,6 @@ export class AddDietPlanComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('image/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Image type is invalid');
       }
     }
@@ -83,13 +82,11 @@ export class AddDietPlanComponent {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.imageSrc.push(e.target.result);
       };
 
       reader.readAsDataURL(this.files[i]);
     }
-    console.log(this.files);
   }
   submitForm() {
     if (!this.addPlanForm.valid) {
@@ -111,7 +108,6 @@ export class AddDietPlanComponent {
 
     for (const controlName of Object.keys(this.addPlanForm.controls)) {
       const control = this.addPlanForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
       plan.append(controlName, control?.value);
     }
     const file = this.files[0];

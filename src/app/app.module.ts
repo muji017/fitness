@@ -41,7 +41,7 @@ import { UserTrainerDietComponent } from './components/user/user-trainer-diet/us
 import { UserTrainerVideosComponent } from './components/user/user-trainer-videos/user-trainer-videos.component';
 import { ChatWithTrainerComponent } from './components/user/chat-with-trainer/chat-with-trainer.component';
 import { UserChatTrainerListDialogeComponent } from './components/user/user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
-
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -69,6 +69,7 @@ import { UserChatTrainerListDialogeComponent } from './components/user/user-chat
     UserChatTrainerListDialogeComponent
   ],
   imports: [
+    NgChartsModule,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,

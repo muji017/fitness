@@ -15,18 +15,20 @@ import { getAllTrainers } from 'src/app/store/selector';
 })
 export class UserChatTrainerListDialogeComponent {
   trainer$!:Observable<trainer[]>; 
+  apiUrl!:string
   constructor(
     private store:Store<trainer[]>,
     private userService:UserService,
     private chatService:ChatService,
     private dialoge:MatDialog
-  ){}
+  ){
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit(){
    this.trainer$=this.store.select(getAllTrainers)
   }
   addRoom(trainerId:any){
-    console.log(trainerId); 
     this.chatService.getRoomUser(trainerId).subscribe(
       (res)=>{
         this.dialoge.closeAll()

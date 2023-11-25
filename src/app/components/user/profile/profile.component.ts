@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel, userToken } from 'src/app/model/userModel';
 import { UserService } from 'src/app/services/userServices/user.service';
+import { WatchhistoryComponent } from '../watchhistory/watchhistory.component';
 
 @Component({
   selector: 'app-profile',
@@ -16,11 +18,13 @@ export class ProfileComponent {
   files!: FileList
   name!:string
   passForm!:FormGroup
+  apiUrl!:string
 
   constructor(
-    private userService:UserService,
+    private userService:UserService,private  dialog:MatDialog,
     private router:Router, private fb:FormBuilder, private toastr:ToastrService
   ){
+    this.apiUrl = userService.getapiUrl()
      this.passForm=this.fb.group({
       password: this.fb.control('', [Validators.required, Validators.minLength(6),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
@@ -29,27 +33,21 @@ export class ProfileComponent {
   }
 
   ngOnInit(){
+   
     this.userService.getProfile().subscribe(
       (res:any)=>{
         this.user=res.user
         this.name=this.user.name
-    },
-    (error)=>{
-      console.log(error)
-    }
-     )
+    })
      
   }
 
   onFileSelected(event:any):any{
     const files: FileList = event.target.files;
     this.files = files;
-    console.log(this.files);
     const form=new FormData()
     const file = this.files[0];
-    console.log("file type",file.type);
     if (!file.type.startsWith('image/')) {
-      console.log('File type is:', file.type);
       return this.toastr.warning('Image type is invalid');
   }
     form.append('image', file, file.name);
@@ -60,7 +58,18 @@ export class ProfileComponent {
       }
     )
   }
-
+  
+  openWatchHistory(){
+    const data={
+      userId:this.user._id
+    }
+    this.dialog.open(WatchhistoryComponent,{
+      enterAnimationDuration:1000,
+      exitAnimationDuration:1000,
+      maxHeight: '500px',
+      data:data
+    })
+  }
   changeName(){
    const name=this.name
    this.userService.changeName(name).subscribe(

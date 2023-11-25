@@ -23,6 +23,7 @@ import { UserTrainerDietComponent } from './user-trainer-diet/user-trainer-diet.
 import { UserTrainerVideosComponent } from './user-trainer-videos/user-trainer-videos.component';
 import { ChatWithTrainerComponent } from './chat-with-trainer/chat-with-trainer.component';
 import { UserChatTrainerListDialogeComponent } from './user-chat-trainer-list-dialoge/user-chat-trainer-list-dialoge.component';
+import { WatchhistoryComponent } from './watchhistory/watchhistory.component';
 
 const routes: Routes = [{
   path: '',
@@ -50,6 +51,7 @@ const routes: Routes = [{
 @NgModule({
   declarations: [
     SetUserPasswordComponent,
+    WatchhistoryComponent,
 
   ],
   imports: [

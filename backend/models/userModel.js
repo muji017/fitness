@@ -39,7 +39,7 @@ const user=mongoose.Schema({
     },
     paymentMethode:{
         type:String
-    },
+    }
     
 })
 

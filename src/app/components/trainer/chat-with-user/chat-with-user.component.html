@@ -5,7 +5,7 @@
         class="w-full pt-2 ProfileTrainer border-5 bg-white ">
         <div class="text-center">
             <img alt="Profile Image" class="w-32 h-32 mx-auto rounded-full"
-                [src]="currentUser?.image ? 'http://localhost:3000/public/images/' + currentUser?.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
+                [src]="currentUser?.image ? apiUrl + currentUser?.image : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
                 alt="">
             <h1 class="text-2xl font-semibold mt-2">{{currentUser?.name}}</h1>
             <div class="text-center mt-12">
@@ -21,7 +21,8 @@
     </div>
 </div>
 
-<app-header  [notification]="notifications"></app-header>
+<div class="border mb-5"><app-header  [notification]="notifications"></app-header></div>
+
 <div class="container-fluid flex justify-start ">
     <div class="justify-start  hidden md:block" style="width: 100%;max-width: 250px; 
     min-width: 250px; ">
@@ -48,7 +49,7 @@
                         [ngClass]="{'ActiveTrainer': user?._id===currentUser?._id}">
                         <div class=" grid grid-cols-2 flex justify-between rounded-lg bg-white p-2">
                             <div class="w-full flex justify-start align-center">
-                                <img [src]="'http://localhost:3000/public/images/' + user?.image" alt="Trainer Image"
+                                <img [src]="apiUrl + user?.image" alt="Trainer Image"
                                     class="rounded-full w-12 h-12">
                                 <span class="p-2 text-sm">{{ user?.name }}
                                 <br>
@@ -76,10 +77,19 @@
                         (mouseover)="showProfilePopup = true" (mouseout)="showProfilePopup = false">
                         <div class="flex justify-start">
                             <img *ngIf="currentUser?.image"
-                                [src]="'http://localhost:3000/public/images/' + currentUser?.image" alt="Trainer Image"
+                                [src]="apiUrl + currentUser?.image" alt="Trainer Image"
                                 class="rounded-full w-12 h-12">
                                
                             <p class="p-2 text-sm">{{ currentUser?.name }}</p>
+                            
+                            
+                        </div>
+                    </div>
+                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;">
+                        
+                        <div *ngIf="chats"
+                            style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
+                            class='bg-color-msg-side w-full overflow-y-auto p-5'>
                             <div *ngIf="userTyping" class="text-blueGray-700 flex h-auto mb-0 p-2 ">
                                 <p>Typing</p>
                                 <div *ngFor="let version of versions" class="mt-2 pulse-loader"
@@ -90,20 +100,14 @@
                                     <div></div>
                                 </div>
                             </div>
-                            
-                        </div>
-                    </div>
-                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;">
-                        
-                        <div *ngIf="chats"
-                            style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
-                            class='bg-color-msg-side w-full overflow-y-auto p-5'>
-                          
                             <div *ngFor="let chat of chats">
                                 <div *ngIf="chat.senderType==='Trainer'" class='w-full flex my-2 justify-end'>
                                     <div
                                         class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
                                         {{chat.content}}
+                                        <mat-icon [ngClass]="{
+                                            'text-blue-500': chat.is_read|| messageRead,
+                                          }" Style='font-size:18px'>done_all</mat-icon>
                                     </div>
                                 </div>
                                 <div *ngIf="chat.senderType==='User'" class='w-full my-2'>

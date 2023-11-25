@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { DietPlansModel } from 'src/app/model/userModel';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllDietPlans } from 'src/app/store/selector';
 
 @Component({
@@ -19,23 +20,25 @@ export class EditDietPlanComponent {
   dietPlans!: DietPlansModel[]
   planId!: any
   imageSrc!:any
+  apiUrl!:string
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private trainerService: TrainerService,
+    private userService:UserService,
     private dialoge: MatDialog,
     private store: Store<DietPlansModel[]>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.planId = this.data.planId
-
+    this.apiUrl=userService.getapiUrl()
     this.store.select(getAllDietPlans).subscribe((res) => {
       const data = res
       this.dietPlans = data.filter((dp)=>dp._id==this.planId)
 
     })
-    this.imageSrc='http://localhost:3000/public/images/'+this.dietPlans[0].image
+    this.imageSrc=this.apiUrl +this.dietPlans[0].image
     this.editPlanForm = this.fb.group({
       title: fb.control(this.dietPlans[0].title, [Validators.required, Validators.minLength(3)]),
       foodType: fb.control(this.dietPlans[0].foodType, [Validators.required]),
@@ -92,7 +95,6 @@ export class EditDietPlanComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('image/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Image type is invalid');
       }
     }
@@ -100,17 +102,14 @@ export class EditDietPlanComponent {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.imageSrc.push(e.target.result);
       };
 
       reader.readAsDataURL(this.files[i]);
     }
-    console.log(this.files);
 }
 
   submitForm() {
-    console.log("submit press");
     
     if (!this.editPlanForm.valid) {
       if (this.showTitleError()) {
@@ -130,7 +129,6 @@ export class EditDietPlanComponent {
 
     for (const controlName of Object.keys(this.editPlanForm.controls)) {
       const control = this.editPlanForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
       plan.append(controlName, control?.value);
     }
     if(this.files){

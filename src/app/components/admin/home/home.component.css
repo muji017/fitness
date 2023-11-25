@@ -2,3 +2,6 @@ body{
     background-color: rgba(0, 0, 0, 0.034) !important;
     height: 100%;
 }
+.hBar{
+    height: 250px !important
+}

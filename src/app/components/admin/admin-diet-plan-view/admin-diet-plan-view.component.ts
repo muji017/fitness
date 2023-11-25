@@ -1,9 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { DietPlansModel } from 'src/app/model/userModel';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { changeDietPlanStatusApi, changeDietPremiumApi, getAllAdminDietPlansListApi, getAllDietPlansListApi, getDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans } from 'src/app/store/selector';
 
@@ -16,17 +18,23 @@ import { getAllDietPlans } from 'src/app/store/selector';
 export class AdminDietPlanViewComponent {
 
   dietPlans!: DietPlansModel[]
+  apiUrl!:string
   searchQuery!: string
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   displayedColumns: string[] = ['image', 'title', 'date', 'foodtype', 'description', 'options', 'premium'];
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private store: Store<DietPlansModel[]>,
-    private toastr:ToastrService
-  ) { }
+    private toastr:ToastrService,
+    private userService:UserService
+  ) {
+    this.apiUrl=userService.getapiUrl()
+   }
 
   ngOnInit() {
     this.store.dispatch(getAllAdminDietPlansListApi())
     this.getplans()
+    this.dataSource.paginator = this.paginator;
   }
   changeStatus(planId: any) {
     this.store.dispatch(changeDietPlanStatusApi({ planId }))

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,8 @@ import { changeVideoPremiumApi, changeVideoStatusApi, getAllAdminVideosListApi }
 import { getAllVideos } from 'src/app/store/selector';
 import { WatchVideoPlayerComponent } from '../watch-video-player/watch-video-player.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-videos-view',
@@ -15,19 +17,25 @@ import { MatDialog } from '@angular/material/dialog';
   encapsulation:ViewEncapsulation.None
 })
 export class VideosViewComponent {
+  apiUrl!:string
   videos!: VideoModel[]
   searchQuery!: string
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   displayedColumns: string[] = ['image', 'title', 'date', 'foodtype', 'description', 'options', 'premium'];
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(
     private store: Store<VideoModel[]>,
     private toastr:ToastrService,
-    private dialoge:MatDialog
-  ) { }
+    private dialoge:MatDialog,
+    private userService:UserService
+  ) { 
+    this.apiUrl=userService.getapiUrl()
+  }
 
   ngOnInit() {
     this.store.dispatch(getAllAdminVideosListApi())
     this.getplans()
+    this.dataSource.paginator = this.paginator;
   }
 
   watchVideo(planId:any){

@@ -32,27 +32,27 @@ adminroute.put('/resendOtp',admincontroller.resendOtp)
 adminroute.post('/sendOtp',admincontroller.sendOtp)
 adminroute.put('/setPassword',admincontroller.setPassword)
 // trainer managment
-adminroute.put('/changeTrainerStatus',admincontroller.changeTrainerStatus)
+adminroute.patch('/changeTrainerStatus',admincontroller.changeTrainerStatus)
 adminroute.get('/getTrainersList',admincontroller.getTrainersList)
 adminroute.post('/addTrainer',upload.single('image'),admincontroller.addTrainer)
 // user managment
 adminroute.get('/getUsersList',admincontroller.getUsersList)
-adminroute.put('/changeUserStatus',admincontroller.changeUserStatus)
+adminroute.patch('/changeUserStatus',admincontroller.changeUserStatus)
 // subscription managment
 adminroute.get('/getPlans',subscriptionController.getPlans)
 adminroute.post('/addPlan',upload.none(),subscriptionController.addPlan)
 adminroute.put('/updatePlan',upload.none(),subscriptionController.updatePlan)
-adminroute.put('/changePlanStatus',subscriptionController.changePlanStatus)
+adminroute.patch('/changePlanStatus',subscriptionController.changePlanStatus)
 adminroute.get('/subscribers',checkAuth,subscriptionController.getSubscribers)
-adminroute.put('/changeSubscribersStatus',checkAuth,subscriptionController.changeSubscribersStatus)
+adminroute.patch('/changeSubscribersStatus',checkAuth,subscriptionController.changeSubscribersStatus)
 // diet managment
-adminroute.put('/changeDietPremium',upload.none(),dietPlanController.changeDietPremium)
+adminroute.patch('/changeDietPremium',upload.none(),dietPlanController.changeDietPremium)
 adminroute.get('/getDietPlan',dietPlanController.getAllDietPlans)
-adminroute.put('/changeDietPlanStatus',checkAuth,dietPlanController.changeDietPlanStatus)
+adminroute.patch('/changeDietPlanStatus',checkAuth,dietPlanController.changeDietPlanStatus)
 
 // video managment
 adminroute.get('/getVideos',videoController.getAllVideos)
-adminroute.put('/changeVideoStatus',videoController.changeVideoStatus)
-adminroute.put('/changeVideoPremium',videoController.changeVideoPremium)
+adminroute.patch('/changeVideoStatus',videoController.changeVideoStatus)
+adminroute.patch('/changeVideoPremium',videoController.changeVideoPremium)
 
 module.exports=adminroute

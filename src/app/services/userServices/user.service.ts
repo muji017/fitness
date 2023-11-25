@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {  watchList, watchhistoryData } from 'src/app/model/chatModel';
 import { DietPlanList, PlanList, PlansModel, UserModel, VideoList, trainerlist, userToken } from 'src/app/model/userModel';
+import { url,imgurl } from '../endPoint';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +11,12 @@ import { DietPlanList, PlanList, PlansModel, UserModel, VideoList, trainerlist, 
 export class UserService {
 
   
-   private apiUrl:string = 'http://localhost:3000';
+   private apiUrl: string = url
+   private imgUrl:string=imgurl
   constructor( private http:HttpClient) { }
 
   getapiUrl():string{
-    return this.apiUrl+'/public/images/'
+    return this.imgUrl+'/public/images/'
   }
   signup(name:string,email: string, password: string):Observable<userToken> {
     const payload = {name, email, password };
@@ -60,23 +63,23 @@ export class UserService {
     return this.http.post<any>(`${this.apiUrl}/processPayment`,payload)
   }
 
-  setPassword(email: string,password:string):Observable<any>{
+  setPassword(email: string,password:string):Observable<{ userId:string, userToken:string }>{
      const payload  = {email,password}
-     return this.http.put<any>(`${this.apiUrl}/setPassword`,payload)
+     return this.http.put<{ userId:string, userToken:string }>(`${this.apiUrl}/setPassword`,payload)
    }
 
-   uploadPic(form:FormData):Observable<any>{
-    return this.http.put<any>(`${this.apiUrl}/uploadPic`,form)
+   uploadPic(form:FormData):Observable<{ user: UserModel }>{
+    return this.http.patch<{user:UserModel}>(`${this.apiUrl}/uploadPic`,form)
    }
 
-   changeName(name:string):Observable<any>{
+   changeName(name:string):Observable<{ message:string }>{
     const payload={name}
-    return this.http.put<any>(`${this.apiUrl}/changeName`,payload)
+    return this.http.patch<{ message:string }>(`${this.apiUrl}/changeName`,payload)
    }
 
-   changePassword(password:string):Observable<any>{
+   changePassword(password:string):Observable<{ message:string }>{
     const payload={password}
-    return this.http.put<any>(`${this.apiUrl}/changePassword`,payload)
+    return this.http.patch<{ message:string }>(`${this.apiUrl}/changePassword`,payload)
    }
 
    getDietPlans(): Observable<DietPlanList> {
@@ -87,5 +90,13 @@ export class UserService {
     return this.http.get<VideoList>(`${this.apiUrl}/getVideos`)
   }
 
+  getWatchHistory():Observable<watchList>{
+    return this.http.get<watchList>(`${this.apiUrl}/getWatchHistory`)
+  }
+   
+  addWatchHistory(videoId:string):Observable<string>{
+    const payload={videoId}
+    return this.http.post<string>(`${this.apiUrl}/addWatchHistory`,payload)
+  }
   
 }

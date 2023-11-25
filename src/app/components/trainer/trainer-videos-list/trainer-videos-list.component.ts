@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, ViewChild, ViewEncapsulation , AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddVideoComponent } from '../add-video/add-video.component';
 import { VideoModel } from 'src/app/model/userModel';
@@ -8,6 +8,9 @@ import { deleteVideoApi, getAllVideosTrainerApi } from 'src/app/store/action';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { ToastrService } from 'ngx-toastr';
 import { EditVideoComponent } from '../edit-video/edit-video.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-trainer-videos-list',
@@ -15,30 +18,65 @@ import { EditVideoComponent } from '../edit-video/edit-video.component';
   styleUrls: ['./trainer-videos-list.component.css'],
   encapsulation:ViewEncapsulation.None
 })
-export class TrainerVideosListComponent {
+export class TrainerVideosListComponent implements AfterViewInit {
 
   videos!:VideoModel[]
+  apiUrl!:string
   searchVideos!:VideoModel[]
   searchQuery!:string
-
+  isScrolled:boolean=false
+  pagedVideos: VideoModel[] = []; 
+  pageSize = 5; 
+  dataSource: MatTableDataSource<VideoModel[]> = new MatTableDataSource<VideoModel[]>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private dialoge:MatDialog,
     private store:Store<VideoModel[]>,
-    private toastr:ToastrService
-  ){}
-
-  ngOnInit(){
-    this.store.dispatch(getAllVideosTrainerApi())
-    this.store.select(getAllVideos).subscribe(
-      (res)=>{
-        this.videos=res
-        this.searchVideos=res
-        console.log(this.videos);
-        
-      }
-    )
+    private toastr:ToastrService,
+    private userService:UserService
+  ){
+    this.apiUrl=userService.getapiUrl()
   }
+   @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.isScrolled = window.scrollY > 0;
+  }
+  ngOnInit() {
+    this.store.dispatch(getAllVideosTrainerApi());
+    this.store.select(getAllVideos).subscribe(
+      (res) => {
+        this.videos = res;
+        this.pagedVideos = res;
+        this.searchVideos = res;
+        this.setupPaginator();
+      }
+    );
+  }
+  
+  ngAfterViewInit() {
+    this.updatePagedVideos();
+  }
+  
+  updatePagedVideos() {
+    if (this.paginator) {
+      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+      const endIndex = startIndex + this.paginator.pageSize;
+      this.pagedVideos = this.videos.slice(startIndex, endIndex);
+    }
+  }
+  
+  setupPaginator() {
+    if (this.paginator) {
+      this.paginator.pageSize = 5;
+      this.paginator.page.subscribe(() => this.updatePagedVideos());
+    }
+  }
+  
+  onPageChange(event: any) {
+    this.updatePagedVideos();
+  }
+  
   playVideo(planId:any){
     const data={
       planId:planId
@@ -85,4 +123,6 @@ export class TrainerVideosListComponent {
       return plan.title.toLowerCase().includes(filterValue);
     });
   }
+
+ 
 }

@@ -40,13 +40,15 @@ userroute.get('/getProfile',checkAuth,usercontroller.getProfile)
 userroute.get('/getPlans',checkAuth,subscriptionContoller.getPlans)
 userroute.post('/createSubscription',checkAuth,subscriptionContoller.createSubscription)
 userroute.post('/processPayment',checkAuth,subscriptionContoller.processPayment)
-userroute.put('/uploadPic',upload.single('image'),checkAuth,usercontroller.uploadPic)
-userroute.put('/changeName',checkAuth,upload.none(),usercontroller.changeName)
-userroute.put('/changePassword',checkAuth,upload.none(),usercontroller.changePassword)
+userroute.patch('/uploadPic',upload.single('image'),checkAuth,usercontroller.uploadPic)
+userroute.patch('/changeName',checkAuth,upload.none(),usercontroller.changeName)
+userroute.patch('/changePassword',checkAuth,upload.none(),usercontroller.changePassword)
 
 // videos and diet plans
 userroute.get('/getDietPlans',checkAuth,dietPlanController.getAllDietPlans)
 userroute.get('/getVideos',checkAuth,videoController.getAllVideos)
+userroute.get('/getWatchHistory',checkAuth,videoController.getWatchHistory)
+userroute.post('/addWatchHistory',checkAuth,videoController.addWatchHistory)
 
 // chat side
 userroute.get('/getRoomUser',checkAuth,chatController.getRoomUser)

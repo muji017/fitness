@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component ,Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { UserModel, userToken, userlist } from 'src/app/model/userModel';
+import { ChatService } from 'src/app/services/chat.service';
 import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
@@ -20,11 +21,13 @@ export class HeaderComponent {
   userData$: Observable<any> | undefined
   apiUrl!: string
   premiun!: any
+  subscriptions:Subscription[]=[]
 
   constructor(private router: Router,
     private userService: UserService,
     private toastr: ToastrService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private chatService:ChatService
   ) {
     this.apiUrl = userService.getapiUrl()
   }
@@ -42,29 +45,13 @@ export class HeaderComponent {
     this.userService.getProfile().pipe(
       map((res: any) => {
         const user = res.user
+        
         if (!user.subscriptionDate) {
           this.toastr.info("Need to subscribe a plan to chat")
           this.router.navigate(['/subscription'])
         }
         else {
-          const currentDate = new Date();
-          const sday = currentDate.getDate();
-          const smonth = currentDate.getMonth() + 1;
-          const syear = currentDate.getFullYear();
-          const formattedCurrentDate = new Date( sday, smonth - 1,syear);
-
-          const userExpiryDate = new Date(user.expiryDate);
-
-          console.log('formattedCurrentDate:', formattedCurrentDate);
-          console.log('userExpiryDate:', userExpiryDate);
-
-          if (formattedCurrentDate < userExpiryDate) {
             this.router.navigate(['/chat']);
-          } else {
-            this.toastr.info("Your Subscription Plan is expired");
-            this.router.navigate(['/subscription']);
-          }
-
         }
       })
     ).subscribe();
@@ -104,8 +91,20 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    localStorage.removeItem('usertoken');
-    window.location.reload();
+    const token:any=this.usertoken
+    const str:any=JSON.parse(token)
+    const userId:string=str.userId
+     console.log(str);
+     
+    const status:boolean=false
+    const userStatusChange=this.chatService.makeOnline(userId,status).subscribe(
+      (res)=>{
+        if(res){
+        localStorage.removeItem('usertoken');
+        window.location.reload();
+      }}
+    )
+    this.subscriptions.push(userStatusChange)
   }
   tog() {
     if (this.smallview == "") {
@@ -124,5 +123,12 @@ export class HeaderComponent {
         console.log(error)
       }
     )
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    });
   }
 }

@@ -1,4 +1,5 @@
 const videoModel = require("../models/videoModel")
+const watchHistory=require("../models/watchedVideo")
 
 const getAllVideos = async (req, res) => {
     try {
@@ -103,11 +104,33 @@ const changeVideoPremium = async (req, res) => {
         res.status(500).json({ error: error })
     }
 }
+
+const getWatchHistory = async (req, res) => {
+    try {
+        const userId=req.userId
+        const watchhistory=await watchHistory.findOne({userId:userId})
+        res.status(200).json({watchhistory})
+    } catch (error) {
+        res.status(500).json({ error: error })  
+    }
+}
+const addWatchHistory = async (req,res)=>{
+    try {
+       const userId=req.userId
+       const videoId=req.body.videoId
+       await watchHistory.updateOne({userId:userId},{$addToSet:{videoId:videoId}},{upsert:true}) 
+       res.status(200).json({message:"success"})
+    } catch (error) {
+        res.status(500).json({ error: error })  
+    }
+}
 module.exports = {
     getAllVideos,
     addVideo,
     deleteVideo,
     updateVideo,
     changeVideoStatus,
-    changeVideoPremium
+    changeVideoPremium,
+    getWatchHistory,
+    addWatchHistory
 }

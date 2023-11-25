@@ -5,8 +5,94 @@
       <app-sidenav  style="width: 100%; min-width: 350px;"></app-sidenav>
     </div>
 
-<h1>
+<div class="m-4 rounded-lg p-3 w-full flex flex-col  bg-white">
+  <div >
+    <h1 >
+      Dashboard
+    </h1>
+  </div>
+ <div class="grid grid-cols-1 lg:grid-cols-2 ">
+  <div class="mt-2"style=" overflow-x: auto;" >
+    <h4>
+    Videos and Plans
+    </h4>
+    <canvas baseChart id="chart1" class=" w-full mt-6 hBar  "
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+    </canvas>
+    <h5 class="chart-description">
+      This bar chart illustrates the number of subscribers over time.
+       Each bar represents a specific period, and the height of the bars corresponds to the number of subscribers during that period.
+    </h5>
+    </div>
+  <div class="mt-2">
+    <h4>
+      Details
+    </h4>
+    <canvas baseChart id="chart2"  class=" w-3/4 m-2  "
+      [labels]="doughnutChartLabels"
+      [datasets]="doughnutChartDatasets"
+      [options]="doughnutChartOptions"
+      [legend]="true"
+      [type]="'doughnut'">
+    </canvas>
+  </div>
+  </div>
+  <div class="subscribersToday mt-6">
+    <h4>Todays Subscribers</h4>
+    <div class="container bg-white" style=" overflow-x: auto;">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation">
+ 
+    
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td style="max-width: 50px;" mat-cell *matCellDef="let element">
+        <img [src]="apiUrl+ element.image" alt="Image">
+      </td>
+    </ng-container>
+  
 
-    Admin Home
-</h1>
+    <ng-container matColumnDef="name"> 
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="subscriptionPlan">
+        <th mat-header-cell *matHeaderCellDef>SubscriptionPlan</th>
+        <td mat-cell *matCellDef="let element">{{ element.planName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="subscriptionDate">
+        <th mat-header-cell *matHeaderCellDef>SubscriptionDate</th>
+        <td mat-cell *matCellDef="let element">{{ element.subscriptionDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="expiryDate">
+        <th mat-header-cell *matHeaderCellDef>ExpiryDate</th>
+        <td mat-cell *matCellDef="let element">{{ element.expiryDate }}</td>
+      </ng-container>
+        
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+   
+  </table>
+  <span *ngIf="subscribersCount<1" class="flex justify-center m-6" >no subscriptions Today</span>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+  </div>
+</div>
 </div>

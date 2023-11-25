@@ -21,6 +21,7 @@ export class UserTrainerProfileComponent {
   trainers!: trainer[]
   dietplans!: number
   videos!: number
+  apiUrl!:string
 
   constructor(
     private store: Store<trainer[]>,
@@ -30,7 +31,9 @@ export class UserTrainerProfileComponent {
     private router: Router,
     private userService: UserService,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.apiUrl=userService.getapiUrl()
+   }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -67,29 +70,13 @@ export class UserTrainerProfileComponent {
         const user = res.user
         if (!user.subscriptionDate) {
           this.toastr.info("Need to subscribe a plan to chat")
-          // this.router.navigate(['/subscription'])
           return
         }
         else {
-          const currentDate = new Date();
-          const sday = currentDate.getDate();
-          const smonth = currentDate.getMonth() + 1;
-          const syear = currentDate.getFullYear();
-          const formattedCurrentDate = new Date(sday, smonth - 1, syear);
-          const userExpiryDate = new Date(user.expiryDate);
-
-          console.log(formattedCurrentDate, userExpiryDate);
-
-          if (formattedCurrentDate < userExpiryDate) {
             this.chatService.getRoomUser(trainerId).subscribe(
               (res) => {
                 this.router.navigate(['/chat']);
               })
-          } else {
-            this.toastr.info("Your Subscription Plan is expired");
-            return
-            // this.router.navigate(['/subscription']);
-          }
 
         }
       })

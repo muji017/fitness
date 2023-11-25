@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DietPlansModel } from 'src/app/model/userModel';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllDietPlansListApi } from 'src/app/store/action';
 import { getAllDietPlans } from 'src/app/store/selector';
 
@@ -16,11 +17,15 @@ export class UserTrainerDietComponent {
   trainerId: any
   searchQuery!: string
   searchPlans!: DietPlansModel[]
+  apiUrl!:string
+
   constructor(
     private route: ActivatedRoute,
     private dietStore: Store<DietPlansModel[]>,
-    private router: Router
+    private router: Router,
+    private userService:UserService
   ) {
+    this.apiUrl=userService.getapiUrl()
     this.route.params.subscribe(
       (params) => {
         const id = params['trainerId']

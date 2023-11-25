@@ -8,7 +8,7 @@
                         style="text-align: center; color: rgb(240, 240, 240); font-size: 24px; font-weight: bold;
              text-transform: uppercase; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
 
-          Famous Personal Trainers
+Effective workout videos
 
      </span>>
      </div>
@@ -24,7 +24,7 @@
         <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
             <div *ngFor="let plan of videos" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <video [src]="'http://localhost:3000/public/images/' + plan?.video" alt="Background Image" class="w-full md:h-auto lg:h-60"></video>
+                <video [src]="apiUrl + plan?.video" alt="Background Image" class="w-full md:h-auto lg:h-60"></video>
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}</h2>
                 <p class="text-gray-300">{{plan.bodyPart}}</p>
                 <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}

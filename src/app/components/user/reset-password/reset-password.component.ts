@@ -45,7 +45,7 @@ export class ResetPasswordComponent {
     }
     const email:string=this.sendOtpForm.get('email')?.value
     console.log(email)
-    const data = {
+    const data = { 
       email: email,
       resetPass: true
     }

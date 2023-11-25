@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { VideoModel } from 'src/app/model/userModel';
 import { TrainerService } from 'src/app/services/trainerServices/trainer.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 import { getAllVideosApiSuccess } from 'src/app/store/action';
 import { getAllVideos } from 'src/app/store/selector';
 
@@ -21,6 +22,7 @@ export class EditVideoComponent {
   videos!:VideoModel[]
   video!:VideoModel
   videoId!:any
+  apiUrl!:string
 
   constructor(
     private toastr:ToastrService,
@@ -28,19 +30,19 @@ export class EditVideoComponent {
     @Inject (MAT_DIALOG_DATA) public data:any,
     private fb:FormBuilder,
     private trainerService:TrainerService,
-    private dialoge:MatDialog
+    private dialoge:MatDialog,
+    private userService:UserService
   )
   {
+    this.apiUrl=this.userService.getapiUrl()
     this.videoId = this.data.videoId
     this.store.select(getAllVideos).subscribe(
       (res)=>{
         const data=res
         this.videos=data.filter((dp)=>dp._id==this.videoId)
-        console.log(this.videos);
-        
       }
     )
-    this.imageSrc='http://localhost:3000/public/images/'+this.videos[0].video
+    this.imageSrc=this.apiUrl+this.videos[0].video
     this.uploadVideoForm = this.fb.group({
       title: fb.control(this.videos[0].title, [Validators.required, Validators.minLength(3)]),
       workoutType: fb.control(this.videos[0].workoutType, [Validators.required]),
@@ -110,7 +112,6 @@ export class EditVideoComponent {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type.startsWith('video/')) {
-        console.log('File type is:', file.type);
         return this.toastr.warning('Video type is invalid');
       }
     }
@@ -118,13 +119,11 @@ export class EditVideoComponent {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.imageSrc.push(e.target.result);
       };
 
       reader.readAsDataURL(this.files[i]);
     }
-    console.log(this.files);
   }
 
   submitForm(){
@@ -151,7 +150,6 @@ export class EditVideoComponent {
 
     for (const controlName of Object.keys(this.uploadVideoForm.controls)) {
       const control = this.uploadVideoForm.get(controlName);
-      console.log("in loop", controlName, control?.value);
        plan.append(controlName, control?.value);
     }
     if(this.files){

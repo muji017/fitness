@@ -86,7 +86,13 @@ background-size: cover; background-position: center ; height: 100vh;">
                             [src]="'http://localhost:3000/public/images/' + currentTrainer?.image" alt="Trainer Image"
                             class="rounded-full w-12 h-12">
                         <p class="p-3 text-sm">{{ currentTrainer?.name }}</p>
-                        <div *ngIf="trainerTyping" class="text-blueGray-700 flex h-auto mb-0 p-3 ">
+                        
+                    </div>
+                </div>
+                <div *ngIf="chats">
+                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
+                        class='bg-color-msg-side w-full overflow-y-auto p-5'>
+                        <div *ngIf="trainerTyping" class="text-blueGray-700 flex h-auto mb-0  ">
                             <p>Typing</p>
                             <div *ngFor="let version of versions" class="mt-2 pulse-loader"
                                 [style.width]="version.width" [style.height]="version.height"
@@ -96,24 +102,27 @@ background-size: cover; background-position: center ; height: 100vh;">
                                 <div></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div *ngIf="chats">
-                    <div style=" max-height: 370px; min-height: 370px;display: flex; flex-direction: column-reverse;"
-                        class='bg-color-msg-side w-full overflow-y-auto p-5'>
                         <div *ngFor="let chat of chats">
                             <div *ngIf="chat.senderType==='User'" class='w-full flex my-2 justify-end'>
-                                <div
+                                
+                                <div matTooltip="{{ chat.createdAt | date: 'medium' }}"
                                     class='bg-gray-600 max-w-1/2 w-fit text-white p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg'>
                                     {{chat.content}}
-                                </div>
+                                    <mat-icon [ngClass]="{
+                                        'text-blue-500': chat.is_read || messageRead,
+                                      }" Style='font-size:18px'>done_all</mat-icon>
+
+                                </div>                           
                             </div>
                             <div *ngIf="chat.senderType==='Trainer'" class='w-full my-2'>
-                                <div class='bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
+                                <div  matTooltip="{{ chat.createdAt | date: 'medium' }}" class=' bg-gray-200 max-w-1/2 w-fit p-2 rounded-tl-lg rounded-tr-lg rounded-br-lg'>
                                     {{chat.content}}
+                                   
                                 </div>
+                              
                             </div>
                         </div>
+                        
                         <div *ngIf="chats.length<=0" class='w-full h-full flex items-center justify-center'>
                             No Chats
                         </div>

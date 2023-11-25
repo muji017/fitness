@@ -20,8 +20,8 @@
 
                 <div class="mb-2 flex-none md:flex border-gray-300 text-black border-1 p-6 rounded-lg shadow-lg">
                     <div>
-                        <img [src]="'http://localhost:3000/public/images/' + plan.image" alt="Background Image"
-                            class="w-full md:h-auto lg:h-60">
+                        <img [src]="apiUrl + plan.image"  alt="Background Image"
+                            class="hover:scale-150  transition-transform cursor-pointer w-full md:h-auto lg:h-60">
                         <h2 class="text-xl text-gray-800 font-semibold mb-2 hover:text-red-500 hover:underline">
                             {{plan.title}}</h2>
                         <p class="text-gray-800">{{plan.foodType}}</p>
