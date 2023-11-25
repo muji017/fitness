@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {  watchList, watchhistoryData } from 'src/app/model/chatModel';
 import { DietPlanList, PlanList, PlansModel, UserModel, VideoList, trainerlist, userToken } from 'src/app/model/userModel';
+import { url,imgurl } from '../endPoint';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,12 @@ import { DietPlanList, PlanList, PlansModel, UserModel, VideoList, trainerlist, 
 export class UserService {
 
   
-   private apiUrl:string = 'http://localhost:3000';
+   private apiUrl: string = url
+   private imgUrl:string=imgurl
   constructor( private http:HttpClient) { }
 
   getapiUrl():string{
-    return this.apiUrl+'/public/images/'
+    return this.imgUrl+'/public/images/'
   }
   signup(name:string,email: string, password: string):Observable<userToken> {
     const payload = {name, email, password };

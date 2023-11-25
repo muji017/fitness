@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DietPlanList, PlanList, UserModel, VideoList, trainer, trainerlist, userlist } from 'src/app/model/userModel';
+import { url } from '../endPoint';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private apiUrl:string = 'http://localhost:3000';
+  private apiUrl: string = url;
 
   constructor( private http:HttpClient) { }
 

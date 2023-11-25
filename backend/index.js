@@ -11,17 +11,20 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static('public'));
-
 const userroute = require('./routes/userRoute');
 const adminroute = require('./routes/adminRoute');
 const trainerroute = require('./routes/trainetRoute');
 
-app.use('/', userroute);
-app.use('/admin', adminroute);
-app.use('/trainer', trainerroute);
+app.use('/api', userroute);
+app.use('/api/admin', adminroute);
+app.use('/api/trainer', trainerroute);
+
+app.use(cookieParser());
+
+
+
 
 mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shard-00-00.tpfodys.mongodb.net:27017,ac-z6r2eyk-shard-00-01.tpfodys.mongodb.net:27017,ac-z6r2eyk-shard-00-02.tpfodys.mongodb.net:27017/fitness?ssl=true&replicaSet=atlas-10jn36-shard-0&authSource=admin&retryWrites=true&w=majority')
 
@@ -38,6 +41,10 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
         origin: 'http://localhost:4200',
       },
     });
+
+    app.use('/', express.static(path.join(__dirname, '../dist/fitness')));
+    app.use('/*', express.static(path.join(__dirname, '../dist/fitness')));
+
 
     io.on("connection", (socket) => {
       console.log("Client connected to WebSocket");

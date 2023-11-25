@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DietPlanList, VideoList, trainer } from 'src/app/model/userModel';
+import { url } from '../endPoint';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { DietPlanList, VideoList, trainer } from 'src/app/model/userModel';
 export class TrainerService {
 
 
-  private apiUrl: string = 'http://localhost:3000';
+  private apiUrl: string = url;
 
   constructor(private http: HttpClient) { }
 
