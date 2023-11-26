@@ -1,2 +1,2 @@
-export const url:string='http://localhost:3000/api'
-export const imgurl:string='http://localhost:3000'
+export const url:string='http://3.111.7.219/api'
+export const imgurl:string='http://3.111.7.219'
