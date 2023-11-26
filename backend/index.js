@@ -10,7 +10,6 @@ app.use(cors({
   origin: 'http://3.111.7.219',
   credentials: true
 }));
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static('public'));
 const userroute = require('./routes/userRoute');
