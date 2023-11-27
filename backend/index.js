@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 
 app.use(cors({
-  origin: 'http://fitness.zsonicx.shop',
+  origin: 'http://fitness.zsonicx.shop', 
   credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
