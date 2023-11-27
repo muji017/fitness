@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 
 app.use(cors({
-  origin: 'http://3.111.7.219',
+  origin: 'http://fitness.zsonicx.shop',
   credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,7 +37,7 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
     const io = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: 'http://3.111.7.219',
+        origin: 'http://fitness.zsonicx.shop',
       },
     });
 
