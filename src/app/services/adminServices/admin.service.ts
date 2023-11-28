@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DietPlanList, PlanList, UserModel, VideoList, trainer, trainerlist, userlist } from 'src/app/model/userModel';
-import { url } from '../endPoint';
+import { imgurl, url } from '../endPoint';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private apiUrl: string = url;
+  private apiUrl: string = imgurl;
 
   constructor( private http:HttpClient) { }
   login(email: string, password: string):Observable<{ adminId: string, adminToken: string }> {
