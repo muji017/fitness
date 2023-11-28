@@ -83,7 +83,7 @@ background-size: cover; background-position: center ; height: 100vh;">
                     (mouseover)="showProfilePopup = true" (mouseout)="showProfilePopup = false">
                     <div class="flex justify-start">
                         <img *ngIf="currentTrainer?.image"
-                            [src]="'http://localhost:3000/public/images/' + currentTrainer?.image" alt="Trainer Image"
+                            [src]="apiUrl + currentTrainer?.image" alt="Trainer Image"
                             class="rounded-full w-12 h-12">
                         <p class="p-3 text-sm">{{ currentTrainer?.name }}</p>
                         
