@@ -24,7 +24,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card -->
             <div *ngFor="let plan of dietPlans" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
-                <img [src]="apiUrl + plan.image"  alt="Background Image"
+                <img [src]="'http://fitness.zsonicx.shop/public/images/' + plan.image"  alt="Background Image"
                 class="hover:scale-150  transition-transform cursor-pointer w-full md:h-auto lg:h-60">
                 <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}
                 </h2>
