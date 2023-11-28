@@ -26,7 +26,7 @@
             <div *ngFor="let plan of dietPlans" class="border-gray-300 bg-black border-1 p-6 rounded-lg shadow-lg">
                 <img [src]="apiUrl + plan.image"  alt="Background Image"
                 class="hover:scale-150  transition-transform cursor-pointer w-full md:h-auto lg:h-60">
-                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}{{apiUrl}}
+                <h2 class="text-xl text-gray-300 font-semibold mb-2 hover:text-red-500 hover:underline ">{{plan.title}}
                 </h2>
                 <p class="text-gray-300">{{plan.foodType}}</p>
                 <p class="text-gray-300">Date : {{ plan.uploadDate | date:'dd/MM/yyyy' }}
