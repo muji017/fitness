@@ -21,7 +21,7 @@ app.use('/api/admin', adminroute);
 app.use('/api/trainer', trainerroute);
 
 app.use(cookieParser());
- 
+
 
 
 
