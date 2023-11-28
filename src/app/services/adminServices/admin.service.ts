@@ -9,7 +9,7 @@ import { imgurl, url } from '../endPoint';
 })
 export class AdminService {
 
-  private apiUrl: string = imgurl;
+  private apiUrl: string = url;
 
   constructor( private http:HttpClient) { }
   login(email: string, password: string):Observable<{ adminId: string, adminToken: string }> {
