@@ -12,9 +12,6 @@ export class AdminService {
   private apiUrl: string = url;
 
   constructor( private http:HttpClient) { }
-
-
-
   login(email: string, password: string):Observable<{ adminId: string, adminToken: string }> {
     const payload = {email, password };
     return this.http.post<{ adminId: string, adminToken: string }>(`${this.apiUrl}/admin/login`,payload); 
