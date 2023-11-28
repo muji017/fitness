@@ -36,7 +36,7 @@ export class ChatWithTrainerComponent {
   notifications: any[]= []
   messageRead!:boolean
   private subscriptions: Subscription[] = []
-
+  apiUrl!:string
 
   constructor(
     private service: UserService,
@@ -49,6 +49,7 @@ export class ChatWithTrainerComponent {
   ) { }
 
   ngOnInit() {
+    this.apiUrl = this.service.getapiUrl()
     this.chatService.openChat()
     
     this.getTrainers()
