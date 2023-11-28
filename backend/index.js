@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 
 app.use(cors({
-  origin: 'https://fitness.zsonicx.shop',
+  origin: ['https://fitness.zsonicx.shop','https://www.fitness.zsonicx.shop'],
   credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,7 +37,7 @@ mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shar
     const io = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: 'https://fitness.zsonicx.shop',
+        origin: ['https://fitness.zsonicx.shop','https://www.fitness.zsonicx.shop'],
       },
     });
 
