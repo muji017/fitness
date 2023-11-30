@@ -28,7 +28,7 @@ export class SignupComponent {
       email: this.formBuilder.control('', [Validators.required, 
         Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
       password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
-      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+      Validators.pattern('^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
       repassword: new FormControl('', Validators.required,)
     }, {
 
@@ -79,7 +79,7 @@ export class SignupComponent {
         return 'Password should be of minimum 6 characters';
       }
       if (password.errors.pattern) {
-        return 'Your password is too common'
+        return 'Password should contain atleast one character and number '
       }
     }
   }
@@ -89,7 +89,7 @@ export class SignupComponent {
     const password: any = this.signUpForm.get('password')?.value;
     if (!repassword?.valid) {
       if (repassword?.hasError('required')) {
-        return 'Password is required';
+        return 'ReEnter your password';
       }
     }
   }
