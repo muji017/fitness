@@ -67,7 +67,7 @@ export class TrainerService {
 
    changePassword(password:string):Observable<{message:string}>{
     const payload={password}
-    return this.http.patch<{message:string}>(`${this.apiUrl}/changePassword`,payload)
+    return this.http.patch<{message:string}>(`${this.apiUrl}/trainer/changePassword`,payload)
    }
 
 
