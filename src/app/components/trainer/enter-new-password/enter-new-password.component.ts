@@ -27,7 +27,7 @@ export class EnterNewPasswordComponent {
 ngOnInit(){
   this.setPasswordForm=this.formBuilder.group({     
      password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
-    Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+    Validators.pattern('^(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]+$')]),
     repassword: this.formBuilder.control('', Validators.required,)
   })
 }
@@ -44,7 +44,7 @@ showPasswordError(): any {
       return 'Password should be of minimum 6 characters';
     }
     if(password.errors.pattern){
-      return 'Your password is too common'
+      return 'Password should contain atleast one character and a number'
     }
   }
 }
