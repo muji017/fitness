@@ -28,7 +28,7 @@ export class SignupComponent {
       email: this.formBuilder.control('', [Validators.required, 
         Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
       password: this.formBuilder.control('', [Validators.required, Validators.minLength(6),
-      Validators.pattern('^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+      Validators.pattern('^(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]+$')]),
       repassword: new FormControl('', Validators.required,)
     }, {
 
