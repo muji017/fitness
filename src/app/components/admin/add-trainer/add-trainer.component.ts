@@ -34,7 +34,7 @@ export class AddTrainerComponent {
       jobPosition: this.fb.control('', Validators.required),
       location: this.fb.control('', Validators.required),
       password: this.fb.control('', [Validators.required, Validators.minLength(6),
-      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+      Validators.pattern('^(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]+$')]),
       reEnterPassword: this.fb.control('', Validators.required),
     });
   }
@@ -83,7 +83,7 @@ export class AddTrainerComponent {
         return 'Password should be of minimum 6 characters';
       }
       if (password.errors.pattern) {
-        return 'Your password is too common'
+        return 'Password should contain aleast one character and a number'
       }
     }
   }
