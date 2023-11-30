@@ -41,7 +41,7 @@ export class TrainerProfileComponent {
     
     this.passForm=this.fb.group({
       password: this.fb.control('', [Validators.required, Validators.minLength(6),
-        Validators.pattern('^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+        Validators.pattern('^(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]+$')]),
         reEnterPassword: this.fb.control('', Validators.required,)
      })
   }
