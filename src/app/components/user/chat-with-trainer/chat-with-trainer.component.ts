@@ -37,6 +37,7 @@ export class ChatWithTrainerComponent {
   messageRead!:boolean
   private subscriptions: Subscription[] = []
   apiUrl!:string
+  aaa!:string
 
   constructor(
     private service: UserService,
