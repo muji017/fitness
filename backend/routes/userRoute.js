@@ -32,6 +32,7 @@ userroute.post('/signup', usercontroller.signup);
 userroute.post('/verifyOtp',usercontroller.otpVerify);
 userroute.put('/resendOtp',usercontroller.resendOtp)
 userroute.post('/sendOtp',usercontroller.sendOtp)
+userroute.post('/verifyMail',usercontroller.sendVerifyMail)
 userroute.put('/setPassword',usercontroller.setPassword)
 userroute.get('/trainerslist',checkAuth,usercontroller.getTrainers)
 
