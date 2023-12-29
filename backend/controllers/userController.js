@@ -51,7 +51,7 @@ const login = async (req, res) => {
                     const OTP = utilities.otpGenerator()
                     userData.otp = OTP
                     await userData.save()
-                    await utilities.sendOtpMail(userData.name, userData.email, OTP)
+                    await utilities.sendVerifyMail(userData.name, userData.email, OTP)
                     res.status(403).json({ message: "Please valid your email" })
                     setTimeout(async () => {
                         await usermodel.updateOne(
@@ -123,7 +123,32 @@ const sendOtp = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+// send otp
 
+const sendVerifyMail = async (req, res) => {
+    try {
+        const { email } = req.body
+        const userData = await userModel.findOne({ email: email })
+        if (userData) {
+            const OTP = utilities.otpGenerator()
+            userData.otp = OTP
+            await userData.save()
+            await utilities.sendVerifyMail(userData.name, userData.email, OTP)
+            res.status(200).json({ message: "Otp resend success" })
+            setTimeout(async () => {
+                await usermodel.updateOne(
+                    { email: email },
+                    { $unset: { otp: 1 } }
+                );
+            }, 60000);
+        }
+        else {
+            res.status(402).json({ message: 'Email Not Found' })
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 // resend otp 
 
 const resendOtp = async (req, res) => {
@@ -304,7 +329,7 @@ const changePassword = async (req, res) => {
 module.exports = {
     signup,
     login,
-    otpVerify,
+    otpVerify,sendVerifyMail,
     resendOtp,
     sendOtp,
     otpVerifyResetPassword, setPassword, changePassword,

@@ -50,6 +50,36 @@ const sendOtpMail = async (name, email, otp) => {
     }
 };
 
+//Send otp to mail
+const sendVerifyMail = async (name, email, otp) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: process.env.emailUser,
+                pass: process.env.emailpassword,
+            },
+        });
+        const mailOptions = {
+            from: process.env.emailUser,
+            to: email,
+            subject: 'Verification otp',
+            html: '<p>Hi ' + name + ' ,one time password is' + otp + '</p>',
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('mail sent ', info.response);
+            }
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 //  otp generator
 const otpGenerator = () => {
@@ -74,4 +104,5 @@ module.exports = {
     sendOtpMail,
     securePassword,
     tokenGenerator,
+    sendVerifyMail
 }
