@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 
 
-mongoose.connect('mongodb://mujeebrahmanps01707:ruzo4mjVv0WDCyor@ac-z6r2eyk-shard-00-00.tpfodys.mongodb.net:27017,ac-z6r2eyk-shard-00-01.tpfodys.mongodb.net:27017,ac-z6r2eyk-shard-00-02.tpfodys.mongodb.net:27017/fitness?ssl=true&replicaSet=atlas-10jn36-shard-0&authSource=admin&retryWrites=true&w=majority')
+mongoose.connect('')
 
   .then(() => {
     console.log('Database connected');
