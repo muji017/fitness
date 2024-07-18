@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 
 app.use(cors({
-  origin: ['https://fitness.zsonicx.shop','https://www.fitness.zsonicx.shop'],
+  origin: ['https://fitness.mujeebtech.online','https://www.fitness.mujeebtech.online'],
   credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,7 +26,6 @@ app.use(cookieParser());
 
 
 mongoose.connect('')
-
   .then(() => {
     console.log('Database connected');
     const server = app.listen(3000, () => {
@@ -37,7 +36,7 @@ mongoose.connect('')
     const io = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: ['https://fitness.zsonicx.shop','https://www.fitness.zsonicx.shop'],
+        origin: ['https://fitness.mujeebtech.online','https://www.fitness.mujeebtech.online'],
       },
     });
 
